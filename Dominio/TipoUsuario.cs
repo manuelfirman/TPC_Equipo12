@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Categoria
+    public class TipoUsuario
     {
-        public int IDCategoria { get; set; }
+        public int IDTipo { get; set; }
         public string Nombre { get; set; }
-        public bool Estado { get; set; }
         public override string ToString()
         {
             return Nombre.ToString();
