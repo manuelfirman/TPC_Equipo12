@@ -63,9 +63,20 @@ CREATE TABLE Usuario (
     Estado BIT NULL DEFAULT 1,
 )
 
+
+CREATE TABLE Imagenes(
+    ID_Imagen INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_Articulo INT NOT NULL,
+    ImagenURL VARCHAR(1000) NOT NULL,
+    Descripcion VARCHAR(50) NOT NULL,
+
+)
+
 INSERT INTO Provincias (Provincia)
 VALUES ('Buenos Aires'),
        ('Cordoba'),
        ('Santa Fe'),
        ('Mendoza'),
        ('Tucuman');
+
+
