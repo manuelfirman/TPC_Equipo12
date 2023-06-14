@@ -1,0 +1,18 @@
+﻿.offcanvas-style-menu {
+    background: linear-gradient(135deg, rgba(16, 131, 213, 0.8), rgba(106, 163, 213, 0.8));
+    box-shadow: 0 0 10px rgba(16, 131, 213, 0.3);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.offcanvas-style-menu h5{
+    margin-top: 1rem;
+}
+
+
+.offcanvas-style-menu-carrito {
+    background: linear-gradient(135deg, rgba(150, 150, 150, 0.8), rgba(180, 180, 180, 0.8));
+    box-shadow: 0 0 10px rgba(150, 150, 150, 0.3);
+    color: #fff;
+    border-radius: 10px;
+}
