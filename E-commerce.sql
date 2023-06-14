@@ -109,4 +109,3 @@ BEGIN
 END
 
 GO
-exec SP_ImagenesAlAzar 3
