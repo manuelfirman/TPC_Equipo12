@@ -2,19 +2,19 @@ GO
 CREATE DATABASE E_COMMERCE12
 GO
 USE E_COMMERCE12
-
+GO
 CREATE TABLE Marcas (
     ID_Marca INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(20) NOT NULL, 
     Estado BIT NULL DEFAULT 1
 )
-
+GO
 CREATE TABLE Categorias (
     ID_Categoria INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(20) NOT NULL, 
     Estado BIT NULL DEFAULT 1
 )
-
+GO
 CREATE TABLE Productos (
     ID_Producto INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Categoria INT NOT NULL FOREIGN KEY REFERENCES Categorias(ID_Categoria),
@@ -26,17 +26,17 @@ CREATE TABLE Productos (
     Stock INT NOT NULL CHECK (Stock > 0),
     Estado BIT NULL DEFAULT 1,
 )
-
+GO
 CREATE TABLE TipoUsuario (
     ID_Tipo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(20) NOT NULL
 )
-
+GO
 CREATE TABLE Provincias (
     ID_Provincia INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(20) NOT NULL
 )
-
+GO
 CREATE TABLE Domicilios (
     ID_Domicilio INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Provincia INT NOT NULL FOREIGN KEY REFERENCES Provincias(ID_Provincia),
@@ -50,7 +50,7 @@ CREATE TABLE Domicilios (
     Estado BIT NULL DEFAULT 1,
 
 )
-
+GO
 CREATE TABLE Usuario (
     ID_Usuario INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_TipoUsuario INT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
@@ -64,8 +64,7 @@ CREATE TABLE Usuario (
     FechaNacimiento DATE NOT NULL,
     Estado BIT NULL DEFAULT 1,
 )
-
-
+GO
 CREATE TABLE Imagenes(
     ID_Imagen INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Producto INT NOT NULL FOREIGN KEY REFERENCES Productos(ID_Producto),
@@ -74,9 +73,39 @@ CREATE TABLE Imagenes(
     Estado BIT NULL DEFAULT 1,
 )
 
-CREATE PROCEDURE SP_ListarTodosLosProductos AS
-SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
-FROM Productos P 
-INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+-- STORED PROCEDURES --
+GO
+CREATE PROCEDURE SP_ListarTodosLosProductos
+AS
+BEGIN
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+END
 
+GO
+CREATE PROCEDURE SP_ProductosAlAzar(
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    ORDER BY NEWID()
+END
+
+GO
+CREATE PROCEDURE SP_ImagenesAlAzar(
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
+    FROM Imagenes I
+    ORDER BY NEWID()
+END
+
+GO

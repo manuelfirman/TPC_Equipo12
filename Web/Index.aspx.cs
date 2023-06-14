@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dominio;
+using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +11,63 @@ namespace Web
 {
     public partial class Index : System.Web.UI.Page
     {
+        private List<Producto> productosCards { get; set; }
+        ProductoNegocio productoNegocio { get; set; }
+        private List<Imagen> imagenesSlider { get; set; }
+        ImagenNegocio imagenNegocio { get; set; }
+
+        public Index()
+        {
+            productoNegocio = new ProductoNegocio(); 
+            imagenNegocio = new ImagenNegocio();
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                productosCards = productoNegocio.ProductosAlAzar(6);
+                //Session.Add("ProductosCards", productosCards);
 
+                rptProductos.DataSource = productosCards;
+                rptProductos.DataBind();
+
+                imagenesSlider = imagenNegocio.ImagenesAlAzar(8);
+                rptSlider.DataSource = imagenesSlider;
+                rptSlider.DataBind();
+
+             
+            }
+
+            //productosCards = (List<Producto>)Session["ProductosCards"];
+        }
+
+        public string cargarImagen(object dataItem)
+        {
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            Producto producto = (Producto)dataItem;
+
+            if(producto != null & producto.Imagenes != null & producto.Imagenes.Count > 0)
+            {
+                string url = producto.Imagenes.FirstOrDefault().Url;
+                if (imagenNegocio.VerificarUrlImagen(url))
+                {
+                    return url;
+                }
+            }
+
+            return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+        }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected string GetButtonCommandArgument(object dataItem)
+        {
+            var item = (Producto)dataItem;
+            return item.IDProducto.ToString();
         }
     }
 }
