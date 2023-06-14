@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ImagenNegocio.cs" />
-    <Compile Include="NegocioABM.cs" />
     <Compile Include="NegocioDB.cs" />
     <Compile Include="ProductoNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

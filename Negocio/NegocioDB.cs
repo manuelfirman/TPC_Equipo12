@@ -22,7 +22,7 @@ namespace Negocio
 
         public NegocioDB()
         {
-            dbName = "E-COMMERCE";
+            dbName = "E_COMMERCE12";
             dbServer = ".\\SQLEXPRESS";
             conn = new SqlConnection($"server={dbServer}; database={dbName}; integrated security=true");
             cmd = new SqlCommand();

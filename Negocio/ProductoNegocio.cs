@@ -12,47 +12,95 @@ namespace Negocio
     {
         public List<Producto> ListarTodosLosProductos()
         {
-            NegocioDB db = new NegocioDB();
+            NegocioDB database = new NegocioDB();
             List<Producto> lista = new List<Producto>();
-            db.StoreProcedure("SP_ListarTodosLosProductos");
-            while (db.Reader.Read())
+            database.StoreProcedure("SP_ListarTodosLosProductos");
+            database.Read();
+            while (database.Reader.Read())
             {
-                Producto aux = new Producto();
+                Producto auxProducto = new Producto();
 
-                int IDProducto = (int)db.Reader["IDProducto"];
-                aux.IDProducto = IDProducto;
-                if (!(db.Reader["Codigo"] is DBNull)) aux.Codigo = (string)db.Reader["Codigo"];
-                if (!(db.Reader["Nombre"] is DBNull)) aux.Nombre = (string)db.Reader["Nombre"];
-                if (!(db.Reader["Descripcion"] is DBNull)) aux.Descripcion = (string)db.Reader["Descripcion"];
-                if (!(db.Reader["Precio"] is DBNull)) aux.Precio = (decimal)db.Reader["Precio"];
-                aux.Precio = Math.Round(aux.Precio);
+                int IDProducto = (int)database.Reader["IDProducto"];
+                auxProducto.IDProducto = IDProducto;
+                if (!(database.Reader["Codigo"] is DBNull)) auxProducto.Codigo = (string)database.Reader["Codigo"];
+                if (!(database.Reader["Nombre"] is DBNull)) auxProducto.Nombre = (string)database.Reader["Nombre"];
+                if (!(database.Reader["Descripcion"] is DBNull)) auxProducto.Descripcion = (string)database.Reader["Descripcion"];
+                if (!(database.Reader["Precio"] is DBNull)) auxProducto.Precio = (decimal)database.Reader["Precio"];
+                auxProducto.Precio = Math.Round(auxProducto.Precio);
 
                 ImagenNegocio imagenNegocio = new ImagenNegocio();
-                aux.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
+                auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
 
 
-                if (!(db.Reader["IDMarca"] is DBNull))
+                if (!(database.Reader["IDMarca"] is DBNull))
                 {
-                    aux.Marca = new Marca();
-                    aux.Marca.Nombre = (string)db.Reader["Marca"];
-                    aux.Marca.IDMarca = (int)db.Reader["IDMarca"];
-
+                    auxProducto.Marca = new Marca();
+                    auxProducto.Marca.Nombre = (string)database.Reader["Marca"];
+                    auxProducto.Marca.IDMarca = (int)database.Reader["IDMarca"];
                 }
 
-                if (!(db.Reader["IDCategoria"] is DBNull))
+                if (!(database.Reader["IDCategoria"] is DBNull))
                 {
-                    aux.Categoria = new Categoria();
-                    aux.Categoria.Nombre = (string)db.Reader["Categoria"];
-                    aux.Categoria.IDCategoria = (int)db.Reader["IDCategoria"];
+                    auxProducto.Categoria = new Categoria();
+                    auxProducto.Categoria.Nombre = (string)database.Reader["Categoria"];
+                    auxProducto.Categoria.IDCategoria = (int)database.Reader["IDCategoria"];
                 }
 
-                lista.Add(aux);
+                lista.Add(auxProducto);
             }
 
-            db.Close();
+            database.Close();
+            return lista;
+        }
+
+        public List<Producto> ProductosAlAzar(int cantidad)
+        {
+            NegocioDB database = new NegocioDB();
+            List<Producto> lista = new List<Producto>();
+            database.StoreProcedure("SP_ProductosAlAzar");
+            database.SetParam("@Cantidad", cantidad);
+            database.Read();
+            while (database.Reader.Read())
+            {
+                Producto auxProducto = new Producto();
+
+                int IDProducto = (int)database.Reader["IDProducto"];
+                auxProducto.IDProducto = IDProducto;
+                if (!(database.Reader["Codigo"] is DBNull)) auxProducto.Codigo = (string)database.Reader["Codigo"];
+                if (!(database.Reader["Nombre"] is DBNull)) auxProducto.Nombre = (string)database.Reader["Nombre"];
+                if (!(database.Reader["Descripcion"] is DBNull)) auxProducto.Descripcion = (string)database.Reader["Descripcion"];
+                if (!(database.Reader["Precio"] is DBNull)) auxProducto.Precio = (decimal)database.Reader["Precio"];
+                auxProducto.Precio = Math.Round(auxProducto.Precio);
+
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
+                auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
+
+
+                if (!(database.Reader["IDMarca"] is DBNull))
+                {
+                    auxProducto.Marca = new Marca();
+                    auxProducto.Marca.Nombre = (string)database.Reader["Marca"];
+                    auxProducto.Marca.IDMarca = (int)database.Reader["IDMarca"];
+                }
+
+                if (!(database.Reader["IDCategoria"] is DBNull))
+                {
+                    auxProducto.Categoria = new Categoria();
+                    auxProducto.Categoria.Nombre = (string)database.Reader["Categoria"];
+                    auxProducto.Categoria.IDCategoria = (int)database.Reader["IDCategoria"];
+                }
+
+                lista.Add(auxProducto);
+            }
+
+            database.Close();
             return lista;
         }
 
 
-    }
+
+
+
+    } 
 }
+

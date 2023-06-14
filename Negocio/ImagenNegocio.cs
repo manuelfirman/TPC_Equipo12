@@ -16,19 +16,19 @@ namespace Negocio
             int IDProducto = imagen.IDProducto;
             string urlImagen = imagen.Url;
             string descripcion = imagen.Descripcion;
-            NegocioDB db = new NegocioDB();
+            NegocioDB database = new NegocioDB();
             string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion); SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID";
             try
             {
-                db.SetParam("@IDProducto", IDProducto);
-                db.SetParam("@ImagenURL", urlImagen);
-                db.SetParam("@Descripcion", descripcion);
-                db.SetQuery(query);
-                db.Read();
+                database.SetParam("@IDProducto", IDProducto);
+                database.SetParam("@ImagenURL", urlImagen);
+                database.SetParam("@Descripcion", descripcion);
+                database.SetQuery(query);
+                database.Read();
 
-                if (db.Reader.Read())
+                if (database.Reader.Read())
                 {
-                    idImagen = (int)db.Reader["ID"];
+                    idImagen = (int)database.Reader["ID"];
                 }
 
                 return idImagen;
@@ -39,22 +39,22 @@ namespace Negocio
             }
             finally
             {
-                db.Close();
+                database.Close();
             }
         }
 
         public int Modificar(int idImagen, string url, string descripcion)
         {
-            NegocioDB db = new NegocioDB();
+            NegocioDB database = new NegocioDB();
             string query = "UPDATE IMAGENES SET ImagenURL = @Url, Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
             int rowsAffected = 0;
             try
             {
-                db.SetParam("@Url", url);
-                db.SetParam("@IDImagen", idImagen);
-                db.SetParam("@Descripcion", descripcion);
-                db.SetQuery(query);
-                rowsAffected = db.RunQuery();
+                database.SetParam("@Url", url);
+                database.SetParam("@IDImagen", idImagen);
+                database.SetParam("@Descripcion", descripcion);
+                database.SetQuery(query);
+                rowsAffected = database.RunQuery();
                 return rowsAffected;
             }
             catch (Exception)
@@ -64,45 +64,51 @@ namespace Negocio
             }
             finally
             {
-                db.Close();
+                database.Close();
             }
         }
+
         public int Eliminar(int IDProductoImagen)
         {
-            NegocioDB db = new NegocioDB();
+            NegocioDB database = new NegocioDB();
             string query = "DELETE FROM IMAGENES WHERE ID_Producto = @IDProductoImagen";
             int rowsAffected = 0;
             try
             {
-                db.SetParam("@IDProductoImagen", IDProductoImagen);
-                db.SetQuery(query);
-                rowsAffected = db.RunQuery();
+                database.SetParam("@IDProductoImagen", IDProductoImagen);
+                database.SetQuery(query);
+                rowsAffected = database.RunQuery();
                 return rowsAffected;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            finally
+            {
+                database.Close();
+            }
         }
+
         public List<Imagen> ImagenesProducto(int IDProducto)
         {
-            NegocioDB db = new NegocioDB();
+            NegocioDB database = new NegocioDB();
             string query = "SELECT ID_Producto, ImagenURL, ID_Imagen, Descripcion, Estado FROM IMAGENES WHERE ID_Producto = @IDProducto";
             List<Imagen> imagenes = new List<Imagen>();
 
             try
             {
-                db.SetParam("@IDProducto", IDProducto);
-                db.SetQuery(query);
-                db.Read();
-                while (db.Reader.Read())
+                database.SetParam("@IDProducto", IDProducto);
+                database.SetQuery(query);
+                database.Read();
+                while (database.Reader.Read())
                 {
                     Imagen imagen = new Imagen();
-                    imagen.IDImagen = (int)db.Reader["ID_Imagen"];
-                    imagen.Url = (string)db.Reader["ImagenURL"];
-                    imagen.IDProducto = (int)db.Reader["ID_Producto"];
-                    imagen.Descripcion = (string)db.Reader["Descripcion"];
-                    imagen.Estado = (bool)db.Reader["Estado"];
+                    imagen.IDImagen = (int)database.Reader["ID_Imagen"];
+                    imagen.Url = (string)database.Reader["ImagenURL"];
+                    imagen.IDProducto = (int)database.Reader["ID_Producto"];
+                    imagen.Descripcion = (string)database.Reader["Descripcion"];
+                    imagen.Estado = (bool)database.Reader["Estado"];
                     imagenes.Add(imagen);
                 }
 
@@ -111,6 +117,10 @@ namespace Negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                database.Close();
             }
         }
 
@@ -134,6 +144,38 @@ namespace Negocio
             }
 
             return false;
+        }
+
+        public List<Imagen> ImagenesAlAzar(int cantidad)
+        {
+            NegocioDB database = new NegocioDB();
+            List<Imagen> lista = new List<Imagen>();
+            try
+            {
+                database.StoreProcedure("SP_ImagenesAlAzar");
+                database.SetParam("@Cantidad", cantidad);
+                database.Read();
+                while (database.Reader.Read())
+                {
+                    Imagen imagen = new Imagen();
+                    if (!(database.Reader["ID_Producto"] is DBNull)) imagen.IDProducto = (int)database.Reader["ID_Producto"];
+                    if (!(database.Reader["ID_Imagen"] is DBNull)) imagen.IDImagen = (int)database.Reader["ID_Imagen"];
+                    if (!(database.Reader["ImagenURL"] is DBNull)) imagen.Url = (string)database.Reader["ImagenURL"];
+                    if (!(database.Reader["Descripcion"] is DBNull)) imagen.Descripcion = (string)database.Reader["Descripcion"];
+
+                    lista.Add(imagen);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                database.Close();
+            }
         }
     }
 }
