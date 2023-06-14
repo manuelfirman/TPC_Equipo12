@@ -156,3 +156,9 @@ BEGIN
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
     WHERE M.Nombre = @Marca AND C.Nombre = @Categoria
 END
+
+GO
+CREATE PROCEDURE SP_ListarCategorias
+BEGIN
+    SELECT C.ID_Categoria, C.Nombre FROM Categorias AS C
+END
