@@ -107,5 +107,52 @@ BEGIN
     FROM Imagenes I
     ORDER BY NEWID()
 END
+go
+CREATE TRIGGER TR_DeleteImagen ON Imagenes
+INSTEAD OF DELETE
+AS
+BEGIN
+    DECLARE @IDImagen INT
+    SELECT @IDImagen = ID_Imagen FROM deleted
+    UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
+END
 
 GO
+CREATE PROCEDURE SP_ProductosPorCategoria(
+    @Categoria VARCHAR(20)
+)
+AS
+BEGIN
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    WHERE C.Nombre = @Categoria
+END
+
+GO
+CREATE PROCEDURE SP_ProductosPorMarca(
+    @Marca VARCHAR(20)
+)
+AS
+BEGIN
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    WHERE M.Nombre = @Marca
+END
+
+GO
+CREATE PROCEDURE SP_ProductosPorCategoriaMarca(
+    @Categoria VARCHAR(20),
+    @Marca VARCHAR(20)
+)
+AS
+BEGIN
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    WHERE M.Nombre = @Marca AND C.Nombre = @Categoria
+END
