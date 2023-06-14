@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Negocio
 {
-    public class NegocioDatos
+    public class NegocioDB
     {
         private string dbName;
         private string dbServer;
@@ -20,7 +20,7 @@ namespace Negocio
             get { return reader; }
         }
 
-        public NegocioDatos()
+        public NegocioDB()
         {
             dbName = "E-COMMERCE";
             dbServer = ".\\SQLEXPRESS";
@@ -32,6 +32,11 @@ namespace Negocio
         {
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.CommandText = query;
+        }
+
+        public void SetParam(string nombre, object valor)
+        {
+            cmd.Parameters.AddWithValue(nombre, valor);
         }
 
         public void Read()
@@ -48,11 +53,6 @@ namespace Negocio
             }
         }
 
-        public void SetParam(string nombre, object valor)
-        {
-            cmd.Parameters.AddWithValue(nombre, valor);
-        }
-
         public int RunQuery()
         {
             cmd.Connection = this.conn;
@@ -67,6 +67,12 @@ namespace Negocio
             {
                 throw ex;
             }
+        }
+
+        public void StoreProcedure(string storeProcedure)
+        {
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = storeProcedure;
         }
 
         public void Close()
