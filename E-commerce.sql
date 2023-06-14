@@ -1,7 +1,7 @@
 GO
-CREATE DATABASE E_COMMERCE
+CREATE DATABASE E_COMMERCE12
 GO
-USE E_COMMERCE
+USE E_COMMERCE12
 
 CREATE TABLE Marcas (
     ID_Marca INT NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -15,13 +15,13 @@ CREATE TABLE Categorias (
     Estado BIT NULL DEFAULT 1
 )
 
-CREATE TABLE Articulos (
-    ID_Articulo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+CREATE TABLE Productos (
+    ID_Producto INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Categoria INT NOT NULL FOREIGN KEY REFERENCES Categorias(ID_Categoria),
     ID_Marca INT NOT NULL FOREIGN KEY REFERENCES Marcas(ID_Marca),
-    Codigo INT NOT NULL,
-    Nombre VARCHAR(15) NOT NULL,
-    Descripcion VARCHAR(50) NOT NULL,
+    Codigo VARCHAR(15) UNIQUE NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
+    Descripcion VARCHAR(500) NOT NULL,
     Precio MONEY NOT NULL CHECK (Precio > 0),
     Estado BIT NULL DEFAULT 1,
 )
@@ -33,7 +33,7 @@ CREATE TABLE TipoUsuario (
 
 CREATE TABLE Provincias (
     ID_Provincia INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    Provincia VARCHAR(20) NOT NULL
+    Nombre VARCHAR(20) NOT NULL
 )
 
 CREATE TABLE Domicilios (
@@ -52,6 +52,8 @@ CREATE TABLE Domicilios (
 
 CREATE TABLE Usuario (
     ID_Usuario INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_TipoUsuario INT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
+    ID_Domicilio INT NOT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
     Dni VARCHAR(10) NOT NULL UNIQUE,
     Nombre VARCHAR(15) NOT NULL,
     Apellido VARCHAR(15) NOT NULL,
@@ -59,24 +61,15 @@ CREATE TABLE Usuario (
     Contrasena VARCHAR(20) NOT NULL, 
     Telefono VARCHAR(15) NOT NULL,
     FechaNacimiento DATE NOT NULL,
-    ID_Domicilio INT NOT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
     Estado BIT NULL DEFAULT 1,
 )
 
 
 CREATE TABLE Imagenes(
     ID_Imagen INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    ID_Articulo INT NOT NULL,
+    ID_Producto INT NOT NULL FOREIGN KEY REFERENCES Productos(ID_Producto),
     ImagenURL VARCHAR(1000) NOT NULL,
     Descripcion VARCHAR(50) NOT NULL,
-
+    Estado BIT NULL DEFAULT 1,
 )
-
-INSERT INTO Provincias (Provincia)
-VALUES ('Buenos Aires'),
-       ('Cordoba'),
-       ('Santa Fe'),
-       ('Mendoza'),
-       ('Tucuman');
-
 
