@@ -23,6 +23,7 @@ CREATE TABLE Productos (
     Nombre VARCHAR(50) NOT NULL,
     Descripcion VARCHAR(500) NOT NULL,
     Precio MONEY NOT NULL CHECK (Precio > 0),
+    Stock INT NOT NULL CHECK (Stock > 0),
     Estado BIT NULL DEFAULT 1,
 )
 
@@ -72,4 +73,10 @@ CREATE TABLE Imagenes(
     Descripcion VARCHAR(50) NOT NULL,
     Estado BIT NULL DEFAULT 1,
 )
+
+CREATE PROCEDURE SP_ListarTodosLosProductos AS
+SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+FROM Productos P 
+INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
 
