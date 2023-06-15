@@ -8,8 +8,8 @@ namespace Dominio
 {
     public class ElementoCarrito
     {
+        public Producto Producto { get; set; }
+        public int Cantidad { get; set; }
         public int IDElemento { get; set; }
-        public Producto producto { get; set; }
-        public int cantidad { get; set; }
     }
 }

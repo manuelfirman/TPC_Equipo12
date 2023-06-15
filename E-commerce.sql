@@ -107,7 +107,8 @@ BEGIN
     FROM Imagenes I
     ORDER BY NEWID()
 END
-go
+
+GO
 CREATE TRIGGER TR_DeleteImagen ON Imagenes
 INSTEAD OF DELETE
 AS
@@ -157,6 +158,56 @@ BEGIN
     WHERE M.Nombre = @Marca AND C.Nombre = @Categoria
 END
 
+
+GO
+CREATE PROCEDURE SP_ImagenesRandomPorCategoria(
+    @Cantidad INT,
+    @Categoria VARCHAR(20)
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
+    FROM Imagenes I
+    INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    WHERE C.Nombre = @Categoria
+    ORDER BY NEWID()
+END
+
+GO
+CREATE PROCEDURE SP_ImagenesRandomPorMarca(
+    @Cantidad int,
+    @Marca VARCHAR(20)
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
+    FROM Imagenes I
+    INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    WHERE M.Nombre = 'Nike'
+    ORDER BY NEWID()
+END
+GO
+CREATE PROCEDURE SP_MarcasRandom(
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) M.ID_Marca, M.Nombre, M.Estado
+    FROM Marcas M
+    ORDER BY NEWID()
+END
+GO
+CREATE PROCEDURE SP_CategoriasRandom(
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) C.ID_Categoria, C.Nombre, C.Estado
+    FROM Categorias C
+    ORDER BY NEWID()
+END
 GO
 CREATE PROCEDURE SP_ListarCategorias
 AS

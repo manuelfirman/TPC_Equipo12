@@ -3,9 +3,25 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <style>
+        .card-custom {
+            border: none;
+            transition: box-shadow 0.3s ease;
+        }
 
+        .card-custom-img {
+            border: none;
+        }
+
+        .card-custom:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+    </style>
     <%--INICIO MAIN--%>
     <main>
+
+        <%--BANNER SLIDER--%>
         <div class="container-fluid" style="margin:0;padding:0">
             <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
@@ -32,31 +48,72 @@
             </div>
         </div>
 
+         <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
 
-        <div class="mt-5 text-light text-center">
-            <%--CARDS PRODUCTOS--%>
-            <div class="mt-5"></div>
-            <asp:Label ID="llbTitulo" CssClass="h3 d-flex justify-content-center text-white" runat="server" Text="PRODUCTOS"></asp:Label>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <asp:Repeater ID="rptProductos" runat="server">
-                    <ItemTemplate>
-                        <div class="col">
-                            <div class="card mw-100">
-                                <div class="card-body">
-                                    <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%# cargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
-                                    <h4 class="card-title"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h4>
-                                    <p class="card-text"><%# ((Dominio.Producto)Container.DataItem).Descripcion %></p>
-                                    <p class="card-text fw-semibold text-success display-6">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
-                                    <a href="Detalle.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>" class="btn btn-primary w-100 mb-1">Ver más</a>
-                                    <asp:Button ID="btnAgregar" CssClass="btn btn-success w-100 mt-1" runat="server" Text="Agregar Carrito" OnClick="btnAgregar_Click" CommandArgument='<%# ((Dominio.Producto)Container.DataItem).IDProducto.ToString() %>' />
+        <%--CARDS PRODUCTOS--%>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            <asp:Repeater ID="rptProductos" runat="server">
+                <ItemTemplate>
+                    <div class="col card-custom">
+                        <div class="card mw-100 card-custom-img">
+                            <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
+                                <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#cargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                            </a>
+                        </div>
+                        <div class="card-description text-start text-dark">
+                            <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
+                            <p class="text-muted small">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
+                            <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>
+
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+
+         <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
+
+        <%--CARDS CATEGORIAS--%>
+        <div class="row row-cols-4">
+            <asp:Repeater ID="rptCategorias" runat="server">
+                <ItemTemplate>
+                    <div class="col card-custom">
+                        <div class="card mw-100 card-custom-img">
+                            <div class="card-custom-img">
+                                <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Categoria)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                <div class="card-text">
+                                    <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
                                 </div>
                             </div>
                         </div>
-                    </ItemTemplate>
-                </asp:Repeater>
-            </div>
-
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
+         <%--CARDS MARCAS--%>
+        <div class="row row-cols-4">
+            <asp:Repeater ID="rptMarcas" runat="server">
+                <ItemTemplate>
+                    <div class="col card-custom">
+                        <div class="card mw-100 card-custom-img">
+                            <div class="card-custom-img">
+                                <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                <div class="card-text">
+                                    <h4 class="card-title"><%# ((Dominio.Marca)Container.DataItem).Nombre.ToUpper() %></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+
+
+
+        <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
+
+
+      
 
 
 
