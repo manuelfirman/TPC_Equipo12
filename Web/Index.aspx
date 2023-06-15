@@ -43,7 +43,7 @@
     </style>
 
     <%--INICIO MAIN--%>
-    <main>
+    <main class="bg-light">
 
         <%--BANNER SLIDER--%>
         <section>
@@ -76,13 +76,13 @@
 
 
         <%--CARDS PRODUCTOS--%>
-        <section class="section-productos">
+        <section class="container section-productos">
             <div class="row">
                 <div class="col">
                     <h2 class="section-title display-4 text-center text-muted letter-spacing">NOVEDADES</h2>
                 </div>
             </div>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 <asp:Repeater ID="rptProductos" runat="server">
                     <ItemTemplate>
                         <div class="col card-custom">
@@ -91,7 +91,7 @@
                                     <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#cargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
                                 </a>
                             </div>
-                            <div class="card-description text-start text-dark">
+                            <div class="card-description text-center text-dark">
                                 <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
                                 <p class="card-text text-muted">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
                                 <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>

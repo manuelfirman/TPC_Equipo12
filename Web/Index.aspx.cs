@@ -39,7 +39,7 @@ namespace Web
                 rptSlider.DataBind();
 
                 // Productos para Cards
-                productosCards = productoNegocio.ProductosAlAzar(10);
+                productosCards = productoNegocio.ProductosAlAzar(8);
                 rptProductos.DataSource = productosCards;
                 rptProductos.DataBind();
 
