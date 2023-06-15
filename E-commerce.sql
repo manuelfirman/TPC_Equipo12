@@ -73,9 +73,14 @@ CREATE TABLE Imagenes(
     Estado BIT NULL DEFAULT 1,
 )
 
--- STORED PROCEDURES --
+
+----------------------------------------------------------------------------------
+------------------------- ***** STORED PROCEDURES **** ---------------------------
+
+---------------------------------
+---------- PRODUCTOS ------------
 GO
-CREATE PROCEDURE SP_ListarTodosLosProductos
+CREATE PROCEDURE SP_ListarTodosLosProductos -- TODOS LOS PRODUCTOS
 AS
 BEGIN
     SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
@@ -85,41 +90,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE SP_ProductosAlAzar(
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    ORDER BY NEWID()
-END
-
-GO
-CREATE PROCEDURE SP_ImagenesAlAzar(
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
-    FROM Imagenes I
-    ORDER BY NEWID()
-END
-
-GO
-CREATE TRIGGER TR_DeleteImagen ON Imagenes
-INSTEAD OF DELETE
-AS
-BEGIN
-    DECLARE @IDImagen INT
-    SELECT @IDImagen = ID_Imagen FROM deleted
-    UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
-END
-
-GO
-CREATE PROCEDURE SP_ProductosPorCategoria(
+CREATE PROCEDURE SP_ProductosPorCategoria( -- PRODUCTOS POR CATEGORIA
     @Categoria VARCHAR(20)
 )
 AS
@@ -132,7 +103,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE SP_ProductosPorMarca(
+CREATE PROCEDURE SP_ProductosPorMarca( -- PRODUCTOS POR  MARCA
     @Marca VARCHAR(20)
 )
 AS
@@ -145,7 +116,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE SP_ProductosPorCategoriaMarca(
+CREATE PROCEDURE SP_ProductosPorCategoriaMarca( -- PRODUCTOS POR CATEGORIA Y MARCA
     @Categoria VARCHAR(20),
     @Marca VARCHAR(20)
 )
@@ -158,9 +129,35 @@ BEGIN
     WHERE M.Nombre = @Marca AND C.Nombre = @Categoria
 END
 
+GO
+CREATE PROCEDURE SP_ProductosAlAzar( -- PRODUCTOS AL AZAR
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    ORDER BY NEWID()
+END
+
+
+------------------------------
+---------- IMAGENES ----------
+GO
+CREATE PROCEDURE SP_ImagenesAlAzar( -- IMAGENES AL AZAR
+    @Cantidad int
+)
+AS
+BEGIN
+    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
+    FROM Imagenes I
+    ORDER BY NEWID()
+END
 
 GO
-CREATE PROCEDURE SP_ImagenesRandomPorCategoria(
+CREATE PROCEDURE SP_ImagenesRandomPorCategoria( -- IMAGENES AL AZAR POR CATEGORIA
     @Cantidad INT,
     @Categoria VARCHAR(20)
 )
@@ -175,7 +172,7 @@ BEGIN
 END
 
 GO
-CREATE PROCEDURE SP_ImagenesRandomPorMarca(
+CREATE PROCEDURE SP_ImagenesRandomPorMarca( -- IMAGENES AL AZAR POR MARCA
     @Cantidad int,
     @Marca VARCHAR(20)
 )
@@ -185,11 +182,22 @@ BEGIN
     FROM Imagenes I
     INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    WHERE M.Nombre = 'Nike'
+    WHERE M.Nombre = @Marca
     ORDER BY NEWID()
 END
+
+
+----------------------------
+---------- MARCAS ----------
 GO
-CREATE PROCEDURE SP_MarcasRandom(
+CREATE PROCEDURE SP_ListarMarcas -- TODAS LAS MARCAS
+AS
+BEGIN
+    SELECT M.Estado, M.Nombre, M.ID_Marca FROM Marcas AS M
+END
+
+GO
+CREATE PROCEDURE SP_MarcasRandom( -- MARCAS AL AZAR
     @Cantidad int
 )
 AS
@@ -198,8 +206,19 @@ BEGIN
     FROM Marcas M
     ORDER BY NEWID()
 END
+
+
+--------------------------------
+---------- CATEGORIAS ----------
 GO
-CREATE PROCEDURE SP_CategoriasRandom(
+CREATE PROCEDURE SP_ListarCategorias -- TODAS LAS CATEGORIAS
+AS
+BEGIN
+    SELECT C.ID_Categoria, C.Nombre, C.Estado FROM Categorias AS C
+END
+
+GO
+CREATE PROCEDURE SP_CategoriasRandom( -- CATEGORIAS AL AZAR
     @Cantidad int
 )
 AS
@@ -208,17 +227,18 @@ BEGIN
     FROM Categorias C
     ORDER BY NEWID()
 END
+
+
+-------------------------------------------------------------------------
+------------------------- ***** TRIGGERS **** ---------------------------
+
+---------- IMAGENES TRIGGER ISTEAD OF DELETE ----------
 GO
-CREATE PROCEDURE SP_ListarCategorias
+CREATE TRIGGER TR_DeleteImagen ON Imagenes
+INSTEAD OF DELETE
 AS
 BEGIN
-    SELECT C.ID_Categoria, C.Nombre, C.Estado FROM Categorias AS C
-END
-
-GO
-
-CREATE PROCEDURE SP_ListarMarcas 
-AS
-BEGIN
-    SELECT M.Estado, M.Nombre, M.ID_Marca FROM Marcas AS M
+    DECLARE @IDImagen INT
+    SELECT @IDImagen = ID_Imagen FROM deleted
+    UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
 END

@@ -179,13 +179,18 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
 
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw8be6443b/products/ADGT0168/ADGT0168-1.JPG', 'Pantalon adidas Mat Pt'),
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw4b603f6b/products/ADGT0168/ADGT0168-2.JPG', 'Pantalon adidas Mat Pt'),
-       (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwaea7c3d2/products/ADGT0168/ADGT0168-3.JPG', 'Pantalon adidas Mat Pt');
+       (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwaea7c3d2/products/ADGT0168/ADGT0168-3.JPG', 'Pantalon adidas Mat Pt'),
+
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwcfa4c7bc/products/COD5602401/COD5602401-2.JPG', 'Remera Converse Laces'),
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw1647078d/products/COD5602401/COD5602401-3.JPG', 'Remera Converse Laces'),
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw5b14c102/products/COD5602401/COD5602401-5.JPG', 'Remera Converse Laces');
 
 
 
-
-
--- REGISTROS NUEVOS 14/06
+-- REGISTROS NUEVOS 14/06 --
 -- INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado)
 -- VALUES (7, 5, 'C003', 'Individual Rise Hombre', 'Salí a ejercitarte con la mejor compañía con el Conjunto Entrenamiento Puma Individual Rise Hombre. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 38199, 10, 1),
 --         (5, 8, 'B001', 'Urbano Classics Trefoil Hombre', 'Salí a ejercitarte con la mejor compañía. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 45999, 10, 1),
@@ -199,7 +204,6 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
 --        (2, 5, 'P001', 'Pantalon Puma Classics', 'Ir a correr una mañana fresca o estar relajada en casa, siempre será mejor con el Pantalón Puma Classics Mujer. Una prenda suave, liviana y cómoda que costará sacar al momento de ir a la oficina. Con un diseño relajado y puños que liberan tus movimientos y evitan la entrada de frío. Una cintura elástica se mueve con vos alejando las incomodidades de tu cuerpo. Con el logo Puma en el frente que es el detalle de calidad que elegís vestir.', 27399, 10, 1),
 --        (2, 8, 'P002', 'Pantalón adidas Adicolor', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda; lleva el Pantalón adidas Adicolor y no dejes que te falte una prenda que resalta cualquier look que elijas. Está elaborado en algodón y poliéster para brindarle suavidad y durabilidad. Sus bolsillos son prácticos, para llevar todo lo que necesites con vos, y el diseño liso te permite combinarlo con todos tus outfits favoritos a la hora de encarar tu rutina.', 39999, 10, 1),
 --        (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15799, 10, 1);
-
 
 -- INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion)
 -- VALUES        (11, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw644f9fdd/products/PU657534-01/PU657534-01-1.JPG', 'Individual Rise Hombre'),
@@ -246,3 +250,23 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
 --        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw8be6443b/products/ADGT0168/ADGT0168-1.JPG', 'Pantalon adidas Mat Pt'),
 --        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw4b603f6b/products/ADGT0168/ADGT0168-2.JPG', 'Pantalon adidas Mat Pt'),
 --        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwaea7c3d2/products/ADGT0168/ADGT0168-3.JPG', 'Pantalon adidas Mat Pt');
+
+
+
+-- REGISTROS NUEVOS 15/06
+
+-- INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion)
+-- VALUES (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
+--        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwcfa4c7bc/products/COD5602401/COD5602401-2.JPG', 'Remera Converse Laces'),
+--        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw1647078d/products/COD5602401/COD5602401-3.JPG', 'Remera Converse Laces'),
+--        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
+--        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
+--        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw5b14c102/products/COD5602401/COD5602401-5.JPG', 'Remera Converse Laces'),
+
+--        (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw67fd9607/products/NI_DH5111-100/NI_DH5111-100-1.JPG', 'Air Max Pre-Day Se');
+
+
+-- INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado)
+-- VALUES (4, 2, 'R005', 'Remera Converse Laces', 'Adecuada para todo el día', 13499, 10, 1);
+
+-- delete from Categorias where Nombre = 'Zapatos'

@@ -20,7 +20,7 @@
 
 
         <%--NAVBAR--%>
-        <nav class="navbar bg-body-tertiary">
+        <nav class="navbar bg-dark border-bottom border-bottom-dark sticky-top" data-bs-theme="dark">
             <div class="container-fluid">
 
                 <%--BOTON MENU--%>
@@ -31,7 +31,7 @@
                 <%--LISTA DESPLEGABLE--%>
                 <div class="ml-auto ms-3">
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Una categoria</a></li>
                             <li><a class="dropdown-item" href="#">Otra categoria</a></li>
@@ -49,14 +49,15 @@
                 </div>
 
                 <%--LOGO--%>
-                <a class="navbar-brand mx-auto" href="#">
-                    <img class="mx-auto" src="https://www.pngall.com/wp-content/uploads/2016/07/Online-Shopping-PNG-Clipart.png" alt="Logo" style="max-width: 80px; height: auto;">
-                    <h1= class="">E-12 STORE</h1>
+                <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
+                    <%--<img class="me-2" src="https://www.pngall.com/wp-content/uploads/2016/07/Online-Shopping-PNG-Clipart.png" alt="Logo" style="max-width: 80px; height: auto;">--%>
+                    <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
 
                 <%--BOTON CARRITO--%>
                 <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
                     <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
+                    <span class="badge rounded-pill bg-danger text-white ms-1"><%--<%# ObtenerCantidadCarrito() %>--%>1</span>
                 </button>
 
                 <%--PANEL CARRITO--%>
@@ -79,7 +80,9 @@
                         <h5 class="offcanvas-title text-light" id="offcanvasDarkNavbarLabel">E-COMMERCE</h5>
                         <hr />
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="Index.aspx">Inicio</a>
+                            </li> 
                             <li class="nav-item dropdown ">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">MARCAS</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
@@ -101,6 +104,12 @@
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
+                            </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
                             </li>
                         </ul>
                     </div>
