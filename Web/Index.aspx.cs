@@ -33,18 +33,25 @@ namespace Web
         {
             if (!IsPostBack)
             {
-                productosCards = productoNegocio.ProductosAlAzar(6);
-                //Session.Add("ProductosCards", productosCards);
-                rptProductos.DataSource = productosCards;
-                rptProductos.DataBind();
-
+                // Imagenes para Banner Principal
                 imagenesSlider = imagenNegocio.ImagenesAlAzar(8);
                 rptSlider.DataSource = imagenesSlider;
                 rptSlider.DataBind();
 
-                categoriasRandom = categoriaNegocio.CategoriasRandom(5);
+                // Productos para Cards
+                productosCards = productoNegocio.ProductosAlAzar(6);
+                rptProductos.DataSource = productosCards;
+                rptProductos.DataBind();
+
+                //Categorias para Cards
+                categoriasRandom = categoriaNegocio.CategoriasRandom(4);
                 rptCategorias.DataSource = categoriasRandom;
                 rptCategorias.DataBind();
+
+                //Marcas para Cards
+                marcasRandom = marcaNegocio.MarcasRandom(4);
+                rptMarcas.DataSource = marcasRandom;
+                rptMarcas.DataBind();
 
             }
 

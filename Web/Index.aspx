@@ -48,16 +48,10 @@
             </div>
         </div>
 
+         <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
 
-        <div class="mt-5 text-light text-center">
-        </div>
-
-
-
-
+        <%--CARDS PRODUCTOS--%>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-            <%--CARDS PRODUCTOS--%>
             <asp:Repeater ID="rptProductos" runat="server">
                 <ItemTemplate>
                     <div class="col card-custom">
@@ -75,19 +69,20 @@
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
-
         </div>
 
+         <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
+
         <%--CARDS CATEGORIAS--%>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-4">
+        <div class="row row-cols-4">
             <asp:Repeater ID="rptCategorias" runat="server">
                 <ItemTemplate>
                     <div class="col card-custom">
-                        <div class="card card-category">
+                        <div class="card mw-100 card-custom-img">
                             <div class="card-custom-img">
                                 <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Categoria)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
                                 <div class="card-text">
-                                    <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre %></h4>
+                                    <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
                                 </div>
                             </div>
                         </div>
@@ -95,6 +90,27 @@
                 </ItemTemplate>
             </asp:Repeater>
         </div>
+         <%--CARDS MARCAS--%>
+        <div class="row row-cols-4">
+            <asp:Repeater ID="rptMarcas" runat="server">
+                <ItemTemplate>
+                    <div class="col card-custom">
+                        <div class="card mw-100 card-custom-img">
+                            <div class="card-custom-img">
+                                <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                <div class="card-text">
+                                    <h4 class="card-title"><%# ((Dominio.Marca)Container.DataItem).Nombre.ToUpper() %></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+
+
+
+        <div class="mb-4"></div> <!-- Márgen inferior entre secciones -->
 
 
       
