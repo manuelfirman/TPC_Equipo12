@@ -11,15 +11,22 @@ namespace Web
 {
     public partial class Index : System.Web.UI.Page
     {
+        private ProductoNegocio productoNegocio { get; set; }
+        private ImagenNegocio imagenNegocio { get; set; }
+        private CategoriaNegocio categoriaNegocio { get; set; }
+        private MarcaNegocio marcaNegocio { get; set; }
+
         private List<Producto> productosCards { get; set; }
-        ProductoNegocio productoNegocio { get; set; }
         private List<Imagen> imagenesSlider { get; set; }
-        ImagenNegocio imagenNegocio { get; set; }
+        private List<Categoria> categoriasRandom { get; set; }
+        private List<Marca> marcasRandom { get; set; }
 
         public Index()
         {
             productoNegocio = new ProductoNegocio(); 
             imagenNegocio = new ImagenNegocio();
+            categoriaNegocio = new CategoriaNegocio();
+            marcaNegocio = new MarcaNegocio();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -28,7 +35,6 @@ namespace Web
             {
                 productosCards = productoNegocio.ProductosAlAzar(6);
                 //Session.Add("ProductosCards", productosCards);
-
                 rptProductos.DataSource = productosCards;
                 rptProductos.DataBind();
 
@@ -36,7 +42,10 @@ namespace Web
                 rptSlider.DataSource = imagenesSlider;
                 rptSlider.DataBind();
 
-             
+                categoriasRandom = categoriaNegocio.CategoriasRandom(5);
+                rptCategorias.DataSource = categoriasRandom;
+                rptCategorias.DataBind();
+
             }
 
             //productosCards = (List<Producto>)Session["ProductosCards"];
@@ -57,6 +66,23 @@ namespace Web
             }
 
             return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+        }
+
+        public string cargarImagenRandomCategoria(string categoria)
+        {
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            List<Imagen> imagenes = imagenNegocio.ImagenesRandomPorCategoria(1, categoria);
+            if(imagenes.Count  == 0) return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+
+            return imagenes.FirstOrDefault().Url;
+        }
+
+        public string cargarImagenRandomMarca(string marca)
+        {
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            List<Imagen> imagen = new List<Imagen>();
+            imagen = imagenNegocio.ImagenesRandomPorCategoria(1, marca);
+            return imagen.FirstOrDefault().Url;
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)

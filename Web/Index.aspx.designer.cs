@@ -24,15 +24,6 @@ namespace Web
         protected global::System.Web.UI.WebControls.Repeater rptSlider;
 
         /// <summary>
-        /// Control llbTitulo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label llbTitulo;
-
-        /// <summary>
         /// Control rptProductos.
         /// </summary>
         /// <remarks>
@@ -40,5 +31,14 @@ namespace Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptProductos;
+
+        /// <summary>
+        /// Control rptCategorias.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptCategorias;
     }
 }

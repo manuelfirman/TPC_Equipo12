@@ -49,6 +49,7 @@
     <Compile Include="Carrito.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Domicilio.cs" />
+    <Compile Include="ElementoCarrito.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="Producto.cs" />

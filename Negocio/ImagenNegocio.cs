@@ -177,5 +177,71 @@ namespace Negocio
                 database.Close();
             }
         }
+
+        public List<Imagen> ImagenesRandomPorCategoria(int cantidad, string categoria)
+        {
+            NegocioDB database = new NegocioDB();
+            List<Imagen> lista = new List<Imagen>();
+            try
+            {
+                database.StoreProcedure("SP_ImagenesRandomPorCategoria");
+                database.SetParam("@Cantidad", cantidad);
+                database.SetParam("@Categoria", categoria);
+                database.Read();
+                while (database.Reader.Read())
+                {
+                    Imagen imagen = new Imagen();
+                    if (!(database.Reader["ID_Producto"] is DBNull)) imagen.IDProducto = (int)database.Reader["ID_Producto"];
+                    if (!(database.Reader["ID_Imagen"] is DBNull)) imagen.IDImagen = (int)database.Reader["ID_Imagen"];
+                    if (!(database.Reader["ImagenURL"] is DBNull)) imagen.Url = (string)database.Reader["ImagenURL"];
+                    if (!(database.Reader["Descripcion"] is DBNull)) imagen.Descripcion = (string)database.Reader["Descripcion"];
+
+                    lista.Add(imagen);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                database.Close();
+            }
+        }
+
+        public List<Imagen> ImagenesRandomPorMarca(int cantidad, string marca)
+        {
+            NegocioDB database = new NegocioDB();
+            List<Imagen> lista = new List<Imagen>();
+            try
+            {
+                database.StoreProcedure("SP_ImagenesRandomPorMarca");
+                database.SetParam("@Cantidad", cantidad);
+                database.SetParam("@Marca", marca);
+                database.Read();
+                while (database.Reader.Read())
+                {
+                    Imagen imagen = new Imagen();
+                    if (!(database.Reader["ID_Producto"] is DBNull)) imagen.IDProducto = (int)database.Reader["ID_Producto"];
+                    if (!(database.Reader["ID_Imagen"] is DBNull)) imagen.IDImagen = (int)database.Reader["ID_Imagen"];
+                    if (!(database.Reader["ImagenURL"] is DBNull)) imagen.Url = (string)database.Reader["ImagenURL"];
+                    if (!(database.Reader["Descripcion"] is DBNull)) imagen.Descripcion = (string)database.Reader["Descripcion"];
+
+                    lista.Add(imagen);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                database.Close();
+            }
+        }
     }
 }
