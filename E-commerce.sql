@@ -208,4 +208,17 @@ BEGIN
     FROM Categorias C
     ORDER BY NEWID()
 END
+GO
+CREATE PROCEDURE SP_ListarCategorias
+AS
+BEGIN
+    SELECT C.ID_Categoria, C.Nombre, C.Estado FROM Categorias AS C
+END
 
+GO
+
+CREATE PROCEDURE SP_ListarMarcas 
+AS
+BEGIN
+    SELECT M.Estado, M.Nombre, M.ID_Marca FROM Marcas AS M
+END
