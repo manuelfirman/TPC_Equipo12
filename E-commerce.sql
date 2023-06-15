@@ -185,7 +185,7 @@ BEGIN
     FROM Imagenes I
     INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    WHERE M.Nombre = 'Nike'
+    WHERE M.Nombre = @Marca
     ORDER BY NEWID()
 END
 GO
