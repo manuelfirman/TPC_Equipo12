@@ -4,9 +4,23 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        .section {
-            margin-bottom: 3rem; /* Ajusta el valor según tu preferencia */
+        .section { <%-- pasar a .css --%>
+            margin-bottom: 3rem;
             padding: 1rem;
+        }
+
+        .section-productos {
+            margin-top: 10rem;
+            margin-bottom: 10rem;
+        }
+
+        .section-categorias {
+            margin-bottom: 10rem;
+        }
+
+        .section-marcas {
+            margin-top: 10rem;
+            margin-bottom: 10rem;
         }
 
         .card-custom {
@@ -22,12 +36,17 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
+        .titulo {
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            color: #fff;
+        }
     </style>
+
     <%--INICIO MAIN--%>
     <main>
 
         <%--BANNER SLIDER--%>
-        <section class="section">
+        <section>
             <div class="container-fluid" style="margin: 0; padding: 0">
                 <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -36,7 +55,7 @@
                                 <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>" style="height: 100vh; margin-top: -7vh;">
                                     <img src="<%# Eval("Url") %>" class="d-block w-100 img-fluid" alt="<%# Eval("Descripcion") %>">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h3><%# Eval("Descripcion") %></h3>
+                                        <h2 class="titulo text-center letter-spacing display-1 text-light fw-bold"><%# Eval("Descripcion").ToString().ToUpper() %></h2>
                                         <p><%# Eval("Descripcion") %></p>
                                     </div>
                                 </div>
@@ -55,11 +74,15 @@
             </div>
         </section>
 
-         <div class="container mt-4 mb-4"></div>
 
         <%--CARDS PRODUCTOS--%>
-        <section class="section">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <section class="section-productos">
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title display-4 text-center text-muted letter-spacing">NOVEDADES</h2>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4">
                 <asp:Repeater ID="rptProductos" runat="server">
                     <ItemTemplate>
                         <div class="col card-custom">
@@ -70,7 +93,7 @@
                             </div>
                             <div class="card-description text-start text-dark">
                                 <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
-                                <p class="text-muted small">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
+                                <p class="card-text text-muted">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
                                 <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>
 
                             </div>
@@ -80,11 +103,16 @@
             </div>
         </section>
 
-         <div class="container mt-4 mb-4"></div>
+
 
         <%--CARDS CATEGORIAS--%>
-        <section class="section">
-            <div class="row row-cols-4">
+        <section class="section section-categorias">
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title display-4 text-center text-muted letter-spacing">ELEGÍ LO QUE TE GUSTA</h2>
+                </div>
+            </div>
+            <div class="row row-cols-8">
                 <asp:Repeater ID="rptCategorias" runat="server">
                     <ItemTemplate>
                         <div class="col card-custom">
@@ -101,8 +129,16 @@
                 </asp:Repeater>
             </div>
         </section>
-            <%--CARDS MARCAS--%>
-        <section class="section">
+
+
+
+        <%--CARDS MARCAS--%>
+        <section class="section section-marcas">
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title display-4 text-center text-muted letter-spacing">NUESTRAS MARCAS</h2>
+                </div>
+            </div>
             <div class="row row-cols-4">
                 <asp:Repeater ID="rptMarcas" runat="server">
                     <ItemTemplate>
@@ -120,14 +156,6 @@
                 </asp:Repeater>
             </div>
         </section>
-        
-
-
-
-       <div class="container mt-4 mb-4"></div>
-
-
-      
 
 
 
