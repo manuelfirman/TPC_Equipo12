@@ -39,7 +39,7 @@ namespace Web
                 rptSlider.DataBind();
 
                 // Productos para Cards
-                productosCards = productoNegocio.ProductosAlAzar(6);
+                productosCards = productoNegocio.ProductosAlAzar(10);
                 rptProductos.DataSource = productosCards;
                 rptProductos.DataBind();
 
@@ -87,9 +87,10 @@ namespace Web
         public string cargarImagenRandomMarca(string marca)
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
-            List<Imagen> imagen = new List<Imagen>();
-            imagen = imagenNegocio.ImagenesRandomPorCategoria(1, marca);
-            return imagen.FirstOrDefault().Url;
+            List<Imagen> imagenes = imagenNegocio.ImagenesRandomPorMarca(1, marca);
+            if (imagenes.Count == 0) return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+
+            return imagenes.FirstOrDefault().Url;
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
