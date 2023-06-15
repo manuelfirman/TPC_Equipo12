@@ -81,9 +81,12 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="CrearCuenta.aspx" />
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="Filtro.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Index.aspx" />
+    <Content Include="Ingresar.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -101,12 +104,26 @@
     <Compile Include="Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CrearCuenta.aspx.cs">
+      <DependentUpon>CrearCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CrearCuenta.aspx.designer.cs">
+      <DependentUpon>CrearCuenta.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DetalleProducto.aspx.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Filtro.aspx.cs">
+      <DependentUpon>Filtro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Filtro.aspx.designer.cs">
+      <DependentUpon>Filtro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -117,6 +134,13 @@
     </Compile>
     <Compile Include="Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ingresar.aspx.cs">
+      <DependentUpon>Ingresar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ingresar.aspx.designer.cs">
+      <DependentUpon>Ingresar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master.Master.cs">
       <DependentUpon>Master.Master</DependentUpon>

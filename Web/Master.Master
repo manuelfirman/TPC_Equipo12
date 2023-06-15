@@ -49,7 +49,7 @@
                 </div>
 
                 <%--LOGO--%>
-                <a class="navbar-brand mx-auto" href="#">
+                <a class="navbar-brand mx-auto" href="Index.aspx">
                     <img class="mx-auto" src="https://www.pngall.com/wp-content/uploads/2016/07/Online-Shopping-PNG-Clipart.png" alt="Logo" style="max-width: 80px; height: auto;">
                     <h1= class="">E-12 STORE</h1>
                 </a>
@@ -79,7 +79,9 @@
                         <h5 class="offcanvas-title text-light" id="offcanvasDarkNavbarLabel">E-COMMERCE</h5>
                         <hr />
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="Index.aspx">Inicio</a>
+                            </li> 
                             <li class="nav-item dropdown ">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">MARCAS</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
@@ -101,6 +103,12 @@
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
+                            </li>   
+                            <li class="nav-item">
+                                <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
                             </li>
                         </ul>
                     </div>
