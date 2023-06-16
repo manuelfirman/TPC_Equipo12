@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -11,50 +12,45 @@ namespace Web
 {
     public partial class DetalleProducto : System.Web.UI.Page
     {
-        private List<Producto> productos {  get; set; }
+    
         private int indice { get; set; }
         private bool hayParam { get; set; }
-        private Producto producto { get; set; }
+        public Producto producto { get; set; }
+        private ProductoNegocio productoNegocio { get; set; }
+
+        public DetalleProducto()
+        {
+            productoNegocio = new ProductoNegocio();
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            hayParam = false;
             if (!IsPostBack)
             {
                 if (Request.QueryString["id"] != null)
                 {
-                    productos = (List<Producto>)Session["ListaProductos"];
-                    int parametro = int.Parse(Request.QueryString["id"]);
-                    indice = 0;
-                    foreach (var producto in productos)
-                    {
+                    int IDProducto = int.Parse(Request.QueryString["id"]);
+                    producto = productoNegocio.ProductoPorID(IDProducto);
+                    //Session.Add("producto", producto);
+                    rptImagenes.DataSource = producto.Imagenes;
+                    rptImagenes.DataBind();
 
-                        if (producto.IDProducto == parametro)
-                        {
-                            hayParam = true;
-                            Session.Add("Producto", producto);
-                            break;
-                        }
-                        indice++;
-                    }
 
                 }
                 else
                 {
+                    // TODO: REDIRECT PAGINA 404
                     lblError.Text = "NO SE RECIBIO NINGUN ARTICULO";
                 }
             }
-            else
-            {
-                hayParam = true;
-            }
 
-            if (hayParam)
+            if (producto != null)
             {
                 cargarProducto();
             }
             else
             {
+                // TODO: REDIRECT PAGINA 404
                 lblError.Text = "NO EXISTE PRODUCTO CON ESE ID";
             }
         }
@@ -63,5 +59,16 @@ namespace Web
         {
 
         }
+
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnComprarAhora_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -83,7 +83,7 @@ GO
 CREATE PROCEDURE SP_ListarTodosLosProductos -- TODOS LOS PRODUCTOS
 AS
 BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
     FROM Productos P 
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
@@ -95,7 +95,7 @@ CREATE PROCEDURE SP_ProductosPorCategoria( -- PRODUCTOS POR CATEGORIA
 )
 AS
 BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
     FROM Productos P 
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
@@ -108,7 +108,7 @@ CREATE PROCEDURE SP_ProductosPorMarca( -- PRODUCTOS POR  MARCA
 )
 AS
 BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
     FROM Productos P 
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
@@ -122,7 +122,7 @@ CREATE PROCEDURE SP_ProductosPorCategoriaMarca( -- PRODUCTOS POR CATEGORIA Y MAR
 )
 AS
 BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
     FROM Productos P 
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
@@ -135,13 +135,25 @@ CREATE PROCEDURE SP_ProductosAlAzar( -- PRODUCTOS AL AZAR
 )
 AS
 BEGIN
-    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado
+    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
     FROM Productos P 
     INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
     INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
     ORDER BY NEWID()
 END
 
+GO
+CREATE PROCEDURE SP_ProductoPorID( -- PRODUCTO POR ID
+    @IDProducto int
+)
+AS
+BEGIN
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
+    FROM Productos P 
+    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
+    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+    WHERE P.ID_Producto = @IDProducto
+END
 
 ------------------------------
 ---------- IMAGENES ----------
