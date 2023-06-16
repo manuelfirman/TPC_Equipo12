@@ -242,3 +242,5 @@ BEGIN
     SELECT @IDImagen = ID_Imagen FROM deleted
     UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
 END
+
+exec SP_ListarTodosLosProductos
