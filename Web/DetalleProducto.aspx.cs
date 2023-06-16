@@ -34,6 +34,12 @@ namespace Web
                     //Session.Add("producto", producto);
                     rptImagenes.DataSource = producto.Imagenes;
                     rptImagenes.DataBind();
+                    rptMiniaturas.DataSource = producto.Imagenes;
+                    rptMiniaturas.DataBind();
+
+                    List<Producto> comments = productoNegocio.ProductosAlAzar(4);
+                    rptComments.DataSource = comments;
+                    rptComments.DataBind();
 
 
                 }

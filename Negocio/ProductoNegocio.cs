@@ -87,7 +87,7 @@ namespace Negocio
                     if (!(database.Reader["Stock"] is DBNull)) auxProducto.Stock = (int)database.Reader["Stock"];
                     if (!(database.Reader["Estado"] is DBNull)) auxProducto.Estado = (bool)database.Reader["Estado"];
                     if (!(database.Reader["Precio"] is DBNull)) auxProducto.Precio = (decimal)database.Reader["Precio"];
-                    auxProducto.Precio = Math.Round(auxProducto.Precio);
+                    auxProducto.Precio = Math.Round(auxProducto.Precio, 2);
 
                     ImagenNegocio imagenNegocio = new ImagenNegocio();
                     auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);

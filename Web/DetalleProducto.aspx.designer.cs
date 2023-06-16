@@ -24,6 +24,15 @@ namespace Web
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
+        /// Control rptMiniaturas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptMiniaturas;
+
+        /// <summary>
         /// Control rptImagenes.
         /// </summary>
         /// <remarks>
@@ -33,12 +42,21 @@ namespace Web
         protected global::System.Web.UI.WebControls.Repeater rptImagenes;
 
         /// <summary>
-        /// Control Button1.
+        /// Control rptComments.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Repeater rptComments;
+
+        /// <summary>
+        /// Control txtComment.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtComment;
     }
 }
