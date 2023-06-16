@@ -1,11 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Web.Index" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        .section { <%-- pasar a .css --%>
-            margin-bottom: 3rem;
+        .section {
+            <%-- pasar a .css --%> margin-bottom: 3rem;
             padding: 1rem;
         }
 
@@ -117,11 +117,12 @@
                     <ItemTemplate>
                         <div class="col card-custom">
                             <div class="card mw-100 card-custom-img">
-                                <div class="card-custom-img">
+                                <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Categoria">
                                     <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Categoria)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
-                                    <div class="card-text">
-                                        <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
-                                    </div>
+                                </a>
+
+                                <div class="card-text">
+                                    <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +146,9 @@
                         <div class="col card-custom">
                             <div class="card mw-100 card-custom-img">
                                 <div class="card-custom-img">
-                                    <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Marca">
+                                         <asp:Image CssClass="card-img-top" ID="imgMarca" runat="server" ImageUrl="<%# cargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    </a>
                                     <div class="card-text">
                                         <h4 class="card-title"><%# ((Dominio.Marca)Container.DataItem).Nombre.ToUpper() %></h4>
                                     </div>
