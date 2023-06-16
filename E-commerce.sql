@@ -90,7 +90,7 @@ CREATE TABLE Usuarios (
     Estado BIT NULL DEFAULT 1,
 )
 GO
-CREATE TABLE Imagenes(
+CREATE TABLE Imagenes (
     ID_Imagen BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Producto BIGINT NOT NULL FOREIGN KEY REFERENCES Productos(ID_Producto),
     ImagenURL VARCHAR(1000) NOT NULL,
@@ -98,6 +98,13 @@ CREATE TABLE Imagenes(
     Estado BIT NULL DEFAULT 1,
 )
 GO
+CREATE TABLE Comentarios (
+    ID_Comentario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_Producto BIGINT NOT NULL FOREIGN KEY REFERENCES Productos (ID_Producto),
+    ID_Usuario BIGINT NOT NULL FOREIGN KEY REFERENCES Usuarios (ID_Usuario),
+    Comentario VARCHAR(150) NOT NULL,
+    Estado BIT NULL DEFAULT 1
+)
 
 
 ----------------------------------------------------------------------------------
