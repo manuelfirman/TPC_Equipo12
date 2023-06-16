@@ -82,8 +82,8 @@ VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo runni
 
        (2, 5, 'P001', 'Pantalon Puma Classics', 'Ir a correr una mañana fresca o estar relajada en casa, siempre será mejor con el Pantalón Puma Classics Mujer. Una prenda suave, liviana y cómoda que costará sacar al momento de ir a la oficina. Con un diseño relajado y puños que liberan tus movimientos y evitan la entrada de frío. Una cintura elástica se mueve con vos alejando las incomodidades de tu cuerpo. Con el logo Puma en el frente que es el detalle de calidad que elegís vestir.', 27399, 10, 1),
        (2, 8, 'P002', 'Pantalón adidas Adicolor', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda; lleva el Pantalón adidas Adicolor y no dejes que te falte una prenda que resalta cualquier look que elijas. Está elaborado en algodón y poliéster para brindarle suavidad y durabilidad. Sus bolsillos son prácticos, para llevar todo lo que necesites con vos, y el diseño liso te permite combinarlo con todos tus outfits favoritos a la hora de encarar tu rutina.', 39999, 10, 1),
-       (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15799, 10, 1);
-
+       (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15799, 10, 1),
+        (4, 2, 'R005', 'Remera Converse Laces', 'Adecuada para todo el día', 13499, 10, 1);
 
 -- IMAGENES
 INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion)
@@ -186,8 +186,7 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw8be6443b/products/ADGT0168/ADGT0168-1.JPG', 'Pantalon adidas Mat Pt'),
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw4b603f6b/products/ADGT0168/ADGT0168-2.JPG', 'Pantalon adidas Mat Pt'),
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwaea7c3d2/products/ADGT0168/ADGT0168-3.JPG', 'Pantalon adidas Mat Pt'),
-
-       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
+        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwcfa4c7bc/products/COD5602401/COD5602401-2.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw1647078d/products/COD5602401/COD5602401-3.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),

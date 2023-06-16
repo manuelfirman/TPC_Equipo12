@@ -176,7 +176,31 @@ namespace Negocio
             }
         }
 
+                ImagenNegocio imagenNegocio = new ImagenNegocio();
+                auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
 
+
+                if (!(database.Reader["IDMarca"] is DBNull))
+                {
+                    auxProducto.Marca = new Marca();
+                    auxProducto.Marca.Nombre = (string)database.Reader["Marca"];
+                    auxProducto.Marca.IDMarca = (int)database.Reader["IDMarca"];
+                }
+
+                if (!(database.Reader["IDCategoria"] is DBNull))
+                {
+                    auxProducto.Categoria = new Categoria();
+                    auxProducto.Categoria.Nombre = (string)database.Reader["Categoria"];
+                    auxProducto.Categoria.IDCategoria = (int)database.Reader["IDCategoria"];
+                }
+
+                lista.Add(auxProducto);
+            }
+
+
+            return lista;
+        
+       }
 
     } 
 }
