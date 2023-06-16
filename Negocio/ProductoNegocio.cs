@@ -176,6 +176,33 @@ namespace Negocio
             }
         }
 
+        public List<Producto> listarPorTipo(string nombre, string tipo)
+        {
+            NegocioDB database = new NegocioDB();
+            List<Producto> lista = new List<Producto>();
+            if (tipo == "Marca")
+            {
+                database.StoreProcedure("SP_ProductosPorMarca");
+                database.SetParam("@Marca", nombre);
+            }
+            else
+            {
+                database.StoreProcedure("SP_ProductosPorCategoria");
+                database.SetParam("@Categoria", nombre);
+            }
+            database.Read();
+            while (database.Reader.Read())
+            {
+                Producto auxProducto = new Producto();
+
+                int IDProducto = (int)database.Reader["IDProducto"];
+                auxProducto.IDProducto = IDProducto;
+                if (!(database.Reader["Codigo"] is DBNull)) auxProducto.Codigo = (string)database.Reader["Codigo"];
+                if (!(database.Reader["Nombre"] is DBNull)) auxProducto.Nombre = (string)database.Reader["Nombre"];
+                if (!(database.Reader["Descripcion"] is DBNull)) auxProducto.Descripcion = (string)database.Reader["Descripcion"];
+                if (!(database.Reader["Precio"] is DBNull)) auxProducto.Precio = (decimal)database.Reader["Precio"];
+                auxProducto.Precio = Math.Round(auxProducto.Precio);
+
                 ImagenNegocio imagenNegocio = new ImagenNegocio();
                 auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
 
@@ -199,9 +226,8 @@ namespace Negocio
 
 
             return lista;
-        
-       }
 
-    } 
+        }
+    }
 }
 
