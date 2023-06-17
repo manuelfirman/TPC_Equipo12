@@ -47,7 +47,7 @@
                         </div>
                     </div>
 
-                    <!-- Imagen principal -->
+                    <!-- IMAGEN PRINCIPAL -->
                     <div class="col-md-6">
                         <div id="carouselProducto" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
@@ -88,9 +88,13 @@
                                 </div>
                                 <!-- Info producto -->
                                 <div class="card-body">
-                                    <p class="letter-spacing display-4 text-success text-opacity-75 fw-lighter">$<%= producto.Precio %></p>
+                                    <p class="letter-spacing display-4 text-success text-opacity-75 fw-lighter">$<%= Math.Round(producto.Precio, 2) %></p>
                                     <p class="text-muted ms-4">o 12 cuotas de $<%= Math.Round(((producto.Precio / 12) * (decimal)1.15), 2) %></p>
                                 </div>
+                                <div class="card-body">
+                                    <asp:Button ID="btnAgregarCarrito" CssClass="btn btn-outline-info" runat="server" Text="Me lo llevo!" />
+                                </div>
+
                                 <div class="card-body product-info mb-3">
                                     <p class="card-text"><span class="fw-bold">Disponibilidad:</span> <%= producto.Stock %> unidades</p>
                                 </div>
@@ -149,13 +153,13 @@
 
             <!-- COMENTARIOS -->
             <div class="container-fluid my-4">
-                <div class="row">
+                <div class="row mx-3">
                     <div class="col-md-12">
                         <h3>Comentarios</h3>
                         <div class="card-body">
                             <asp:Repeater ID="rptComments" runat="server">
                                 <ItemTemplate>
-                                    <div class="bg-dark bg-opacity-25">
+                                    <div class="bg-success bg-opacity-10">
                                         <h5><%# Eval("Nombre") %></h5>
                                         <p><%# Eval("Descripcion") %></p>
                                     </div>
@@ -172,17 +176,46 @@
                     </div>
                 </div>
             </div>
+        </section>
+        <div class="row my-5"></div>
+        
+        <!--CARDS PRODUCTOS SUGERIDOS-->
+        <section class="container section-productos">
+            <div class="row">
+                <div class="col">
+                    <h2 class="section-title display-4 text-center text-muted letter-spacing">Otras sugerencias para vos</h2>
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                <asp:Repeater ID="rptProductos" runat="server">
+                    <ItemTemplate>
+                        <div class="col card-custom">
+                            <div class="card mw-100 card-custom-img">
+                                <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
+                                    <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#CargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                </a>
+                            </div>
+                            <div class="card-description text-center text-dark">
+                                <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
+                                <p class="card-text text-muted">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
+                                <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>
 
+                            </div>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
 
+            <div class="row my-5"></div>
         </section>
 
 
-        <!-- Modal de imagen -->
+        <!-- MODAL DE IMAGEN -->
         <div class="modal fade" id="modalImagen" tabindex="-1" aria-labelledby="modalImagenLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <img id="imgModal" class="d-block mx-auto img-fluid" />
+                        <img id="imgModal" src="/" class="d-block mx-auto img-fluid" />
                     </div>
                 </div>
             </div>

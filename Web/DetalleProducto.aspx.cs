@@ -31,11 +31,13 @@ namespace Web
                 {
                     int IDProducto = int.Parse(Request.QueryString["id"]);
                     producto = productoNegocio.ProductoPorID(IDProducto);
-                    //Session.Add("producto", producto);
+                    Session.Add("producto", producto);
                     rptImagenes.DataSource = producto.Imagenes;
                     rptImagenes.DataBind();
                     rptMiniaturas.DataSource = producto.Imagenes;
                     rptMiniaturas.DataBind();
+                    rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
+                    rptProductos.DataBind();
 
                     List<Producto> comments = productoNegocio.ProductosAlAzar(4);
                     rptComments.DataSource = comments;
@@ -74,6 +76,23 @@ namespace Web
         protected void btnComprarAhora_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public string CargarImagen(object dataItem)
+        {
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            Producto producto = (Producto)dataItem;
+
+            if (producto != null & producto.Imagenes != null & producto.Imagenes.Count > 0)
+            {
+                string url = producto.Imagenes.FirstOrDefault().Url;
+                if (imagenNegocio.VerificarUrlImagen(url))
+                {
+                    return url;
+                }
+            }
+
+            return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
         }
 
     }

@@ -44,14 +44,6 @@ CREATE TABLE EstadoVenta(
 	Estado VARCHAR(100) NOT NULL,
 )
 GO
-CREATE TABLE Ventas (
-    ID_Venta BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    ID_Factura BIGINT NOT NULL FOREIGN KEY REFERENCES Facturas (ID_Factura),
-    ID_Usuario BIGINT NOT NULL FOREIGN KEY REFERENCES Usuarios (ID_Usuario),
-    ID_Estado BIGINT NOT NULL FOREIGN KEY REFERENCES EstadoVenta (ID_Estado),
-    Fecha DATETIME DEFAULT GETDATE()
-)
-GO
 CREATE TABLE TipoUsuario (
     ID_Tipo BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(20) NOT NULL
@@ -90,6 +82,14 @@ CREATE TABLE Usuarios (
     Estado BIT NULL DEFAULT 1,
 )
 GO
+CREATE TABLE Ventas (
+    ID_Venta BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_Factura BIGINT NOT NULL FOREIGN KEY REFERENCES Facturas (ID_Factura),
+    ID_Usuario BIGINT NOT NULL FOREIGN KEY REFERENCES Usuarios (ID_Usuario),
+    ID_Estado BIGINT NOT NULL FOREIGN KEY REFERENCES EstadoVenta (ID_Estado),
+    Fecha DATETIME DEFAULT GETDATE()
+)
+GO
 CREATE TABLE Imagenes (
     ID_Imagen BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Producto BIGINT NOT NULL FOREIGN KEY REFERENCES Productos(ID_Producto),
@@ -107,8 +107,26 @@ CREATE TABLE Comentarios (
 )
 
 
+
 ----------------------------------------------------------------------------------
 ------------------------- ***** STORED PROCEDURES **** ---------------------------
+
+---------------------------------
+---------- USUARIOS ------------
+GO
+CREATE PROCEDURE SP_UsuarioPorID(
+    @IDUsuario BIGINT
+)
+AS
+BEGIN
+    SELECT ID_Usuario, ID_TipoUsuario, TU.Nombre as TipoUsuario, Dni, U.Nombre, Apellido, Email, Telefono, FechaNacimiento, U.Estado,
+    D.ID_Domicilio, D.ID_Provincia as ID_Provincia, P.Nombre as Provincia, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado as EstadoDomicilio
+    FROM Usuarios U
+    INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo
+    INNER JOIN Domicilios D ON U.ID_Domicilio = D.ID_Domicilio
+    INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia
+    WHERE ID_Usuario = @IDUsuario
+END
 
 ---------------------------------
 ---------- PRODUCTOS ------------
@@ -190,6 +208,7 @@ END
 
 ------------------------------
 ---------- IMAGENES ----------
+
 GO
 CREATE PROCEDURE SP_ImagenesAlAzar( -- IMAGENES AL AZAR
     @Cantidad int

@@ -9,7 +9,7 @@ namespace Negocio
 {
     public class MarcaNegocio
     {
-        public List<Marca> listarMarcas()
+        public List<Marca> ListarMarcas()
         {
             NegocioDB db = new NegocioDB();
             List<Marca> marcas = new List<Marca>();
@@ -22,7 +22,7 @@ namespace Negocio
 
                 if (!(db.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)db.Reader["Nombre"];
                 if (!(db.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)db.Reader["Estado"];
-                if (!(db.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (int)db.Reader["ID_Marca"];
+                if (!(db.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (long)db.Reader["ID_Marca"];
                 marcas.Add(auxMarca);
             }
 
@@ -42,7 +42,7 @@ namespace Negocio
                 while (database.Reader.Read())
                 {
                 Marca auxMarca = new Marca();
-                    if (!(database.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (int)database.Reader["ID_Marca"];
+                    if (!(database.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (long)database.Reader["ID_Marca"];
                     if (!(database.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)database.Reader["Nombre"];
                     if (!(database.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)database.Reader["Estado"];
 

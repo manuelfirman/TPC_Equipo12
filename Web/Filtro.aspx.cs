@@ -25,7 +25,7 @@ namespace Web
                     return;
                 }else if (tipo == "Marca" || tipo == "Categoria")
                 {
-                    listaProductos = productoNegocio.listarPorTipo(nombre, tipo);
+                    listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
                     lblTitulo.Text = "Productos para la marca" + tipo;
                     if(listaProductos.Count == 0)
                     {

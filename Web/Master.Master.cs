@@ -25,8 +25,8 @@ namespace Web
         {
             if(!IsPostBack)
             {
-                categorias = categoriaNegocio.listarCategoria();
-                marcas = marcaNegocio.listarMarcas();
+                categorias = categoriaNegocio.ListarCategoria();
+                marcas = marcaNegocio.ListarMarcas();
                 repCategorias.DataSource = categorias;
                 repCategorias.DataBind();
 

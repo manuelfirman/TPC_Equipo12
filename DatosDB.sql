@@ -203,11 +203,11 @@ INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Pis
 VALUES (14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
 
 -- USER VENDEDOR
-INSERT INTO Usuario (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
 VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', 'elvendedor1234', '2995123123', GETDATE(), 1);
 
 -- USER COMUN
-INSERT INTO Usuario (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (1, 2, '34986521', 'Juan', 'Perez', 'juanperez@gmail.com', 'juan1234', '2995323232', GETDATE(), 1);
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (1, 2, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', 'juan1234', '2995323232', GETDATE(), 1);
 
 
