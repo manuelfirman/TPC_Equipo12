@@ -3,25 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .thumbnail-gallery {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            max-height: 100%; /* altura maxima galeria de miniaturas */
-            overflow-y: auto; /* desplazamiento vertical si las miniaturas exceden la altura maxima*/
-        }
 
-        .thumbnail-item {
-            margin-bottom: 10px; /* espacio entre miniaturas */
-        }
-
-        .img-thumbnail {
-            max-height: 100px; /* altura máxima para las miniaturas */
-            object-fit: contain; /* ajusta imagen dentro del contenedor */
-        }
-    </style>
-    
     <main>
         <asp:Label ID="lblError" CssClass="h1 d-flex justify-content-center text-white" runat="server" Text=""></asp:Label>
 
@@ -77,7 +59,7 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <h2 class="card-title"><%= producto.Nombre %></h2>
+                                <h2 class="card-title"><%= Producto.Nombre %></h2>
                                 <!-- Calificacion -->
                                 <div class="rating mb-3">
                                     <i class="fa fa-star"></i>
@@ -88,15 +70,15 @@
                                 </div>
                                 <!-- Info producto -->
                                 <div class="card-body">
-                                    <p class="letter-spacing display-4 text-success text-opacity-75 fw-lighter">$<%= Math.Round(producto.Precio, 2) %></p>
-                                    <p class="text-muted ms-4">o 12 cuotas de $<%= Math.Round(((producto.Precio / 12) * (decimal)1.15), 2) %></p>
+                                    <p class="letter-spacing display-4 text-success text-opacity-75 fw-lighter">$<%= Math.Round(Producto.Precio, 2) %></p>
+                                    <p class="text-muted ms-4">o 12 cuotas de $<%= Math.Round(((Producto.Precio / 12) * (decimal)1.15), 2) %></p>
                                 </div>
                                 <div class="card-body">
-                                    <asp:Button ID="btnAgregarCarrito" CssClass="btn btn-outline-info" runat="server" Text="Me lo llevo!" />
+                                    <asp:Button ID="btnAgregarCarrito" CssClass="btn btn-outline-info" OnClick="btnAgregarCarrito_Click"  runat="server" Text="Me lo llevo!" />
                                 </div>
 
                                 <div class="card-body product-info mb-3">
-                                    <p class="card-text"><span class="fw-bold">Disponibilidad:</span> <%= producto.Stock %> unidades</p>
+                                    <p class="card-text"><span class="fw-bold">Disponibilidad:</span> <%= Producto.Stock %> unidades</p>
                                 </div>
                                 <!-- Info envio -->
                                 <div class="card-body shipping-info text-bg-light mb-3">
@@ -129,13 +111,13 @@
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <h5>Descripcion</h5>
-                                        <p><%= producto.Descripcion %></p>
+                                        <p><%= Producto.Descripcion %></p>
                                     </li>
                                     <li class="list-group-item">
                                         <h5>Detalles producto</h5>
-                                        <p>Marca: <%=producto.Marca.Nombre %></p>
-                                        <p>Categoria: <%=producto.Categoria.Nombre %></p>
-                                        <p>Codigo: <%=producto.Codigo %></p>
+                                        <p>Marca: <%=Producto.Marca.Nombre %></p>
+                                        <p>Categoria: <%=Producto.Categoria.Nombre %></p>
+                                        <p>Codigo: <%=Producto.Codigo %></p>
                                     </li>
                                     <li class="list-group-item">
                                         <h5>Característica 3</h5>

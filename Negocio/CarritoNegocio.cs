@@ -9,10 +9,64 @@ namespace Negocio
 {
     public class CarritoNegocio
     {
-        private Carrito carrito;
+        private Carrito Carrito { get; set; } = new Carrito();
 
-        CarritoNegocio() {
-            carrito = new Carrito();
+        public void AgregarProducto(Producto producto, int cantidad)
+        {
+            foreach (ElementoCarrito prod in Carrito.Elementos)
+            {
+                if (producto.IDProducto == prod.Producto.IDProducto)
+                {
+                    prod.Cantidad += cantidad;
+                    return;
+                }
+            }
+
+
+            ElementoCarrito elementoCarrito = new ElementoCarrito();
+            elementoCarrito.Producto = producto;
+            elementoCarrito.Cantidad = cantidad;
+            Carrito.Elementos.Add(elementoCarrito);
+        }
+
+        public void QuitarProducto(long IDProducto)
+        {
+            ElementoCarrito elementoCarrito = Carrito.Elementos.FirstOrDefault(a => a.Producto.IDProducto == IDProducto);
+            if (elementoCarrito != null)
+            {
+                Carrito.Elementos.Remove(elementoCarrito);
+            }
+        }
+
+        public int Cantidad()
+        {
+            return Carrito.Elementos.Count;
+        }
+
+        public List<Producto> Productos()
+        {
+            List<Producto> listaProductos = new List<Producto>();
+            foreach(ElementoCarrito elemento in Carrito.Elementos) 
+            {
+                listaProductos.Add(elemento.Producto);
+            }
+            return listaProductos;
+        }
+
+        public List<ElementoCarrito> Elementos()
+        {
+            return Carrito.Elementos;
+        }
+
+        public decimal PrecioTotal()
+        {
+            decimal total = 0;
+            foreach(ElementoCarrito elemento in Carrito.Elementos)
+            {
+                total += (elemento.Producto.Precio * elemento.Cantidad);
+            }
+
+            return total;
         }
     }
 }

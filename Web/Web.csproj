@@ -94,6 +94,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Styles\canvas.css" />
+    <Content Include="Styles\carrito.css" />
+    <Content Include="Styles\home.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
