@@ -9,10 +9,10 @@ namespace Negocio
 {
     public class NegocioDB
     {
-        private string dbName;
-        private string dbServer;
-        private SqlConnection conn;
-        private SqlCommand cmd;
+        private readonly string dbName;
+        private readonly string dbServer;
+        private readonly SqlConnection conn;
+        private readonly SqlCommand cmd;
         private SqlDataReader reader;
 
         public SqlDataReader Reader
@@ -56,9 +56,9 @@ namespace Negocio
         public int RunQuery()
         {
             cmd.Connection = this.conn;
-            int rowsAffected = 0;
             try
             {
+                int rowsAffected = 0;
                 conn.Open();
                 rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected;
@@ -77,10 +77,7 @@ namespace Negocio
 
         public void Close()
         {
-            if (reader != null)
-            {
-                reader.Close();
-            }
+            reader?.Close();
             conn.Close();
         }
     }

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public class Imagen
+    public class Comentario
     {
-        public long IDImagen { get; set; }
+        public long IDComentario {  get; set; } 
         public long IDProducto { get; set; }
-        public string Descripcion { get; set; }
-        public string Url { get; set; }
+        public long IDUsuario { get; set; }
+        public string TextoComentario { get; set; }
         public bool Estado { get; set; }
     }
 }

@@ -9,40 +9,43 @@ namespace Negocio
 {
     public class CategoriaNegocio
     {
-        public List<Categoria> listarCategoria()
+        private NegocioDB Database { get; set; }
+
+        public List<Categoria> ListarCategoria()
         {
-            NegocioDB db = new NegocioDB();
+            Database = new NegocioDB();
             List<Categoria> categorias = new List<Categoria>();
-            db.StoreProcedure("SP_ListarCategorias");
-            db.Read();
-            while (db.Reader.Read())
+            Database.StoreProcedure("SP_ListarCategorias");
+            Database.Read();
+            while (Database.Reader.Read())
             {
                 Categoria auxCategoria = new Categoria();
 
-                if (!(db.Reader["Nombre"] is DBNull)) auxCategoria.Nombre = (string)db.Reader["Nombre"];
-                if (!(db.Reader["Estado"] is DBNull)) auxCategoria.Estado = (bool)db.Reader["Estado"];
-                if (!(db.Reader["ID_Categoria"] is DBNull)) auxCategoria.IDCategoria = (int)db.Reader["ID_Categoria"];
+                if (!(Database.Reader["Nombre"] is DBNull)) auxCategoria.Nombre = (string)Database.Reader["Nombre"];
+                if (!(Database.Reader["Estado"] is DBNull)) auxCategoria.Estado = (bool)Database.Reader["Estado"];
+                if (!(Database.Reader["ID_Categoria"] is DBNull)) auxCategoria.IDCategoria = (long)Database.Reader["ID_Categoria"];
                 categorias.Add(auxCategoria);
             }
-            db.Close();
+            Database.Close();
             return categorias;
         }
 
         public List<Categoria> CategoriasRandom(int cantidad)
         {
-            NegocioDB database = new NegocioDB();
+            Database = new NegocioDB();
             List<Categoria> lista = new List<Categoria>();
+            Categoria auxCategoria;
             try
             {
-                database.StoreProcedure("SP_CategoriasRandom");
-                database.SetParam("@Cantidad", cantidad);
-                database.Read();
-                while (database.Reader.Read())
-            {
-                Categoria auxCategoria = new Categoria();
-                    if (!(database.Reader["ID_Categoria"] is DBNull)) auxCategoria.IDCategoria = (int)database.Reader["ID_Categoria"];
-                    if (!(database.Reader["Nombre"] is DBNull)) auxCategoria.Nombre = (string)database.Reader["Nombre"];
-                    if (!(database.Reader["Estado"] is DBNull)) auxCategoria.Estado = (bool)database.Reader["Estado"];
+                Database.StoreProcedure("SP_CategoriasRandom");
+                Database.SetParam("@Cantidad", cantidad);
+                Database.Read();
+                while (Database.Reader.Read())
+                {
+                    auxCategoria = new Categoria();
+                    if (!(Database.Reader["ID_Categoria"] is DBNull)) auxCategoria.IDCategoria = (long)Database.Reader["ID_Categoria"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) auxCategoria.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxCategoria.Estado = (bool)Database.Reader["Estado"];
 
                     lista.Add(auxCategoria);
                 }
@@ -55,7 +58,7 @@ namespace Negocio
             }
             finally
             {
-                database.Close();
+                Database.Close();
             }
         }
 

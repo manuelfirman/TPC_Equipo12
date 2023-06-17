@@ -1,4 +1,6 @@
 USE E_COMMERCE12
+
+-- PROVINCIAS
 INSERT INTO Provincias (Nombre)
 VALUES ('Buenos Aires'),
        ('Catamarca'),
@@ -25,6 +27,7 @@ VALUES ('Buenos Aires'),
        ('Tucuman');
 
 
+-- MARCAS
 INSERT INTO Marcas (Nombre, Estado)
 VALUES ('Nike', 1),
        ('Converse', 1),
@@ -36,6 +39,7 @@ VALUES ('Nike', 1),
        ('Adidas', 1);
 
 
+-- CATEGORIAS
 INSERT INTO Categorias (Nombre, Estado)
 VALUES ('Zapatillas', 1),
        ('Pantalones', 1),
@@ -46,12 +50,13 @@ VALUES ('Zapatillas', 1),
        ('Conjuntos Deportivos', 1);
 
 
+-- TIPOS DE USUARIO
 INSERT INTO TipoUsuario (Nombre)
 VALUES  ('Usuario'),
-        ('Admin'),
-        ('Vendedor');
+        ('Vendedor'),
+        ('Admin');
 
-
+-- PRODUCTOS
 INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado)
 VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo running pero agregando un estilo deportivo muy moderno, las Zapatillas Nike Air Max Pre-Day llegan a tus días para sacar la audacia que hay dentro tuyo. Con estampados de animales potentes y colores animados este calzado construye un patchwork ideal para tu look salvaje y atrevido.', 75000, 10, 1),
        (1, 1, 'Z002', 'Air Jordan 5 Retro GTX', 'Conquistá la noche con las Zapatillas Air Jordan 5 Retro GTX Mujer. Un par que te alista para todas las temporadas y te mantiene fiel a tu estilo noventoso. Construidas con material súper resistente, cuero de primera calidad y características impermeables.', 150000, 10, 1),
@@ -80,6 +85,7 @@ VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo runni
        (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15799, 10, 1),
         (4, 2, 'R005', 'Remera Converse Laces', 'Adecuada para todo el día', 13499, 10, 1);
 
+-- IMAGENES
 INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion)
 VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw67fd9607/products/NI_DH5111-100/NI_DH5111-100-1.JPG', 'Air Max Pre-Day Se'),
        (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw0d929b5d/products/NI_DH5111-100/NI_DH5111-100-2.JPG', 'Air Max Pre-Day Se'),
@@ -185,5 +191,23 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw1647078d/products/COD5602401/COD5602401-3.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
-       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw5b14c102/products/COD5602401/COD5602401-5.JPG', 'Remera Converse Laces'),
-       (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw67fd9607/products/NI_DH5111-100/NI_DH5111-100-1.JPG', 'Air Max Pre-Day Se');
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw5b14c102/products/COD5602401/COD5602401-5.JPG', 'Remera Converse Laces');
+
+
+-- DOMICILIO VENDEDOR
+INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Estado)
+VALUES (14, 'Neuquen', 'Belgrano', '1500', '8300', 1);
+
+-- DOMICILIO USER
+INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado)
+VALUES (14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
+
+-- USER VENDEDOR
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', 'elvendedor1234', '2995123123', GETDATE(), 1);
+
+-- USER COMUN
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (1, 2, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', 'juan1234', '2995323232', GETDATE(), 1);
+
+

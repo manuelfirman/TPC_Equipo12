@@ -11,22 +11,22 @@ namespace Web
 {
     public partial class Index : System.Web.UI.Page
     {
-        private ProductoNegocio productoNegocio { get; set; }
-        private ImagenNegocio imagenNegocio { get; set; }
-        private CategoriaNegocio categoriaNegocio { get; set; }
-        private MarcaNegocio marcaNegocio { get; set; }
+        private ProductoNegocio ProductoNegocioHome { get; set; }
+        private ImagenNegocio ImagenNegocioHome { get; set; }
+        private CategoriaNegocio CategoriaNegocioHome { get; set; }
+        private MarcaNegocio MarcaNegocioHome { get; set; }
 
-        private List<Producto> productosCards { get; set; }
-        private List<Imagen> imagenesSlider { get; set; }
-        private List<Categoria> categoriasRandom { get; set; }
-        private List<Marca> marcasRandom { get; set; }
+        private List<Producto> ProductosCards { get; set; }
+        private List<Imagen> ImagenesSlider { get; set; }
+        private List<Categoria> CategoriasRandom { get; set; }
+        private List<Marca> MarcasRandom { get; set; }
 
         public Index()
         {
-            productoNegocio = new ProductoNegocio(); 
-            imagenNegocio = new ImagenNegocio();
-            categoriaNegocio = new CategoriaNegocio();
-            marcaNegocio = new MarcaNegocio();
+            ProductoNegocioHome = new ProductoNegocio(); 
+            ImagenNegocioHome = new ImagenNegocio();
+            CategoriaNegocioHome = new CategoriaNegocio();
+            MarcaNegocioHome = new MarcaNegocio();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -34,23 +34,23 @@ namespace Web
             if (!IsPostBack)
             {
                 // Imagenes para Banner Principal
-                imagenesSlider = imagenNegocio.ImagenesAlAzar(8);
-                rptSlider.DataSource = imagenesSlider;
+                ImagenesSlider = ImagenNegocioHome.ImagenesAlAzar(8);
+                rptSlider.DataSource = ImagenesSlider;
                 rptSlider.DataBind();
 
                 // Productos para Cards
-                productosCards = productoNegocio.ProductosAlAzar(8);
-                rptProductos.DataSource = productosCards;
+                ProductosCards = ProductoNegocioHome.ProductosAlAzar(8);
+                rptProductos.DataSource = ProductosCards;
                 rptProductos.DataBind();
 
                 //Categorias para Cards
-                categoriasRandom = categoriaNegocio.CategoriasRandom(4);
-                rptCategorias.DataSource = categoriasRandom;
+                CategoriasRandom = CategoriaNegocioHome.CategoriasRandom(4);
+                rptCategorias.DataSource = CategoriasRandom;
                 rptCategorias.DataBind();
 
                 //Marcas para Cards
-                marcasRandom = marcaNegocio.MarcasRandom(4);
-                rptMarcas.DataSource = marcasRandom;
+                MarcasRandom = MarcaNegocioHome.MarcasRandom(4);
+                rptMarcas.DataSource = MarcasRandom;
                 rptMarcas.DataBind();
 
             }
@@ -58,7 +58,7 @@ namespace Web
             //productosCards = (List<Producto>)Session["ProductosCards"];
         }
 
-        public string cargarImagen(object dataItem)
+        public string CargarImagen(object dataItem)
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             Producto producto = (Producto)dataItem;
@@ -75,7 +75,7 @@ namespace Web
             return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
         }
 
-        public string cargarImagenRandomCategoria(string categoria)
+        public string CargarImagenRandomCategoria(string categoria)
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             List<Imagen> imagenes = imagenNegocio.ImagenesRandomPorCategoria(1, categoria);
@@ -84,7 +84,7 @@ namespace Web
             return imagenes.FirstOrDefault().Url;
         }
 
-        public string cargarImagenRandomMarca(string marca)
+        public string CargarImagenRandomMarca(string marca)
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             List<Imagen> imagenes = imagenNegocio.ImagenesRandomPorMarca(1, marca);
@@ -93,7 +93,7 @@ namespace Web
             return imagenes.FirstOrDefault().Url;
         }
 
-        protected void btnAgregar_Click(object sender, EventArgs e)
+        protected void BtnAgregar_Click(object sender, EventArgs e)
         {
 
         }
