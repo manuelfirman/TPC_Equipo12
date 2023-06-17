@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href="Styles/home.css" rel="stylesheet" />
-    <link href="Styles/carrito.css" rel="stylesheet" />
+
     <!--INICIO MAIN-->
     <main class="bg-light">
 
