@@ -13,48 +13,47 @@ namespace Web
     public partial class DetalleProducto : System.Web.UI.Page
     {
     
-        private int indice { get; set; }
-        private bool hayParam { get; set; }
-        public Producto producto { get; set; }
-        private ProductoNegocio productoNegocio { get; set; }
+        private int Indice { get; set; }
+        private bool HayParam { get; set; }
+        public Producto Producto { get; set; }
+        private ProductoNegocio ProductoNegocioDetalle { get; set; }
 
         public DetalleProducto()
         {
-            productoNegocio = new ProductoNegocio();
+            ProductoNegocioDetalle = new ProductoNegocio();
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["id"] == null)
+            {
+                // TODO: REDIRECT PAGINA 404
+                lblError.Text = "NO SE RECIBIO NINGUN ARTICULO";
+            }
             if (!IsPostBack)
             {
-                if (Request.QueryString["id"] != null)
-                {
-                    int IDProducto = int.Parse(Request.QueryString["id"]);
-                    producto = productoNegocio.ProductoPorID(IDProducto);
-                    Session.Add("producto", producto);
-                    rptImagenes.DataSource = producto.Imagenes;
-                    rptImagenes.DataBind();
-                    rptMiniaturas.DataSource = producto.Imagenes;
-                    rptMiniaturas.DataBind();
-                    rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
-                    rptProductos.DataBind();
+                int IDProducto = int.Parse(Request.QueryString["id"]);
+                Producto = ProductoNegocioDetalle.ProductoPorID(IDProducto);
+                Session.Add("Producto", Producto);
+                rptImagenes.DataSource = Producto.Imagenes;
+                rptImagenes.DataBind();
+                rptMiniaturas.DataSource = Producto.Imagenes;
+                rptMiniaturas.DataBind();
+                rptProductos.DataSource = ProductoNegocioDetalle.ProductosAlAzar(4);
+                rptProductos.DataBind();
 
-                    List<Producto> comments = productoNegocio.ProductosAlAzar(4);
-                    rptComments.DataSource = comments;
-                    rptComments.DataBind();
-
-
-                }
-                else
-                {
-                    // TODO: REDIRECT PAGINA 404
-                    lblError.Text = "NO SE RECIBIO NINGUN ARTICULO";
-                }
+                List<Producto> comments = ProductoNegocioDetalle.ProductosAlAzar(4);
+                rptComments.DataSource = comments;
+                rptComments.DataBind();
+            }
+            else
+            {
+                Producto = Session["Producto"] as Producto;
             }
 
-            if (producto != null)
+            if (Producto != null)
             {
-                cargarProducto();
+                CargarProducto();
             }
             else
             {
@@ -63,19 +62,19 @@ namespace Web
             }
         }
 
-        public void cargarProducto()
+        public void CargarProducto()
         {
 
         }
 
         protected void btnAgregarCarrito_Click(object sender, EventArgs e)
         {
+            var masterPage = this.Master as Master;            
 
-        }
+            Producto producto = Session["Producto"] as Producto;
 
-        protected void btnComprarAhora_Click(object sender, EventArgs e)
-        {
-
+            masterPage.AgregarCarrito(producto, 1);
+            masterPage.ActualizarCarrito();
         }
 
         public string CargarImagen(object dataItem)
@@ -94,6 +93,5 @@ namespace Web
 
             return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
         }
-
     }
 }

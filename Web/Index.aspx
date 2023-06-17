@@ -3,46 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        <!-- pasar a .css --> 
-        .section {
-            margin-bottom: 3rem;
-            padding: 1rem;
-        }
-
-        .section-productos {
-            margin-top: 10rem;
-            margin-bottom: 10rem;
-        }
-
-        .section-categorias {
-            margin-bottom: 10rem;
-        }
-
-        .section-marcas {
-            margin-top: 10rem;
-            margin-bottom: 10rem;
-        }
-
-        .card-custom {
-            border: none;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .card-custom-img {
-            border: none;
-        }
-
-        .card-custom:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .titulo {
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-            color: #fff;
-        }
-    </style>
-
+    <link href="Styles/home.css" rel="stylesheet" />
+    <link href="Styles/carrito.css" rel="stylesheet" />
     <!--INICIO MAIN-->
     <main class="bg-light">
 
@@ -107,7 +69,7 @@
 
 
         <!--CARDS CATEGORIAS-->
-        <section class="section section-categorias">
+        <section class="container-fluid section section-categorias">
             <div class="row">
                 <div class="col">
                     <h2 class="section-title display-4 text-center text-muted letter-spacing">ELEGÍ LO QUE TE GUSTA</h2>
@@ -135,7 +97,7 @@
 
 
         <!--CARDS MARCAS-->
-        <section class="section section-marcas">
+        <section class="container fluid section section-marcas">
             <div class="row">
                 <div class="col">
                     <h2 class="section-title display-4 text-center text-muted letter-spacing">NUESTRAS MARCAS</h2>

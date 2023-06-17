@@ -1,0 +1,16 @@
+﻿.thumbnail-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-height: 100%; /* altura maxima galeria de miniaturas */
+    overflow-y: auto; /* desplazamiento vertical si las miniaturas exceden la altura maxima*/
+}
+
+.thumbnail-item {
+    margin-bottom: 10px; /* espacio entre miniaturas */
+}
+
+.img-thumbnail {
+    max-height: 100px; /* altura máxima para las miniaturas */
+    object-fit: contain; /* ajusta imagen dentro del contenedor */
+}
