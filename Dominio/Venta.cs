@@ -13,5 +13,12 @@ namespace Dominio
         public Usuario Usuario { get; set; }
         public EstadoVenta Estado { get; set; }
         public DateTime Fecha { get; set; }
+
+        public Venta()
+        {
+            Factura = new Factura();
+            Usuario = new Usuario();
+            Estado = new EstadoVenta();
+        }
     }
 }

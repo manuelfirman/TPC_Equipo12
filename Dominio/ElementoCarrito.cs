@@ -11,5 +11,10 @@ namespace Dominio
         public long IDElementoCarrito { get; set; }
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
+
+        public ElementoCarrito()
+        {
+            Producto = new Producto();
+        }
     }
 }

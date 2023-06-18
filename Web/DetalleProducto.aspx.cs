@@ -67,7 +67,7 @@ namespace Web
 
         }
 
-        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        protected void BtnAgregarCarrito_Click(object sender, EventArgs e)
         {
             var masterPage = this.Master as Master;            
 
