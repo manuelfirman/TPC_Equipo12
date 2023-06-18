@@ -40,8 +40,8 @@ namespace Web
 
                 repMarcas.DataSource = Marcas;
                 repMarcas.DataBind();
+                ActualizarCarrito();
             }
-
         }
 
         public int CantidadCarrito()
@@ -72,6 +72,22 @@ namespace Web
             Button btnEliminar = (Button)sender;
             int IDProducto = int.Parse(btnEliminar.CommandArgument);
             Carrito.QuitarProducto(IDProducto);
+            ActualizarCarrito();
+        }
+
+        protected void btnSumarCantidad_Click(object sender, EventArgs e)
+        {
+            Button btnSumar = (Button)sender;
+            int IDProducto = int.Parse(btnSumar.CommandArgument);
+            Carrito.SumarUnProducto(IDProducto);
+            ActualizarCarrito();
+        }
+
+        protected void btnRestarCantidad_Click(object sender, EventArgs e)
+        {
+            Button btnRestar = (Button)sender;
+            int IDProducto = int.Parse(btnRestar.CommandArgument);
+            Carrito.RestarUnProducto(IDProducto);
             ActualizarCarrito();
         }
     }
