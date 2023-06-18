@@ -2,7 +2,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/css/bootstrap.min.css" />--%>
         <style>
         .login-container {
             max-width: 400px;
@@ -14,34 +13,36 @@
             background-color: #fff;
         }
     </style>
-<body>
-    <div class="container login-container">
-        <h2 class="text-center mb-4">Iniciar Sesión</h2>
-        <hr />
+    <div class="container min-vh-100">
+        <div class="container login-container">
+            <h2 class="text-center mb-4">Iniciar Sesión</h2>
+            <hr />
 
-        <div class="mb-3">
-            <label for="txtEmail" class="form-label">Email:</label>
-            <input type="text" class="form-control" id="txtEmail" runat="server" />
-        </div>
+            <div class="mb-3">
+                <label for="txtEmail" class="form-label">Email:</label>
+                <input type="text" class="form-control" id="txtEmail" runat="server" />
+            </div>
 
-        <div class="mb-3">
-            <label for="txtPassword" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" id="txtPassword" runat="server" />
-        </div>
+            <div class="mb-3">
+                <label for="txtPassword" class="form-label">Contraseña:</label>
+                <input type="password" class="form-control" id="txtPassword" runat="server" />
+            </div>
 
-        <div class="text-center">
-            <asp:Button ID="btnLogin" runat="server" Text="Iniciar Sesión" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
-        </div>
+            <div class="text-center mt-2 mb-2">
+                <asp:Button ID="btnLogin" runat="server" Text="Iniciar Sesión" CssClass="btn btn-primary" OnClick="btnLogin_Click" />
+            </div>
 
-        <div class="text-center">
-            <asp:Button ID="btnOlvidePass" runat="server" Text="Olvide mi contraseña" CssClass="nav-link" OnClick="btnLogin_Click" />
-        </div>
+            <div class="text-center">
+                <asp:Label ID="lblMessage" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+            </div>
 
-        <div class="text-center mt-3">
-            <asp:Literal ID="lblMessage" runat="server" Visible="false"></asp:Literal>
+            <div class="text-center">
+                <asp:Button ID="btnOlvidePass" runat="server" Text="Olvide mi contraseña" CssClass="nav-link" OnClick="btnLogin_Click" />
+                <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="nav-link" OnClick="btnLogin_Click" />
+            </div>
+
+
         </div>
     </div>
 
-    <%--<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.bundle.min.js"></script>--%>
-</body>
 </asp:Content>

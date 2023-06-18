@@ -26,7 +26,6 @@ namespace Web
         protected void Page_Load(object sender, EventArgs e)
         {
             // USUARIO
-            Usuario = Session["Usuario"] as Usuario;
             CheckCerrarSesion();
 
             // CARRITO
@@ -39,6 +38,8 @@ namespace Web
 
             if (!IsPostBack)
             {
+                Usuario = Session["Usuario"] as Usuario;
+
                 Categorias = CategoriaNegocioMaster.ListarCategoria();
                 Marcas = MarcaNegocioMaster.ListarMarcas();
                 repCategorias.DataSource = Categorias;

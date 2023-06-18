@@ -103,10 +103,9 @@ CREATE TABLE Comentarios (
     ID_Producto BIGINT NOT NULL FOREIGN KEY REFERENCES Productos (ID_Producto),
     ID_Usuario BIGINT NOT NULL FOREIGN KEY REFERENCES Usuarios (ID_Usuario),
     Comentario VARCHAR(150) NOT NULL,
+    Fecha DATETIME DEFAULT GETDATE(),
     Estado BIT NULL DEFAULT 1
 )
-
-
 
 ----------------------------------------------------------------------------------
 ------------------------- ***** STORED PROCEDURES **** ---------------------------

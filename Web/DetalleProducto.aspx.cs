@@ -14,9 +14,11 @@ namespace Web
     {
     
         private int Indice { get; set; }
-        private bool HayParam { get; set; }
+        protected bool HayComentarios { get; set; }
         public Producto Producto { get; set; }
         private ProductoNegocio ProductoNegocioDetalle { get; set; }
+        private ComentarioNegocio ComentarioNegocio { get; set; } = new ComentarioNegocio();
+        private List<Comentario> Comentarios { get; set; }
 
         public DetalleProducto()
         {
@@ -30,41 +32,43 @@ namespace Web
                 // TODO: REDIRECT PAGINA 404
                 lblError.Text = "NO SE RECIBIO NINGUN ARTICULO";
             }
+
+            int IDProducto = int.Parse(Request.QueryString["id"]);
+            Producto = ProductoNegocioDetalle.ProductoPorID(IDProducto);
+            Session["Producto"] = Producto;
+            rptImagenes.DataSource = Producto.Imagenes;
+            rptImagenes.DataBind();
+            rptMiniaturas.DataSource = Producto.Imagenes;
+            rptMiniaturas.DataBind();
+            rptProductos.DataSource = ProductoNegocioDetalle.ProductosAlAzar(4);
+            rptProductos.DataBind();
+
             if (!IsPostBack)
             {
-                int IDProducto = int.Parse(Request.QueryString["id"]);
-                Producto = ProductoNegocioDetalle.ProductoPorID(IDProducto);
-                Session.Add("Producto", Producto);
-                rptImagenes.DataSource = Producto.Imagenes;
-                rptImagenes.DataBind();
-                rptMiniaturas.DataSource = Producto.Imagenes;
-                rptMiniaturas.DataBind();
-                rptProductos.DataSource = ProductoNegocioDetalle.ProductosAlAzar(4);
-                rptProductos.DataBind();
-
-                List<Producto> comments = ProductoNegocioDetalle.ProductosAlAzar(4);
-                rptComments.DataSource = comments;
-                rptComments.DataBind();
+                ActualizarComentarios(IDProducto);
+                
             }
-            else
+            else if (Producto != null)
             {
                 Producto = Session["Producto"] as Producto;
-            }
-
-            if (Producto != null)
-            {
-                CargarProducto();
+                Comentarios = Session["Comentarios"] as List<Comentario>;
             }
             else
             {
                 // TODO: REDIRECT PAGINA 404
                 lblError.Text = "NO EXISTE PRODUCTO CON ESE ID";
             }
+
+            if (Comentarios.Count == 0) HayComentarios = false;
+            else HayComentarios = true;
         }
 
-        public void CargarProducto()
+        public void ActualizarComentarios(long IDProducto)
         {
-
+            Comentarios = ComentarioNegocio.ComentariosPorProducto(IDProducto);
+            Session["Comentarios"] = Comentarios;
+            rptComments.DataSource = Comentarios;
+            rptComments.DataBind();
         }
 
         protected void BtnAgregarCarrito_Click(object sender, EventArgs e)
@@ -92,6 +96,38 @@ namespace Web
             }
 
             return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+        }
+
+        protected void BtnComentar_Click(object sender, EventArgs e)
+        {
+            Comentario comentario = new Comentario();
+            comentario.IDProducto = Producto.IDProducto;
+            comentario.IDUsuario = ((Usuario)Session["Usuario"]).IDUsuario;
+            comentario.TextoComentario = txtComment.Text;
+
+            if(txtComment.Text != "")
+            {
+                if (ComentarioNegocio.CrearComentario(comentario))
+                {
+                    txtComment.Text = "";
+                    comentario = new Comentario();
+                }
+            }
+
+            ActualizarComentarios(Producto.IDProducto);
+        }
+
+        protected void BtnBorrarComentario_Click(object sender, EventArgs e)
+        {
+            Button btnBorrar = (Button)sender;
+            int IDComentario = int.Parse(btnBorrar.CommandArgument);
+
+            if(ComentarioNegocio.EliminarComentario(IDComentario))
+            {
+                // TODO: Cartelito de comentario eliminado
+            }
+
+            ActualizarComentarios(((Producto)Session["Producto"]).IDProducto);
         }
     }
 }

@@ -22,15 +22,21 @@ namespace Web
         {
             string email = txtEmail.Value;
             string pass = txtPassword.Value;
-
-
+            lblMessage.Visible = false;
+            if (email.Length == 0 || pass.Length == 0)
+            {
+                lblMessage.Text = "Ingresar todos los campos";
+                lblMessage.Visible = true;
+                return;
+            }
 
             string hashPass = UsuarioNegocioLogin.PassPorEmail(email);
 
+            // TODO: Descomentar y reemplazar cuando este el registro
             //if(Crypt.VerificarPassword(pass, hashPass))
-            if(pass == hashPass)
+            if (pass == hashPass)
             {
-                
+
                 Session["Usuario"] = UsuarioNegocioLogin.UsuarioPorEmail(email);
                 Response.Redirect("Index.aspx");
             }

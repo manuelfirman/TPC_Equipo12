@@ -141,20 +141,57 @@
                         <div class="card-body">
                             <asp:Repeater ID="rptComments" runat="server">
                                 <ItemTemplate>
-                                    <div class="bg-success bg-opacity-10">
-                                        <h5><%# Eval("Nombre") %></h5>
-                                        <p><%# Eval("Descripcion") %></p>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <% if (!HayComentarios)
+                                            { %>
+                                            <h5 class="card-title">Esta publicación no tiene comentarios, ¡sé el primero!</h5>
+                                            <% }
+                                            else
+                                            {%>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h5 class="card-title"><%# Eval("NombreUsuario") %></h5>
+                                                    <p class="card-text"><small class="text-muted"><%# Eval("Fecha") %></small></p>
+                                                    <p class="card-text"><%# Eval("TextoComentario") %></p>
+                                                </div>
+                                                <%if (((Dominio.Usuario)Session["Usuario"]) != null && ((Dominio.Usuario)Session["Usuario"]).TipoUser.IDTipo != 1 ) { %>
+                                                <div>
+                                                    <asp:Button ID="BtnBorrarComentario" runat="server" Text="x" OnClick="BtnBorrarComentario_Click" CssClass="btn btn-danger btn-sm"  CommandArgument='<%# ((Dominio.Comentario)Container.DataItem).IDComentario %>'/>
+                                                </div>
+                                                <%} %>
+                                            </div>
+                                            <% } %>
+                                        </div>
                                     </div>
                                 </ItemTemplate>
                             </asp:Repeater>
                         </div>
 
+                        <%if (Session["Usuario"] != null) { %>
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">Hacer un comentario:</h3>
+                                <div class="form-group">
+                                    <asp:TextBox ID="txtComment" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <asp:Button ID="BtnComentar" runat="server" Text="Enviar Comentario" OnClienClick="guardarPosicionVentana()" OnClick="BtnComentar_Click" CssClass="btn btn-primary" />
+                                    </div>
+                                    <div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="card-body">
                             <h3>Hacer un comentario:</h3>
-                            <asp:TextBox ID="txtComment" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
-                            <%--<asp:Button ID="" runat="server" Text="Enviar Comentario" OnClick="" CssClass="btn btn-primary" />--%>
+                            
+                            
                         </div>
+                        <%} %>
                     </div>
                 </div>
             </div>
@@ -202,28 +239,8 @@
                 </div>
             </div>
         </div>
-        <script>
-            // Obtener la imagen seleccionada y mostrarla en el modal
-            var modalImagen = document.getElementById('modalImagen');
-            var imgModal = document.getElementById('imgModal');
 
-            modalImagen.addEventListener('show.bs.modal', function (event) {
-                var trigger = event.relatedTarget; // Elemento que activó el modal
-                var imgUrl = trigger.getAttribute('data-bs-img'); // Obtener la URL de la imagen
-
-                // Mostrar la imagen en el modal
-                imgModal.src = imgUrl;
-            });
-
-        </script>
-
-
-
-
-
-
+        <script src="Scripts/modalDetalle.js"></script>
+        <script src="Scripts/scrollPosition.js"></script>
     </main>
-
-
-
 </asp:Content>

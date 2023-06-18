@@ -11,7 +11,9 @@ namespace Dominio
         public long IDComentario {  get; set; } 
         public long IDProducto { get; set; }
         public long IDUsuario { get; set; }
+        public string NombreUsuario { get; set; }
         public string TextoComentario { get; set; }
+        public DateTime Fecha { get; set; }
         public bool Estado { get; set; }
     }
 }
