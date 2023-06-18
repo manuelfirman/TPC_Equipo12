@@ -40,12 +40,8 @@ namespace Web
 
                 repMarcas.DataSource = Marcas;
                 repMarcas.DataBind();
-
-                
-
+                ActualizarCarrito();
             }
-
-            ActualizarCarrito();
         }
 
         public int CantidadCarrito()
@@ -58,10 +54,6 @@ namespace Web
             Carrito.AgregarProducto(producto, cantidad);
         }
 
-        public void QuitarCarrito(Producto producto)
-        {
-            Carrito.QuitarProducto(producto.IDProducto);
-        }
 
         public void ActualizarCarrito()
         {
@@ -77,7 +69,26 @@ namespace Web
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+            Button btnEliminar = (Button)sender;
+            int IDProducto = int.Parse(btnEliminar.CommandArgument);
+            Carrito.QuitarProducto(IDProducto);
+            ActualizarCarrito();
+        }
 
+        protected void btnSumarCantidad_Click(object sender, EventArgs e)
+        {
+            Button btnSumar = (Button)sender;
+            int IDProducto = int.Parse(btnSumar.CommandArgument);
+            Carrito.SumarUnProducto(IDProducto);
+            ActualizarCarrito();
+        }
+
+        protected void btnRestarCantidad_Click(object sender, EventArgs e)
+        {
+            Button btnRestar = (Button)sender;
+            int IDProducto = int.Parse(btnRestar.CommandArgument);
+            Carrito.RestarUnProducto(IDProducto);
+            ActualizarCarrito();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="DetalleProducto.aspx.cs" Inherits="Web.DetalleProducto" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="DetalleProducto.aspx.cs" Inherits="Web.DetalleProducto" EnableEventValidation="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
@@ -62,11 +62,11 @@
                                 <h2 class="card-title"><%= Producto.Nombre %></h2>
                                 <!-- Calificacion -->
                                 <div class="rating mb-3">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-half-o"></i>
+                                    <i class="fa fa-star" style="color: lightblue"></i>
+                                    <i class="fa fa-star" style="color: lightblue"></i>
+                                    <i class="fa fa-star" style="color: lightblue"></i>
+                                    <i class="fa fa-star" style="color: lightblue"></i>
+                                    <i class="fa fa-star-half-o" style="color: lightblue"></i>
                                 </div>
                                 <!-- Info producto -->
                                 <div class="card-body">

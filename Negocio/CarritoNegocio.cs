@@ -68,5 +68,24 @@ namespace Negocio
 
             return total;
         }
+
+        public void SumarUnProducto(long IDProducto)
+        {
+            ElementoCarrito elementoCarrito = Carrito.Elementos.FirstOrDefault(a => a.Producto.IDProducto == IDProducto);
+            if (elementoCarrito != null)
+            {
+                elementoCarrito.Cantidad++;
+            }
+        }
+
+        public void RestarUnProducto(long IDProducto)
+        {
+            ElementoCarrito elementoCarrito = Carrito.Elementos.FirstOrDefault(a => a.Producto.IDProducto == IDProducto);
+            if (elementoCarrito != null)
+            {
+                elementoCarrito.Cantidad--;
+                if (elementoCarrito.Cantidad < 1) elementoCarrito.Cantidad = 1;
+            }
+        }
     }
 }

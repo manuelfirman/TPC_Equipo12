@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Web.Master" %>
 
 <!DOCTYPE html>
-
 <html>
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,6 +16,43 @@
 
 </head>
 <body>
+    <style>
+    .square-button {
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .quantity-input {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        line-height: 30px;
+        text-align: center;
+        border: none;
+        background-color: transparent;
+        font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
+    }
+
+    .heading-style {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        /* Agrega otros estilos personalizados aquí */
+    }
+
+    .btn-xs {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+    }
+
+</style>
     <form id="form1" runat="server">
 
 
@@ -62,107 +98,12 @@
                 </button>
 
                 <%--PANEL CARRITO--%>
-<%--                <div class="offcanvas offcanvas-end bg-dark offcanvas-style-menu-carrito" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title text-light" id="offcanvasCarritoLabel">CARRITO</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-
-
-                        <% if (Carrito.Cantidad() > 0)
-                            { %>
-                        <div class="container">
-                                <asp:Repeater runat="server" ID="rptModal">
-                                    <ItemTemplate>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="card">
-                                                <div class="row g-0">
-                                                    <div class="col-md-4">
-                                                        <img src='<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Imagenes[0].Url %>' class="card-img" alt="Miniatura">
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title"><%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre %></h5>
-                                                            <ul class="list-group list-group-flush">
-                                                                <li class="list-group-item">Precio: $<%# Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio, 2) %></li>
-                                                                <li class="list-group-item">Cantidad: <%# ((Dominio.ElementoCarrito)Container.DataItem).Cantidad %></li>
-                                                            </ul>
-                                                            <asp:Button ID="btnEliminar" CssClass="btn btn-danger mt-3" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto.ToString() %>' />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                        </div>
-
-                        <a href="Pago.aspx" class="btn btn-primary w-100">Ir a pagar</a>
-                        <% }
-                            else
-                            { %>
-                        <p>No hay items en el carrito</p>
-                        <% } %>
-
-
-
-
-                        <!-- Contenido del carrito -->
-                    </div>
-                </div>--%>
-
-
-
-
-
-
-<%--                <div class="offcanvas offcanvas-end bg-dark offcanvas-style-menu-carrito" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title text-light" id="offcanvasCarritoLabel">CARRITO</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <% if (Carrito.Cantidad() > 0)
-                            { %>
-                        <div class="container">
-                            <div class="row">
-                                <asp:Repeater runat="server" ID="rptModal">
-                                    <ItemTemplate>
-                                        <div class="col-12 mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="mr-3">
-                                                    <img src='<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Imagenes[0].Url %>' class="img-thumbnail" alt="Miniatura">
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <h5><%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre %></h5>
-                                                    <p class="mb-1">Precio: $<%# Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio, 2) %></p>
-                                                    <p class="mb-0">Cantidad: <%# ((Dominio.ElementoCarrito)Container.DataItem).Cantidad %></p>
-                                                </div>
-                                                <div>
-                                                    <asp:Button ID="btnEliminar" CssClass="btn btn-danger btn-sm" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto.ToString() %>' />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </ItemTemplate>
-                                </asp:Repeater>
-                            </div>
-                        </div>
-                        <a href="Pago.aspx" class="btn btn-primary w-100 mt-3">Ir a pagar</a>
-                        <% }
-                        else
-                        { %>
-                        <p>No hay items en el carrito</p>
-                        <% } %>
-                    </div>
-                </div>--%>
-
-
                 <div class="offcanvas offcanvas-end bg-dark offcanvas-style-menu-carrito" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title text-light" id="offcanvasCarritoLabel">CARRITO</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+                    <h6 class="offcanvas-title text-light mb-3 ms-2" id="offcanvasCarritoLabelTuCompra">Tu compra</h6>
                     <div class="offcanvas-body p-0">
                         <% if (Carrito.Cantidad() > 0)
                             { %>
@@ -170,31 +111,76 @@
                             <div class="row">
                                 <asp:Repeater runat="server" ID="rptModal">
                                     <ItemTemplate>
-                                        <%--<div class="col-12 mb-3">--%>
-                                            <div class="d-flex align-items-center">
-                                                <div class="mr-3">
-                                                    <img src='<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Imagenes[0].Url %>' class="img-thumbnail img-fluid" alt="Miniatura">
-                                                </div>
-                                                <div class="flex-grow-1 text-center">
-                                                    <h6 class="mb-1"><%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre %></h6>
-                                                    <p class="mb-0 small">Precio: $<%# Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio, 2) %></p>
-                                                    <p class="mb-0 small">Cantidad: <%# ((Dominio.ElementoCarrito)Container.DataItem).Cantidad %></p>
-                                                </div>
-                                                <div>
-                                                    <asp:Button ID="btnEliminar" CssClass="btn btn-danger btn-sm" runat="server" Text="x" OnClick="btnEliminar_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto.ToString() %>' />
+                                        <div class="card card-body bg-dark text-light mb-1 mx-1" style="padding-left: 5px">
+                                            <div class="align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="d-flex align-items-center">
+                                                        <p class=" text-muted" style="margin-bottom:0"><%# Container.ItemIndex + 1 %></p>
+                                                    </div>
+                                                    <div class="mr-3">
+                                                        <img src='<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Imagenes[0].Url %>' class="img-thumbnail img-fluid" alt="Miniatura">
+                                                    </div>
+                                            
+                                                    <div class="flex-grow-1 text-start ms-lg-3">
+                                                        <h6 class="mb-1 text-light shadow-sm fw-bold"><%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre %></h6>
+                                                        <div class="flex-grow-1 text-start ms-lg-3">
+                                                        <p class="mb-0 small">Precio:  <span class="text-success">$<%# Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio, 2) %></span></p>
+                                                            <div class="d-flex align-items-center">
+                                                                <p class="mb-0  small">Cantidad:</p>
+                                                                <span class="input-group-btn ms-2">
+                                                                    <asp:Button ID="btnSumarCantidad" CssClass="btn btn-sm btn-outline-secondary square-button ml-1" runat="server" Text="-" OnClick="btnRestarCantidad_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto %>' />
+                                                                </span>
+                                                                <asp:TextBox ID="txtCantidad" CssClass="form-control form-control-sm quantity-input" runat="server" Text='<%# ((Dominio.ElementoCarrito)Container.DataItem).Cantidad %>' ReadOnly="true" />
+                                                                <span class="input-group-btn">
+                                                                    <asp:Button ID="btnRestarCantidad" CssClass="btn btn-sm btn-outline-secondary square-button" runat="server" Text="+" OnClick="btnSumarCantidad_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto %>' />
+                                                                </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center">
+                                                        <asp:Button ID="btnEliminar" CssClass="btn btn-danger btn-sm square-button" runat="server" Text="x" OnClick="btnEliminar_Click" CommandArgument='<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto %>' />
+                                                    </div>
                                                 </div>
                                             </div>
-                                        <%--</div>--%>
+                                        </div>
                                     </ItemTemplate>
                                 </asp:Repeater>
                             </div>
                         </div>
-                        <a href="Pago.aspx" class="btn btn-primary w-100 mt-3">Ir a pagar</a>
+
                         <% }
-                        else
-                        { %>
-                        <p>No hay items en el carrito</p>
+                            else
+                            { %>
+                         <div class="container">
+                            <p>No hay items en el carrito</p>
+                        </div>
                         <% } %>
+                    </div>
+                    <div class="offcanvas-footer mb-2">
+                    <% if (Carrito.Cantidad() > 0) { %>
+                        <div class="container">
+
+                            <div class="border-top mb-3"></div>
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <p class="m-0 text-white fw-medium">TOTAL</p>
+                                </div>
+                                <div class="col text-end text-success-emphasis fw-lighter">
+                                    <h4 class="m-0">$<%= Math.Round(Carrito.PrecioTotal(), 2) %></h4>
+                                </div>
+                            </div>
+                            <div class="border-bottom mt-3"></div>
+
+
+
+                            <a href="Pago.aspx" class="btn btn-primary w-100 mt-3">Comprar</a>
+                        </div>
+                    <% } else { %>
+
+
+                    <%} %>
                     </div>
                 </div>
 
@@ -202,7 +188,8 @@
                 <%--PANEL MENU--%>
                 <div class="offcanvas offcanvas-start offcanvas-style-menu" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                        <div></div><button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        <div></div>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body">
                         <h5 class="offcanvas-title text-light" id="offcanvasDarkNavbarLabel">E-COMMERCE</h5>
@@ -210,7 +197,7 @@
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="Index.aspx">Inicio</a>
-                            </li> 
+                            </li>
                             <li class="nav-item dropdown ">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">MARCAS</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
@@ -223,8 +210,7 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">CATEGORIAS
-                                </a>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">CATEGORIAS</a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repCategorias" runat="server">
                                         <ItemTemplate>
@@ -235,7 +221,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
-                            </li>   
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
                             </li>
