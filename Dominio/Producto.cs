@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Producto
     {
-        public int IDProducto { get; set; }
+        public long IDProducto { get; set; }
         public Categoria Categoria { get; set; }
         public Marca Marca { get; set; }
         public List<Imagen> Imagenes { get; set; }
@@ -18,5 +18,12 @@ namespace Dominio
         public decimal Precio { get; set; }
         public int Stock { get; set; }
         public bool Estado { get; set; }
+
+        public Producto()
+        {
+            Categoria = new Categoria();
+            Marca = new Marca();
+            Imagenes = new List<Imagen>();
+        }
     }
 }

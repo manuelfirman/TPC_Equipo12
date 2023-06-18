@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="CarritoNegocio.cs" />
     <Compile Include="CategoriaNegocio.cs" />
+    <Compile Include="ComentarioNegocio.cs" />
+    <Compile Include="Crypt.cs" />
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="MarcaNegocio.cs" />
     <Compile Include="NegocioDB.cs" />

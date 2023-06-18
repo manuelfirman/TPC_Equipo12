@@ -1,51 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Web.Index" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="Web.Index" EnableEventValidation="true" %>
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .section { <%-- pasar a .css --%>
-            margin-bottom: 3rem;
-            padding: 1rem;
-        }
+    <link href="Styles/home.css" rel="stylesheet" />
 
-        .section-productos {
-            margin-top: 10rem;
-            margin-bottom: 10rem;
-        }
-
-        .section-categorias {
-            margin-bottom: 10rem;
-        }
-
-        .section-marcas {
-            margin-top: 10rem;
-            margin-bottom: 10rem;
-        }
-
-        .card-custom {
-            border: none;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .card-custom-img {
-            border: none;
-        }
-
-        .card-custom:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .titulo {
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-            color: #fff;
-        }
-    </style>
-
-    <%--INICIO MAIN--%>
+    <!--INICIO MAIN-->
     <main class="bg-light">
 
-        <%--BANNER SLIDER--%>
+        <!--BANNER SLIDER-->
         <section>
             <div class="container-fluid" style="margin: 0; padding: 0">
                 <div id="carouselMain" class="carousel slide" data-bs-ride="carousel">
@@ -75,7 +38,7 @@
         </section>
 
 
-        <%--CARDS PRODUCTOS--%>
+        <!--CARDS PRODUCTOS-->
         <section class="container section-productos">
             <div class="row">
                 <div class="col">
@@ -88,7 +51,7 @@
                         <div class="col card-custom">
                             <div class="card mw-100 card-custom-img">
                                 <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
-                                    <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#cargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#CargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
                                 </a>
                             </div>
                             <div class="card-description text-center text-dark">
@@ -105,8 +68,8 @@
 
 
 
-        <%--CARDS CATEGORIAS--%>
-        <section class="section section-categorias">
+        <!--CARDS CATEGORIAS-->
+        <section class="container-fluid section section-categorias">
             <div class="row">
                 <div class="col">
                     <h2 class="section-title display-4 text-center text-muted letter-spacing">ELEGÍ LO QUE TE GUSTA</h2>
@@ -117,11 +80,12 @@
                     <ItemTemplate>
                         <div class="col card-custom">
                             <div class="card mw-100 card-custom-img">
-                                <div class="card-custom-img">
-                                    <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomCategoria(((Dominio.Categoria)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
-                                    <div class="card-text">
-                                        <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
-                                    </div>
+                                <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Categoria">
+                                    <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# CargarImagenRandomCategoria(((Dominio.Categoria)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                </a>
+
+                                <div class="card-text">
+                                    <h4 class="card-title"><%# ((Dominio.Categoria)Container.DataItem).Nombre.ToUpper() %></h4>
                                 </div>
                             </div>
                         </div>
@@ -132,8 +96,8 @@
 
 
 
-        <%--CARDS MARCAS--%>
-        <section class="section section-marcas">
+        <!--CARDS MARCAS-->
+        <section class="container fluid section section-marcas">
             <div class="row">
                 <div class="col">
                     <h2 class="section-title display-4 text-center text-muted letter-spacing">NUESTRAS MARCAS</h2>
@@ -145,7 +109,9 @@
                         <div class="col card-custom">
                             <div class="card mw-100 card-custom-img">
                                 <div class="card-custom-img">
-                                    <asp:Image CssClass="card-img-top" ID="imgCategoria" runat="server" ImageUrl="<%# cargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Marca">
+                                         <asp:Image CssClass="card-img-top" ID="imgMarca" runat="server" ImageUrl="<%# CargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    </a>
                                     <div class="card-text">
                                         <h4 class="card-title"><%# ((Dominio.Marca)Container.DataItem).Nombre.ToUpper() %></h4>
                                     </div>

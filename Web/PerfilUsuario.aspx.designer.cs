@@ -11,25 +11,16 @@ namespace Web
 {
 
 
-    public partial class Filtro
+    public partial class PerfilUsuario
     {
 
         /// <summary>
-        /// Control lblTitulo.
+        /// Control rptUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTitulo;
-
-        /// <summary>
-        /// Control RepFiltro.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater RepFiltro;
+        protected global::System.Web.UI.WebControls.Repeater rptUsuario;
     }
 }

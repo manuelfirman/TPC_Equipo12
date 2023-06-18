@@ -8,6 +8,14 @@ namespace Dominio
 {
     public class Carrito
     {
-        public List<ElementoCarrito> Productos {  get; set; }
+        public List<ElementoCarrito> Elementos {  get; set; }
+        public decimal Total { get; set; }
+
+        public Carrito()
+        {
+            Elementos = new List<ElementoCarrito>();
+            Total = 0;
+        }
+
     }
 }

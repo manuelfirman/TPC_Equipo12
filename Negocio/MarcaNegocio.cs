@@ -9,42 +9,44 @@ namespace Negocio
 {
     public class MarcaNegocio
     {
-        public List<Marca> listarMarcas()
+        private NegocioDB Database { get; set; }
+
+        public List<Marca> ListarMarcas()
         {
-            NegocioDB db = new NegocioDB();
+            Database = new NegocioDB();
             List<Marca> marcas = new List<Marca>();
 
-            db.StoreProcedure("SP_ListarMarcas");
-            db.Read();
-            while (db.Reader.Read())
+            Database.StoreProcedure("SP_ListarMarcas");
+            Database.Read();
+            while (Database.Reader.Read())
             {
                 Marca auxMarca = new Marca();
 
-                if (!(db.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)db.Reader["Nombre"];
-                if (!(db.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)db.Reader["Estado"];
-                if (!(db.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (int)db.Reader["ID_Marca"];
+                if (!(Database.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)Database.Reader["Nombre"];
+                if (!(Database.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)Database.Reader["Estado"];
+                if (!(Database.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (long)Database.Reader["ID_Marca"];
                 marcas.Add(auxMarca);
             }
 
-            db.Close();
+            Database.Close();
             return marcas;
         }
 
         public List<Marca> MarcasRandom(int cantidad)
         {
-            NegocioDB database = new NegocioDB();
+            Database = new NegocioDB();
             List<Marca> lista = new List<Marca>();
             try
             {
-                database.StoreProcedure("SP_MarcasRandom");
-                database.SetParam("@Cantidad", cantidad);
-                database.Read();
-                while (database.Reader.Read())
+                Database.StoreProcedure("SP_MarcasRandom");
+                Database.SetParam("@Cantidad", cantidad);
+                Database.Read();
+                while (Database.Reader.Read())
                 {
                 Marca auxMarca = new Marca();
-                    if (!(database.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (int)database.Reader["ID_Marca"];
-                    if (!(database.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)database.Reader["Nombre"];
-                    if (!(database.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)database.Reader["Estado"];
+                    if (!(Database.Reader["ID_Marca"] is DBNull)) auxMarca.IDMarca = (long)Database.Reader["ID_Marca"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) auxMarca.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxMarca.Estado = (bool)Database.Reader["Estado"];
 
                     lista.Add(auxMarca);
             }
@@ -57,7 +59,7 @@ namespace Negocio
             }
             finally
             {
-                database.Close();
+                Database.Close();
             }
         }
 

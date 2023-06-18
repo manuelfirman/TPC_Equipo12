@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Domicilio
     {
-        public int IDDomicilio { get; set; }
+        public long IDDomicilio { get; set; }
         public Provincia Provincia { get; set; }
         public string Localidad { get; set; }
         public string Calle { get; set; }
@@ -18,6 +18,12 @@ namespace Dominio
         public string Referencia { get; set; }
         public string Alias { get; set; }
         public bool Estado { get; set; }
+
+        public Domicilio()
+        {
+            Provincia = new Provincia();
+        }
+
         public override string ToString()
         {
             string domicilio = $"{Calle} {Altura}, {Localidad}. {Provincia}.";

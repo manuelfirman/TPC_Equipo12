@@ -8,8 +8,8 @@ namespace Dominio
 {
     public class Imagen
     {
-        public int IDImagen { get; set; }
-        public int IDProducto { get; set; }
+        public long IDImagen { get; set; }
+        public long IDProducto { get; set; }
         public string Descripcion { get; set; }
         public string Url { get; set; }
         public bool Estado { get; set; }

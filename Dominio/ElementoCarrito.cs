@@ -8,8 +8,13 @@ namespace Dominio
 {
     public class ElementoCarrito
     {
+        public long IDElementoCarrito { get; set; }
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
-        public int IDElemento { get; set; }
+
+        public ElementoCarrito()
+        {
+            Producto = new Producto();
+        }
     }
 }

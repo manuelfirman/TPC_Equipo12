@@ -42,13 +42,22 @@ namespace Web
         protected global::System.Web.UI.WebControls.TextBox txtbusqueda;
 
         /// <summary>
-        /// Control btnBusqueda.
+        /// Control BtnBusqueda.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBusqueda;
+        protected global::System.Web.UI.WebControls.Button BtnBusqueda;
+
+        /// <summary>
+        /// Control rptModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rptModal;
 
         /// <summary>
         /// Control repMarcas.

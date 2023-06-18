@@ -8,7 +8,7 @@ namespace Dominio
 {
     public class Usuario
     {
-        public int IDUsuario { get; set; }
+        public long IDUsuario { get; set; }
         public TipoUsuario TipoUser { get; set; }
         public string DNI { get; set; }
         public string Nombre { get; set; }
@@ -19,5 +19,11 @@ namespace Dominio
         public DateTime FechaNacimiento { get; set; }
         public Domicilio Domicilio { get; set; }
         public bool Estado { get; set; }
+
+        public Usuario()
+        {
+            TipoUser = new TipoUsuario();
+            Domicilio = new Domicilio();
+        }
     }
 }

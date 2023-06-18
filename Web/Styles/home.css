@@ -1,0 +1,36 @@
+﻿.section {
+    margin-bottom: 3rem;
+    padding: 1rem;
+}
+
+.section-productos {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+}
+
+.section-categorias {
+    margin-bottom: 10rem;
+}
+
+.section-marcas {
+    margin-top: 10rem;
+    margin-bottom: 10rem;
+}
+
+.card-custom {
+    border: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.card-custom-img {
+    border: none;
+}
+
+.card-custom:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.titulo {
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+    color: #fff;
+}
