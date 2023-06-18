@@ -18,6 +18,12 @@ namespace Dominio
         public string Referencia { get; set; }
         public string Alias { get; set; }
         public bool Estado { get; set; }
+
+        public Domicilio()
+        {
+            Provincia = new Provincia();
+        }
+
         public override string ToString()
         {
             string domicilio = $"{Calle} {Altura}, {Localidad}. {Provincia}.";

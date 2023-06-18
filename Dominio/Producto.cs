@@ -18,5 +18,12 @@ namespace Dominio
         public decimal Precio { get; set; }
         public int Stock { get; set; }
         public bool Estado { get; set; }
+
+        public Producto()
+        {
+            Categoria = new Categoria();
+            Marca = new Marca();
+            Imagenes = new List<Imagen>();
+        }
     }
 }

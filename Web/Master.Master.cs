@@ -16,6 +16,7 @@ namespace Web
         private CategoriaNegocio CategoriaNegocioMaster { get; set; }
         private MarcaNegocio MarcaNegocioMaster { get; set; }
         protected CarritoNegocio Carrito { get; set; }
+        protected Usuario Usuario { get; set; }
 
         public Master()
         {
@@ -24,6 +25,11 @@ namespace Web
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            // USUARIO
+            Usuario = Session["Usuario"] as Usuario;
+            CheckCerrarSesion();
+
+            // CARRITO
             Carrito = Session["Carrito"] as CarritoNegocio;
             if (Carrito == null)
             {
@@ -67,7 +73,7 @@ namespace Web
 
         }
 
-        protected void btnEliminar_Click(object sender, EventArgs e)
+        protected void BtnEliminar_Click(object sender, EventArgs e)
         {
             Button btnEliminar = (Button)sender;
             int IDProducto = int.Parse(btnEliminar.CommandArgument);
@@ -75,7 +81,7 @@ namespace Web
             ActualizarCarrito();
         }
 
-        protected void btnSumarCantidad_Click(object sender, EventArgs e)
+        protected void BtnSumarCantidad_Click(object sender, EventArgs e)
         {
             Button btnSumar = (Button)sender;
             int IDProducto = int.Parse(btnSumar.CommandArgument);
@@ -83,12 +89,25 @@ namespace Web
             ActualizarCarrito();
         }
 
-        protected void btnRestarCantidad_Click(object sender, EventArgs e)
+        protected void BtnRestarCantidad_Click(object sender, EventArgs e)
         {
             Button btnRestar = (Button)sender;
             int IDProducto = int.Parse(btnRestar.CommandArgument);
             Carrito.RestarUnProducto(IDProducto);
             ActualizarCarrito();
+        }
+
+        protected void CheckCerrarSesion()
+        {
+            string salir = Request.QueryString["salir"];
+            if (salir != null)
+            {
+                if (salir == "true")
+                {
+                    Session["Usuario"] = null;
+                    Response.Redirect("Ingresar.aspx");
+                }
+            }
         }
     }
 }
