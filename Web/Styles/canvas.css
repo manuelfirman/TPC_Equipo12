@@ -11,7 +11,8 @@
 
 
 .offcanvas-style-menu-carrito {
-    background: linear-gradient(135deg, rgba(150, 150, 150, 0.8), rgba(180, 180, 180, 0.8));
+    /*background: linear-gradient(135deg, rgba(150, 150, 150, 0.8), rgba(180, 180, 180, 0.8));*/
+    background: linear-gradient(135deg, rgb(193, 211, 235, 0,80), rgb(182, 221, 235, 0,80));
     box-shadow: 0 0 10px rgba(150, 150, 150, 0.3);
     color: #fff;
     border-radius: 10px;
