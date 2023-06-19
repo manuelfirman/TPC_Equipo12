@@ -17,6 +17,7 @@ namespace Web
         private MarcaNegocio MarcaNegocioMaster { get; set; }
         protected CarritoNegocio Carrito { get; set; }
         protected Usuario Usuario { get; set; }
+        public bool HayUser { get; set; }
 
         public Master()
         {
@@ -29,7 +30,11 @@ namespace Web
             Usuario = Session["Usuario"] as Usuario;
             if(Usuario == null)
             {
-                Usuario = new Usuario();
+                HayUser = false;
+            }
+            else
+            {
+                HayUser = true;
             }
             CheckCerrarSesion();
 
