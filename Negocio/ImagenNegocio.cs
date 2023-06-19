@@ -12,85 +12,6 @@ namespace Negocio
     {
         private NegocioDB Database { get; set; }
 
-        public long Guardar(Imagen imagen)
-        {
-            Database = new NegocioDB();
-            long idImagen = -1;
-            long IDProducto = imagen.IDProducto;
-            string urlImagen = imagen.Url;
-            string descripcion = imagen.Descripcion;
-            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion); SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID";
-            try
-            {
-                Database.SetParam("@IDProducto", IDProducto);
-                Database.SetParam("@ImagenURL", urlImagen);
-                Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
-                Database.Read();
-
-                if (Database.Reader.Read())
-                {
-                    idImagen = (int)Database.Reader["ID"];
-                }
-
-                return idImagen;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                Database.Close();
-            }
-        }
-
-        public int Modificar(long idImagen, string url, string descripcion)
-        {
-            Database = new NegocioDB();
-            string query = "UPDATE IMAGENES SET ImagenURL = @Url, Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
-            try
-            {
-                int rowsAffected = 0;
-                Database.SetParam("@Url", url);
-                Database.SetParam("@IDImagen", idImagen);
-                Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
-                rowsAffected = Database.RunQuery();
-                return rowsAffected;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            finally
-            {
-                Database.Close();
-            }
-        }
-
-        public int Eliminar(long IDProductoImagen)
-        {
-            Database = new NegocioDB();
-            string query = "DELETE FROM IMAGENES WHERE ID_Producto = @IDProductoImagen";
-            try
-            {
-                int rowsAffected = 0;
-                Database.SetParam("@IDProductoImagen", IDProductoImagen);
-                Database.SetQuery(query);
-                rowsAffected = Database.RunQuery();
-                return rowsAffected;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                Database.Close();
-            }
-        }
 
         public List<Imagen> ImagenesProducto(long IDProducto)
         {
@@ -125,28 +46,6 @@ namespace Negocio
             {
                 Database.Close();
             }
-        }
-
-        public bool VerificarUrlImagen(string url)
-        {
-            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
-            {
-                try
-                {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                    request.Method = "HEAD";
-                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                    {
-                        return response.StatusCode == HttpStatusCode.OK;
-                    }
-                }
-                catch (WebException)
-                {
-                    return false;
-                }
-            }
-
-            return false;
         }
 
         public List<Imagen> ImagenesAlAzar(int cantidad)
@@ -252,6 +151,108 @@ namespace Negocio
             {
                 Database.Close();
             }
+        }
+
+        public long Guardar(Imagen imagen)
+        {
+            Database = new NegocioDB();
+            long idImagen = -1;
+            long IDProducto = imagen.IDProducto;
+            string urlImagen = imagen.Url;
+            string descripcion = imagen.Descripcion;
+            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion); SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID";
+            try
+            {
+                Database.SetParam("@IDProducto", IDProducto);
+                Database.SetParam("@ImagenURL", urlImagen);
+                Database.SetParam("@Descripcion", descripcion);
+                Database.SetQuery(query);
+                Database.Read();
+
+                if (Database.Reader.Read())
+                {
+                    idImagen = (int)Database.Reader["ID"];
+                }
+
+                return idImagen;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public int Modificar(long idImagen, string url, string descripcion)
+        {
+            Database = new NegocioDB();
+            string query = "UPDATE IMAGENES SET ImagenURL = @Url, Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
+            try
+            {
+                int rowsAffected = 0;
+                Database.SetParam("@Url", url);
+                Database.SetParam("@IDImagen", idImagen);
+                Database.SetParam("@Descripcion", descripcion);
+                Database.SetQuery(query);
+                rowsAffected = Database.RunQuery();
+                return rowsAffected;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public int Eliminar(long IDProductoImagen)
+        {
+            Database = new NegocioDB();
+            string query = "DELETE FROM IMAGENES WHERE ID_Producto = @IDProductoImagen";
+            try
+            {
+                int rowsAffected = 0;
+                Database.SetParam("@IDProductoImagen", IDProductoImagen);
+                Database.SetQuery(query);
+                rowsAffected = Database.RunQuery();
+                return rowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public bool VerificarUrlImagen(string url)
+        {
+            if (Uri.IsWellFormedUriString(url, UriKind.Absolute))
+            {
+                try
+                {
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                    request.Method = "HEAD";
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        return response.StatusCode == HttpStatusCode.OK;
+                    }
+                }
+                catch (WebException)
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
     }
 }

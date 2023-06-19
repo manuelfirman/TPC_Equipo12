@@ -233,6 +233,21 @@ namespace Negocio
                 Database.Close();
             }
         }
+
+        public bool AgregarProducto(Producto producto)
+        {
+            return true;
+        }
+
+        public bool ModificarProducto(Producto producto)
+        {
+            return true;
+        }
+
+        public bool EliminarProducto(long IDProducto)
+        {
+            return true;
+        }
     }
 }
 

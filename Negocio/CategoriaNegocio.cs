@@ -62,5 +62,20 @@ namespace Negocio
             }
         }
 
+        public bool AgregarCategoria(Categoria categoria)
+        {
+            return true;
+        }
+
+        public bool ModificarCategoria(Categoria categoria)
+        {
+            return true;
+        }
+
+        public bool EliminarCategoria(long IDCategoria)
+        {
+            return true;
+        }
+
     }
 }

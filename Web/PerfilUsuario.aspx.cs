@@ -17,8 +17,22 @@ namespace Web
             Usuario = Session["Usuario"] as Usuario;
             if (Usuario == null) Response.Redirect("Ingresar.aspx");
 
-            rptUsuario.DataSource = new List<Usuario> { Usuario };
-            rptUsuario.DataBind();
+            if (!IsPostBack)
+            {
+                rptUsuario.DataSource = new List<Usuario> { Usuario };
+                rptUsuario.DataBind();
+            }
+
+        }
+
+
+        protected void BtnGuardarDatosPersonales_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void BtnGuardarDomicilio_Click(object sender, EventArgs e)
+        {
 
         }
     }
