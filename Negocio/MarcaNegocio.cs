@@ -63,6 +63,19 @@ namespace Negocio
             }
         }
 
+        public bool AgregarMarca(Marca marca)
+        {
+            return true;
+        }
 
+        public bool ModificarMarca(Marca marca)
+        {
+            return true;
+        }
+
+        public bool EliminarMarca(long IDMarca)
+        {
+            return true;
+        }
     }
 }

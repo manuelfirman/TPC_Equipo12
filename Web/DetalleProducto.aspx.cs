@@ -29,8 +29,7 @@ namespace Web
         {
             if (Request.QueryString["id"] == null)
             {
-                // TODO: REDIRECT PAGINA 404
-                lblError.Text = "NO SE RECIBIO NINGUN ARTICULO";
+                Response.Redirect("404.aspx");
             }
 
             int IDProducto = int.Parse(Request.QueryString["id"]);
@@ -55,8 +54,7 @@ namespace Web
             }
             else
             {
-                // TODO: REDIRECT PAGINA 404
-                lblError.Text = "NO EXISTE PRODUCTO CON ESE ID";
+                Response.Redirect("404.aspx");
             }
 
             if (Comentarios.Count == 0) HayComentarios = false;

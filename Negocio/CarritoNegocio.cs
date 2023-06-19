@@ -11,6 +11,26 @@ namespace Negocio
     {
         private Carrito Carrito { get; set; } = new Carrito();
 
+        public int GetCantidad()
+        {
+            return Carrito.Elementos.Count;
+        }
+
+        public List<Producto> GetProductos()
+        {
+            List<Producto> listaProductos = new List<Producto>();
+            foreach(ElementoCarrito elemento in Carrito.Elementos) 
+            {
+                listaProductos.Add(elemento.Producto);
+            }
+            return listaProductos;
+        }
+
+        public List<ElementoCarrito> GetElementos()
+        {
+            return Carrito.Elementos;
+        }
+
         public void AgregarProducto(Producto producto, int cantidad)
         {
             foreach (ElementoCarrito prod in Carrito.Elementos)
@@ -21,7 +41,6 @@ namespace Negocio
                     return;
                 }
             }
-
 
             ElementoCarrito elementoCarrito = new ElementoCarrito();
             elementoCarrito.Producto = producto;
@@ -36,37 +55,6 @@ namespace Negocio
             {
                 Carrito.Elementos.Remove(elementoCarrito);
             }
-        }
-
-        public int Cantidad()
-        {
-            return Carrito.Elementos.Count;
-        }
-
-        public List<Producto> Productos()
-        {
-            List<Producto> listaProductos = new List<Producto>();
-            foreach(ElementoCarrito elemento in Carrito.Elementos) 
-            {
-                listaProductos.Add(elemento.Producto);
-            }
-            return listaProductos;
-        }
-
-        public List<ElementoCarrito> Elementos()
-        {
-            return Carrito.Elementos;
-        }
-
-        public decimal PrecioTotal()
-        {
-            decimal total = 0;
-            foreach(ElementoCarrito elemento in Carrito.Elementos)
-            {
-                total += (elemento.Producto.Precio * elemento.Cantidad);
-            }
-
-            return total;
         }
 
         public void SumarUnProducto(long IDProducto)
@@ -86,6 +74,17 @@ namespace Negocio
                 elementoCarrito.Cantidad--;
                 if (elementoCarrito.Cantidad < 1) elementoCarrito.Cantidad = 1;
             }
+        }
+
+        public decimal PrecioTotal()
+        {
+            decimal total = 0;
+            foreach(ElementoCarrito elemento in Carrito.Elementos)
+            {
+                total += (elemento.Producto.Precio * elemento.Cantidad);
+            }
+
+            return total;
         }
     }
 }

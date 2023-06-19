@@ -21,15 +21,16 @@ namespace Web
                 string nombre = Request.QueryString["Nombre"];
                 if (nombre == null || tipo == null)
                 {
-                    lblTitulo.Text = "NO SE A SELECCIONADO NADA";
+                    lblTitulo.Text = "NO SE HA SELECCIONADO NADA";
                     return;
-                }else if (tipo == "Marca" || tipo == "Categoria")
+                }
+                else if (tipo == "Marca" || tipo == "Categoria")
                 {
                     listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
-                    lblTitulo.Text = "Productos para la " + tipo + " " + nombre;
+                    lblTitulo.Text = tipo.ToUpper() + " " + nombre.ToUpper();
                     if(listaProductos.Count == 0)
                     {
-                        lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre;
+                        lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre.ToUpper();
                         return;
                     }
                     RepFiltro.DataSource = listaProductos;
@@ -37,13 +38,15 @@ namespace Web
                 }
                 else
                 {
-                    lblTitulo.Text = nombre + " no existe";
+                    lblTitulo.Text = nombre.ToUpper() + " NO EXISTE";
                 }
 
+                rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
+                rptProductos.DataBind();
             }
         }
 
-        public string cargarImagen(object dataItem)
+        public string CargarImagen(object dataItem)
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             Producto producto = (Producto)dataItem;

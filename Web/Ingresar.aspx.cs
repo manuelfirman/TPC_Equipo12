@@ -11,7 +11,6 @@ namespace Web
     public partial class Ingresar : System.Web.UI.Page
     {
         private UsuarioNegocio UsuarioNegocioLogin { get; set; } = new UsuarioNegocio();
-        private Crypt Crypt { get; set; } = new Crypt();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,13 +29,8 @@ namespace Web
                 return;
             }
 
-            string hashPass = UsuarioNegocioLogin.PassPorEmail(email);
-
-            // TODO: Descomentar y reemplazar cuando este el registro
-            //if(Crypt.VerificarPassword(pass, hashPass))
-            if (pass == hashPass)
+            if (UsuarioNegocioLogin.LoginUsuario(email, pass))
             {
-
                 Session["Usuario"] = UsuarioNegocioLogin.BuscarUsuario("Email",email);
                 Response.Redirect("Index.aspx");
             }

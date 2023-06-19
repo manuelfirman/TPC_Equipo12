@@ -19,11 +19,5 @@ namespace Dominio
         public DateTime FechaNacimiento { get; set; }
         public Domicilio Domicilio { get; set; }
         public bool Estado { get; set; }
-
-        public Usuario()
-        {
-            TipoUser = new TipoUsuario();
-            Domicilio = new Domicilio();
-        }
     }
 }

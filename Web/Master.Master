@@ -56,56 +56,71 @@
     <form id="form1" runat="server">
 
 
-        <%--NAVBAR--%>
+        <!--NAVBAR-->
         <nav class="navbar bg-dark border-bottom border-bottom-dark sticky-top" data-bs-theme="dark">
             <div class="container-fluid">
 
-                <%--BOTON MENU--%>
+                <!--BOTON MENU-->
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <%--LISTA DESPLEGABLE--%>
+                <!--LISTA DESPLEGABLE-->
+                <%if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %> <!-- ADMIN || VENDEDOR-->
                 <div class="ml-auto ms-3">
                     <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Productos</a>
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Una categoria</a></li>
-                            <li><a class="dropdown-item" href="#">Otra categoria</a></li>
+                            <% if (Usuario.TipoUser.IDTipo == 3) { %>
+                            <li><a class="dropdown-item" href="Admin.aspx">Panel de Administrador</a></li>
+                            <% } %>
+                            <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Lo que se te ocurra</a></li>
-                            <li><a class="dropdown-item" href="#">Marquitos</a></li>
+                            <li><a class="dropdown-item" href="#">Stock y Ventas</a></li>
+                            <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
                         </ul>
                     </div>
                 </div>
+                <%} %>
 
-                <%--BUSCADOR--%>
+                <!--BUSCADOR-->
                 <div class="d-flex ms-3">
                     <asp:TextBox placeholder="Ejemplo: Celular" CssClass="form-control me-2" ID="txtbusqueda" runat="server"></asp:TextBox>
                     <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" />
                 </div>
 
-                <%--LOGO--%>
+                <!--LOGO-->
                 <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
-                    <%--<img class="me-2" src="https://www.pngall.com/wp-content/uploads/2016/07/Online-Shopping-PNG-Clipart.png" alt="Logo" style="max-width: 80px; height: auto;">--%>
                     <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
 
-                <%--BOTON CARRITO--%>
-                <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
-                    <span class="badge rounded-pill bg-danger text-white ms-1"><%= CantidadCarrito() %></span>
-                </button>
+                <% if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
+                    <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
+                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
+                    </button>
+                <% } else { %>
+                <!--BOTON CARRITO-->
+                    <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1"><%= CantidadCarrito() %></span>
+                    </button>
+                <%} %>
 
-                <%--PANEL CARRITO--%>
+
+                <!--PANEL DERECHO CARRITO/ADMIN-->
+                <% if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo != 2 && Usuario.TipoUser.IDTipo != 3)) { %> <!-- SOLO USUARIO -->
                 <div class="offcanvas offcanvas-end bg-dark offcanvas-style-menu-carrito" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
+
+
+                   <!--CANVAS CARRITO-->
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title text-light" id="offcanvasCarritoLabel">CARRITO</h5>
                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <h6 class="offcanvas-title text-light mb-3 ms-2" id="offcanvasCarritoLabelTuCompra">Tu compra</h6>
                     <div class="offcanvas-body p-0">
-                        <% if (Carrito.Cantidad() > 0)
+                        <% if (Carrito.GetCantidad() > 0)
                             { %>
                         <div class="container">
                             <div class="row">
@@ -159,7 +174,7 @@
                         <% } %>
                     </div>
                     <div class="offcanvas-footer mb-2">
-                    <% if (Carrito.Cantidad() > 0) { %>
+                    <% if (Carrito.GetCantidad() > 0) { %>
                         <div class="container">
 
                             <div class="border-top mb-3"></div>
@@ -175,7 +190,7 @@
 
 
 
-                            <a href="Pago.aspx" class="btn btn-primary w-100 mt-3">Comprar</a>
+                            <a href="Checkout.aspx" class="btn btn-primary w-100 mt-3">Comprar</a>
                         </div>
                     <% } else { %>
 
@@ -183,6 +198,7 @@
                     <%} %>
                     </div>
                 </div>
+                <%} %>
 
 
                 <%--PANEL MENU--%>
@@ -221,16 +237,7 @@
                         </ul>
                     </div>
                     <div class="offcanvas-footer">
-                    <% if(Usuario == null) { %>
-                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                            <li class="nav-item">
-                                <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
-                            </li>
-                        </ul>
-                    <%} else { %>
+                        <% if (Usuario.TipoUser != null) { %>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="PerfilUsuario.aspx">MI PERFIL</a>
@@ -239,6 +246,15 @@
                                 <a class="nav-link" href="Index.aspx?salir=true">CERRAR SESIÓN</a>
                             </li>
                         </ul>
+                    <%} else { %>
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
+                            </li>
+                        </ul
                     <%} %>
                     </div>
                 </div>
@@ -248,13 +264,13 @@
             </div>
         </nav>
 
-        <%--CONTENT--%>
+        <!--CONTENT-->
 
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 
 
-        <%--FOOTER--%>
+        <!--FOOTER-->
         <footer class="bg-dark text-white text-center py-3">
             <p>Derechos de autor &copy; 2023 Tu E-commerce. Todos los derechos reservados.</p>
         </footer>
