@@ -37,7 +37,7 @@ namespace Web
             if (pass == hashPass)
             {
 
-                Session["Usuario"] = UsuarioNegocioLogin.UsuarioPorEmail(email);
+                Session["Usuario"] = UsuarioNegocioLogin.BuscarUsuario("Email",email);
                 Response.Redirect("Index.aspx");
             }
             else

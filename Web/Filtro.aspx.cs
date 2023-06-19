@@ -26,10 +26,10 @@ namespace Web
                 }else if (tipo == "Marca" || tipo == "Categoria")
                 {
                     listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
-                    lblTitulo.Text = "Productos para la marca" + tipo;
+                    lblTitulo.Text = "Productos para la " + tipo + " " + nombre;
                     if(listaProductos.Count == 0)
                     {
-                        lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + tipo;
+                        lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre;
                         return;
                     }
                     RepFiltro.DataSource = listaProductos;
@@ -37,7 +37,7 @@ namespace Web
                 }
                 else
                 {
-                    lblTitulo.Text = tipo + " no existe";
+                    lblTitulo.Text = nombre + " no existe";
                 }
 
             }

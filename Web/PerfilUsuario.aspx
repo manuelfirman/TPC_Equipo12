@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="PerfilUsuario.aspx.cs" Inherits="Web.PerfilUsuario" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -20,17 +21,18 @@
                                 <span id="spnEmail" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Email %></span>
                             </div>
                             <div class="form-group">
-                                <label>Telefono:</label>
-                                <span id="spnTelefono" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
-                            </div>
-                            <div class="form-group">
                                 <label>DNI:</label>
                                 <span id="spnDni" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).DNI %></span>
                             </div>
+
+                            <!-- <div class="form-group">
+                                <label>Telefono:</label>
+                                <span id="spnTelefono" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
+                            </div> -->
                         </div>
 
                         <!--DATOS DOMICILIO-->
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
+                        <!-- <div class="card card-body bg-dark text-light mb-1 mx-1">
                             <h4 class="text-primary">Dirección - <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Alias %></h4>
                             <div class="form-group">
                                 <label>Provincia:</label>
@@ -56,7 +58,7 @@
                                 <label>Domicilio:</label>
                                 <span id="spnCalle" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Calle %> <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Altura %></span>
                             </div>
-                        </div>
+                        </div>  -->
                     </div>
             </ItemTemplate>
         </asp:Repeater>
