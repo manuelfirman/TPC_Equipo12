@@ -66,22 +66,24 @@
                 </button>
 
                 <!--LISTA DESPLEGABLE-->
-                <%if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %> <!-- ADMIN || VENDEDOR-->
-                <div class="ml-auto ms-3">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>
-                        <ul class="dropdown-menu">
-                            <% if (Usuario.TipoUser.IDTipo == 3) { %>
-                            <li><a class="dropdown-item" href="Admin.aspx">Panel de Administrador</a></li>
-                            <% } %>
-                            <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Stock y Ventas</a></li>
-                            <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <%} %>
+                <%if (HayUser) {  %>
+                    <%if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %> <!-- ADMIN || VENDEDOR-->
+                        <div class="ml-auto ms-3">
+                            <div class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>
+                                <ul class="dropdown-menu">
+                                    <% if (Usuario.TipoUser.IDTipo == 3) { %>
+                                    <li><a class="dropdown-item" href="Admin.aspx">Panel de Administrador</a></li>
+                                    <% } %>
+                                    <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Stock y Ventas</a></li>
+                                    <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    <%} %>
+                <% } %>
 
                 <!--BUSCADOR-->
                 <div class="d-flex ms-3">
@@ -93,12 +95,13 @@
                 <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
                     <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
-
-                <% if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
-                    <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
-                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
-                        <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
-                    </button>
+                <% if(HayUser) { %>
+                    <% if ((Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
+                        <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
+                            <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                            <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
+                        </button>
+                    <% } %>
                 <% } else { %>
                 <!--BOTON CARRITO-->
                     <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
@@ -109,7 +112,6 @@
 
 
                 <!--PANEL DERECHO CARRITO/ADMIN-->
-                <% if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo != 2 && Usuario.TipoUser.IDTipo != 3)) { %> <!-- SOLO USUARIO -->
                 <div class="offcanvas offcanvas-end bg-dark offcanvas-style-menu-carrito" tabindex="-1" id="offcanvasCarrito" aria-labelledby="offcanvasCarritoLabel">
 
 
@@ -198,7 +200,6 @@
                     <%} %>
                     </div>
                 </div>
-                <%} %>
 
 
                 <%--PANEL MENU--%>
@@ -237,7 +238,7 @@
                         </ul>
                     </div>
                     <div class="offcanvas-footer">
-                        <% if (Usuario.TipoUser != null) { %>
+                        <% if (HayUser) { %>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="PerfilUsuario.aspx">MI PERFIL</a>
