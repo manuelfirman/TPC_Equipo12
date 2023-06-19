@@ -46,5 +46,15 @@ namespace Web
                 lblMessage.Visible = true;
             }
         }
+
+        protected void btnOlvidePass_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("RecuperarContraseña.aspx");
+        }
+
+        protected void btnRegistrarse_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CrearCuenta.aspx");
+        }
     }
 }
