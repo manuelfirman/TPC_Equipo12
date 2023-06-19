@@ -4,9 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <asp:Label ID="lblTitulo" runat="server" Text="" CssClass="h-2"></asp:Label>
 
     <main class="bg-light">
+        <h3 class="text-center mx-2"><asp:Label ID="lblTitulo" runat="server" Text=""></asp:Label></h3>
         <section class="container">
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">

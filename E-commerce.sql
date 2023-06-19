@@ -71,7 +71,7 @@ GO
 CREATE TABLE Usuarios (
     ID_Usuario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_TipoUsuario BIGINT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
-    ID_Domicilio BIGINT NOT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
+    ID_Domicilio BIGINT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
     Dni VARCHAR(10) NOT NULL UNIQUE,
     Nombre VARCHAR(15) NOT NULL,
     Apellido VARCHAR(15) NOT NULL,
@@ -305,5 +305,3 @@ BEGIN
     SELECT @IDImagen = ID_Imagen FROM deleted
     UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
 END
-
-exec SP_ListarTodosLosProductos
