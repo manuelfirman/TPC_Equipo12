@@ -66,6 +66,7 @@
   <ItemGroup>
     <Content Include="404.aspx" />
     <Content Include="Admin.aspx" />
+    <Content Include="Categorias.aspx" />
     <Content Include="Checkout.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -89,6 +90,7 @@
     <Content Include="Global.asax" />
     <Content Include="Index.aspx" />
     <Content Include="Ingresar.aspx" />
+    <Content Include="ModificarUsuario.aspx" />
     <Content Include="PerfilUsuario.aspx" />
     <Content Include="RecuperarContraseña.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -119,6 +121,13 @@
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Categorias.aspx.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Categorias.aspx.designer.cs">
+      <DependentUpon>Categorias.aspx</DependentUpon>
     </Compile>
     <Compile Include="Checkout.aspx.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
@@ -171,6 +180,13 @@
     </Compile>
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ModificarUsuario.aspx.cs">
+      <DependentUpon>ModificarUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModificarUsuario.aspx.designer.cs">
+      <DependentUpon>ModificarUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="PerfilUsuario.aspx.cs">
       <DependentUpon>PerfilUsuario.aspx</DependentUpon>
