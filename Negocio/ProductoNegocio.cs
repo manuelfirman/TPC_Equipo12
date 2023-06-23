@@ -236,17 +236,207 @@ namespace Negocio
 
         public bool AgregarProducto(Producto producto)
         {
-            return true;
+            NegocioDB db = new NegocioDB();
+            try
+            {
+                db.SetQuery($"INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado) VALUES(@ID_Categoria, @ID_Marca, @Codigo, @Nombre, @Descripcion, @Precio, @Stock, @Estado)");
+                db.SetParam("@ID_Categoria", producto.Categoria.IDCategoria);
+                db.SetParam("@ID_Marca", producto.Marca.IDMarca);
+                db.SetParam("@Codigo", producto.Codigo);
+                db.SetParam("@Nombre", producto.Nombre);
+                db.SetParam("@Descripcion", producto.Descripcion);
+                db.SetParam("@Precio", producto.Precio);
+                db.SetParam("@Stock", producto.Stock);
+                db.SetParam("@Estado", 1);
+                if (db.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                db.Close();
+            }
         }
 
         public bool ModificarProducto(Producto producto)
         {
-            return true;
+            NegocioDB db = new NegocioDB();
+            try
+            {
+                db.SetQuery($"UPDATE Productos SET ID_Categoria = @ID_Categoria, ID_Marca = @ID_Marca, Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock, Estado = @Estado");
+                db.SetParam("@ID_Categoria", producto.Categoria.IDCategoria);
+                db.SetParam("@ID_Marca", producto.Marca.IDMarca);
+                db.SetParam("@Codigo", producto.Codigo);
+                db.SetParam("@Nombre", producto.Nombre);
+                db.SetParam("@Descripcion", producto.Descripcion);
+                db.SetParam("@Precio", producto.Precio);
+                db.SetParam("@Stock", producto.Stock);
+                db.SetParam("@Estado", 1);
+                if (db.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                db.Close();
+            }
+        }
+
+        public bool EstadoProducto(long ID_Producto, bool Estado)
+        {
+            NegocioDB db = new NegocioDB();
+            try
+            {
+                db.SetQuery($"UPDATE Productos SET Estado = @Estado WHERE ID_Producto = @ID_Producto");
+                db.SetParam("@Estado", Estado);
+                db.SetParam("@ID_Producto", ID_Producto);
+                if (db.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                db.Close();
+            }
         }
 
         public bool EliminarProducto(long IDProducto)
         {
-            return true;
+            NegocioDB db = new NegocioDB();
+            try
+            {
+                db.SetQuery($"DELETE FROM Productos WHERE ID_Producto = @ID_Producto");
+                db.SetParam("@ID_Producto", IDProducto);
+                if (db.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                db.Close();
+            }
+        }
+
+        public bool AgregarImagenes(Producto producto)
+        {
+            NegocioDB dB = new NegocioDB();
+            int cantidad = producto.Imagenes.Count;
+            int columnasAfectadas = 0;
+            try
+            {
+                foreach (Imagen imagen in producto.Imagenes)
+                {
+                    dB.SetQuery($"INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@ID_Producto, @ImagenURL, @Descripcion, @Estado)");
+                    dB.SetParam("@ID_Producto", producto.IDProducto);
+                    dB.SetParam("@ImagenURL", imagen.Url);
+                    dB.SetParam("@Descripcion", imagen.Descripcion);
+                    dB.SetParam("@Estado", 1);
+                    if (dB.RunQuery() == 1) columnasAfectadas++;
+                }
+
+                if (columnasAfectadas == cantidad) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                dB.Close();
+            }
+        }
+
+        public bool ModificarImagenes(Producto producto)
+        {
+            NegocioDB dB = new NegocioDB();
+            int cantidad = producto.Imagenes.Count;
+            int columnasAfectadas = 0;
+            try
+            {
+                foreach (Imagen imagen in producto.Imagenes)
+                {
+                    dB.SetQuery($"UPDATE Imagenes SET ID_Producto = @ID_Producto, ImagenURL = @ImagenURL, Descripcion = @Descripcion, Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
+                    dB.SetParam("@ID_Imagen", imagen.IDImagen);
+                    dB.SetParam("@ID_Producto", producto.IDProducto);
+                    dB.SetParam("@ImagenURL", imagen.Url);
+                    dB.SetParam("@Descripcion", imagen.Descripcion);
+                    dB.SetParam("@Estado", 1);
+                    if (dB.RunQuery() == 1) columnasAfectadas++;
+                }
+
+                if (columnasAfectadas == cantidad) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                dB.Close();
+            }
+        }
+
+        public bool EstadoImagen(long ID_Imagen, bool Estado)
+        {
+            NegocioDB dB = new NegocioDB();
+            try
+            {
+                dB.SetQuery($"UPDATE Imagenes SET Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
+                dB.SetParam("@ID_Imagen", ID_Imagen);
+                dB.SetParam("@Estado", Estado);
+                if (dB.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                dB.Close();
+            }
+        }
+
+        public bool EliminarImagen(long ID_Imagen)
+        {
+            NegocioDB dB = new NegocioDB();
+            try
+            {
+                dB.SetQuery($"DELETE FROM Imagenes WHERE ID_Imagen = @ID_Imagen)");
+                dB.SetParam("@ID_Imagen", ID_Imagen);
+                if (dB.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                dB.Close();
+            }
         }
     }
 }
