@@ -222,14 +222,15 @@ namespace Negocio
             }
         }
 
-        public bool BajaUsuario(long IDUsuario)
+        public bool EstadoUsuario(long IDUsuario, int estado)
         {
             Database = new NegocioDB();
 
             try
             {
-                Database.SetQuery("UPDATE TABLE Usuarios SET Estado = 0 WHERE ID_Usuario = @ID_Usuario");
+                Database.SetQuery("UPDATE TABLE Usuarios SET Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
+                Database.SetParam("@Estado", estado);
 
                 if (Database.RunQuery() == 1) return true;
                 else return false;

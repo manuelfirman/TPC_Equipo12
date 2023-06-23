@@ -87,8 +87,9 @@ namespace Negocio
             Database = new NegocioDB();
             try
             {
-                Database.SetQuery("UPDATE TABLE Categorias SET Nombre = @Nombre");
+                Database.SetQuery("UPDATE TABLE Categorias SET Nombre = @Nombre WHERE ID_Categoria = @ID_Categoria");
                 Database.SetParam("@Nombre", categoria.Nombre);
+                Database.SetParam("@ID_Categoria", categoria.IDCategoria);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
