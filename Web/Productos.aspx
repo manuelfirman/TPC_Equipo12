@@ -57,6 +57,12 @@
                 </asp:DropDownList>
             </div>
 
+            <div class="mb-3" >
+                <label class="form-label" runat="server" id="lblEstado"></label>
+                <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
+                </asp:DropDownList>
+            </div>
+
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregar_Click" />
             </div>

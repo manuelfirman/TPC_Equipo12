@@ -276,7 +276,7 @@ namespace Negocio
                 db.SetParam("@Precio", producto.Precio);
                 db.SetParam("@Stock", producto.Stock);
                 db.SetParam("@ID_Producto", producto.IDProducto);
-                db.SetParam("@Estado", 1);
+                db.SetParam("@Estado", producto.Estado);
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }

@@ -59,7 +59,10 @@ namespace Web
                     DRPCategoria.Items.Add(item);
                     posicion++;
                 }
-
+                item = new ListItem("Activado", "1");
+                DRPEstado.Items.Add(item);
+                item = new ListItem("Desactivado", "2");
+                DRPEstado.Items.Add(item);
                 if (tipo == "Modificar")
                 {
                     if (id == null || id == "")
@@ -76,11 +79,14 @@ namespace Web
                     lblCategoria.InnerText = $"Categoria actual: {producto.Categoria.Nombre}";
                     lblMarca.InnerText = $"Marca actual: {producto.Marca.Nombre}";
                     btnAgregar.Text = "Modificar Producto";
+                    string estadoActual = producto.Estado == true ? "Activado" : "Desactivado";
+                    lblEstado.InnerText = $"Estado actual: {estadoActual}";
                     txtTitulo.InnerText = "Modificar Producto";
                 }else {
                     txtTitulo.InnerText = "Agregar Producto";
-                    lblCategoria.InnerText = "Categoria";
-                    lblMarca.InnerText = "Marca";
+                    lblCategoria.InnerText = "Categoria:";
+                    lblMarca.InnerText = "Marca:";
+                    lblEstado.InnerText = $"Estado:";
                     btnAgregar.Text = "Agregar Producto";
                 }
             }
@@ -103,7 +109,7 @@ namespace Web
             producto.Categoria.IDCategoria = long.Parse(DRPCategoria.SelectedValue.Split(',')[1]);
             producto.Marca.Nombre = DRPMarca.SelectedValue.Split(',')[0];
             producto.Marca.IDMarca = long.Parse(DRPMarca.SelectedValue.Split(',')[1]);
-            
+            producto.Estado = DRPEstado.SelectedItem.ToString() == "Activado" ? true : false;
             if (tipo == "Agregar"){
                 
                 bool ok = productoNegocio.AgregarProducto(producto);
