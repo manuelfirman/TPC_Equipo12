@@ -20,12 +20,12 @@
 
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">Nombre Marca:</label>
-                <input type="text" id="txtNombre" runat="server" />
+                <input type="text" id="txtNombre" runat="server" class="form-control"/>
             </div>
 
             <div class="mb-3" >
                 <label class="form-label" runat="server" id="lblEstado"></label>
-                <asp:DropDownList ID="DRPEstado" runat="server">
+                <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
                 </asp:DropDownList>
             </div>
 

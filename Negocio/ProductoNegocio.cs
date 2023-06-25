@@ -267,7 +267,7 @@ namespace Negocio
             NegocioDB db = new NegocioDB();
             try
             {
-                db.SetQuery($"UPDATE Productos SET ID_Categoria = @ID_Categoria, ID_Marca = @ID_Marca, Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock, Estado = @Estado");
+                db.SetQuery($"UPDATE Productos SET ID_Categoria = @ID_Categoria, ID_Marca = @ID_Marca, Codigo = @Codigo, Nombre = @Nombre, Descripcion = @Descripcion, Precio = @Precio, Stock = @Stock, Estado = @Estado WHERE ID_Producto = @ID_Producto");
                 db.SetParam("@ID_Categoria", producto.Categoria.IDCategoria);
                 db.SetParam("@ID_Marca", producto.Marca.IDMarca);
                 db.SetParam("@Codigo", producto.Codigo);
@@ -275,6 +275,7 @@ namespace Negocio
                 db.SetParam("@Descripcion", producto.Descripcion);
                 db.SetParam("@Precio", producto.Precio);
                 db.SetParam("@Stock", producto.Stock);
+                db.SetParam("@ID_Producto", producto.IDProducto);
                 db.SetParam("@Estado", 1);
                 if (db.RunQuery() == 1) return true;
                 else return false;
