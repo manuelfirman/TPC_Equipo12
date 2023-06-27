@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -17,33 +18,67 @@ namespace Web
         {
             if (!IsPostBack)
             {
+                string filtro = Request.QueryString["Filtro"];
                 string tipo = Request.QueryString["Tipo"];
                 string nombre = Request.QueryString["Nombre"];
-                if (nombre == null || tipo == null)
+                string busqueda = Request.QueryString["Busqueda"];
+
+                if(filtro == null)
                 {
                     lblTitulo.Text = "NO SE HA SELECCIONADO NADA";
                     return;
                 }
-                else if (tipo == "Marca" || tipo == "Categoria")
+                else if(filtro == "busqueda")
                 {
-                    listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
-                    lblTitulo.Text = tipo.ToUpper() + " " + nombre.ToUpper();
-                    if(listaProductos.Count == 0)
-                    {
-                        lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre.ToUpper();
-                        return;
-                    }
-                    RepFiltro.DataSource = listaProductos;
-                    RepFiltro.DataBind();
+                    FiltroBusqueda(busqueda);
                 }
-                else
+                else if (filtro == "detalle")
                 {
-                    lblTitulo.Text = nombre.ToUpper() + " NO EXISTE";
+                    FiltroDetalle(nombre, tipo);
                 }
 
                 rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
                 rptProductos.DataBind();
             }
+        }
+
+        public void FiltroDetalle(string nombre, string tipo)
+        {
+            if (nombre == null || tipo == null)
+            {
+
+                lblTitulo.Text = "NO SE HA SELECCIONADO NADA";
+                return;
+            }
+            else if (tipo == "Marca" || tipo == "Categoria")
+            {
+                listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
+                lblTitulo.Text = tipo.ToUpper() + " " + nombre.ToUpper();
+                if (listaProductos.Count == 0)
+                {
+                    lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre.ToUpper();
+                    return;
+                }
+                RepFiltro.DataSource = listaProductos;
+                RepFiltro.DataBind();
+            }
+            else
+            {
+                lblTitulo.Text = nombre.ToUpper() + " NO EXISTE";
+            }
+        }
+
+        public void FiltroBusqueda(string busqueda)
+        {
+            listaProductos = productoNegocio.BuscadorProductos(busqueda);
+            lblTitulo.Text = "Resultado de la busqueda: " + busqueda;
+            if (listaProductos.Count == 0)
+            {
+                lblTitulo.Text = "NO SE ENCONTRARON PRODUCTOS PARA LA BUSQUEDA: " + busqueda;
+                return;
+            }
+            RepFiltro.DataSource = listaProductos;
+            RepFiltro.DataBind();
         }
 
         public string CargarImagen(object dataItem)

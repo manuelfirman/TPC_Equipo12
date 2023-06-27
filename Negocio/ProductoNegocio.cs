@@ -234,6 +234,60 @@ namespace Negocio
             }
         }
 
+        public List<Producto> BuscadorProductos(string busqueda)
+        {
+            Database = new NegocioDB();
+            List<Producto> lista = new List<Producto>();
+            ImagenNegocio imagenNegocio = new ImagenNegocio();
+            Producto auxProducto;
+
+            try
+            {
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE '%' + @Busqueda + '%' OR M.Nombre LIKE '%' + @Busqueda + '%' OR C.Nombre LIKE '%' + @Busqueda + '%' OR P.Descripcion LIKE '%' + @Busqueda + '%'");
+                Database.SetParam("@Busqueda", busqueda);
+                Database.Read();
+                while (Database.Reader.Read())
+                {
+                    auxProducto = new Producto();
+                    long IDProducto = (long)Database.Reader["IDProducto"];
+                    auxProducto.IDProducto = IDProducto;
+                    if (!(Database.Reader["Codigo"] is DBNull)) auxProducto.Codigo = (string)Database.Reader["Codigo"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) auxProducto.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Descripcion"] is DBNull)) auxProducto.Descripcion = (string)Database.Reader["Descripcion"];
+                    if (!(Database.Reader["Stock"] is DBNull)) auxProducto.Stock = (int)Database.Reader["Stock"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxProducto.Estado = (bool)Database.Reader["Estado"];
+                    if (!(Database.Reader["Precio"] is DBNull)) auxProducto.Precio = (decimal)Database.Reader["Precio"];
+
+                    auxProducto.Imagenes = imagenNegocio.ImagenesProducto(IDProducto);
+
+                    if (!(Database.Reader["IDMarca"] is DBNull))
+                    {
+                        auxProducto.Marca.Nombre = (string)Database.Reader["Marca"];
+                        auxProducto.Marca.IDMarca = (long)Database.Reader["IDMarca"];
+                    }
+
+                    if (!(Database.Reader["IDCategoria"] is DBNull))
+                    {
+                        auxProducto.Categoria.Nombre = (string)Database.Reader["Categoria"];
+                        auxProducto.Categoria.IDCategoria = (long)Database.Reader["IDCategoria"];
+                    }
+
+                    lista.Add(auxProducto);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
         public bool AgregarProducto(Producto producto)
         {
             NegocioDB db = new NegocioDB();
