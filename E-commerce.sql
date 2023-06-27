@@ -71,17 +71,18 @@ GO
 CREATE TABLE Usuarios (
     ID_Usuario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_TipoUsuario BIGINT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
-    ID_Domicilio BIGINT NOT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
+    ID_Domicilio BIGINT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
     Dni VARCHAR(10) NOT NULL UNIQUE,
     Nombre VARCHAR(15) NOT NULL,
     Apellido VARCHAR(15) NOT NULL,
     Email VARCHAR(50) NOT NULL UNIQUE,
-    Contrasena VARCHAR(20) NOT NULL, 
-    Telefono VARCHAR(15) NOT NULL,
-    FechaNacimiento DATE NOT NULL,
+    Contrasena VARCHAR(200) NOT NULL, 
+    Telefono VARCHAR(15) NULL,
+    FechaNacimiento DATE NULL,
     Estado BIT NULL DEFAULT 1,
 )
-GO
+
+
 CREATE TABLE Ventas (
     ID_Venta BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Factura BIGINT NOT NULL FOREIGN KEY REFERENCES Facturas (ID_Factura),
@@ -105,6 +106,15 @@ CREATE TABLE Comentarios (
     Comentario VARCHAR(150) NOT NULL,
     Fecha DATETIME DEFAULT GETDATE(),
     Estado BIT NULL DEFAULT 1
+)
+GO
+CREATE TABLE Banners (
+    ID_Banner BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    Titulo VARCHAR(100) NOT NULL,
+    Texto VARCHAR(200) NOT NULL,
+    Referencia VARCHAR(50) NOT NULL,
+    ImagenURL VARCHAR(1000) NOT NULL,
+
 )
 
 ----------------------------------------------------------------------------------
@@ -306,4 +316,13 @@ BEGIN
     UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
 END
 
-exec SP_ListarTodosLosProductos
+---------- USUARIOS TRIGGER ISTEAD OF DELETE ----------
+GO
+CREATE TRIGGER TR_DeleteUsuario ON Usuarios
+INSTEAD OF DELETE
+AS
+BEGIN
+    DECLARE @IDUsuario INT
+    SELECT @IDUsuario = ID_Usuario FROM deleted
+    UPDATE Usuarios SET Estado = 0 WHERE ID_Usuario = @IDUsuario
+END

@@ -17,6 +17,7 @@ namespace Web
         private MarcaNegocio MarcaNegocioMaster { get; set; }
         protected CarritoNegocio Carrito { get; set; }
         protected Usuario Usuario { get; set; }
+        public bool HayUser { get; set; }
 
         public Master()
         {
@@ -26,6 +27,15 @@ namespace Web
         protected void Page_Load(object sender, EventArgs e)
         {
             // USUARIO
+            Usuario = Session["Usuario"] as Usuario;
+            if(Usuario == null)
+            {
+                HayUser = false;
+            }
+            else
+            {
+                HayUser = true;
+            }
             CheckCerrarSesion();
 
             // CARRITO
@@ -38,7 +48,7 @@ namespace Web
 
             if (!IsPostBack)
             {
-                Usuario = Session["Usuario"] as Usuario;
+
 
                 Categorias = CategoriaNegocioMaster.ListarCategoria();
                 Marcas = MarcaNegocioMaster.ListarMarcas();
@@ -53,7 +63,7 @@ namespace Web
 
         public int CantidadCarrito()
         {
-            return Carrito.Cantidad();
+            return Carrito.GetCantidad();
         }
 
         public void AgregarCarrito(Producto producto, int cantidad)
@@ -65,7 +75,7 @@ namespace Web
         public void ActualizarCarrito()
         {
             Session["Carrito"] = Carrito;
-            rptModal.DataSource = Carrito.Elementos();
+            rptModal.DataSource = Carrito.GetElementos();
             rptModal.DataBind();
         }
 
@@ -105,7 +115,7 @@ namespace Web
             {
                 if (salir == "true")
                 {
-                    Session["Usuario"] = null;
+                    Session.Clear();
                     Response.Redirect("Ingresar.aspx");
                 }
             }

@@ -148,7 +148,8 @@
                                             <h5 class="card-title">Esta publicación no tiene comentarios, ¡sé el primero!</h5>
                                             <% }
                                             else
-                                            {%>
+                                            {
+%>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
                                                     <h5 class="card-title"><%# Eval("NombreUsuario") %></h5>

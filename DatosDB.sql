@@ -202,12 +202,15 @@ VALUES (14, 'Neuquen', 'Belgrano', '1500', '8300', 1);
 INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado)
 VALUES (14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
 
--- USER VENDEDOR
-INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', 'elvendedor1234', '2995123123', GETDATE(), 1);
-
 -- USER COMUN
 INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (1, 2, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', 'juan1234', '2995323232', GETDATE(), 1);
+VALUES (1, 2, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995323232', GETDATE(), 1);
 
+-- USER VENDEDOR
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995123123', GETDATE(), 1);
+
+-- USER ADMIN (TODAS LAS PASS SON luis1234)
+INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (3, 2, '0000000', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
 

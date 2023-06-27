@@ -11,33 +11,6 @@ namespace Negocio
     {
         private NegocioDB Database { get; set; }
 
-        public bool CrearComentario(Comentario comentario)
-        {
-            Database = new NegocioDB();
-
-            try
-            {
-                Database.SetQuery("INSERT INTO Comentarios(ID_Producto, ID_Usuario, Comentario) VALUES(@ID_Producto, @ID_Usuario, @Comentario)");
-                Database.SetParam("@Comentario", comentario.TextoComentario);
-                Database.SetParam("@ID_Producto", comentario.IDProducto);
-                Database.SetParam("@ID_Usuario", comentario.IDUsuario);
-
-                if (Database.RunQuery() == 1)
-                {
-                    return true;
-                }
-                return false;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally 
-            { 
-                Database.Close(); 
-            }
-        }
-
         public List<Comentario> ComentariosPorProducto(long IDProducto)
         {
             Database = new NegocioDB();
@@ -77,6 +50,33 @@ namespace Negocio
         public List<Comentario> ComentariosPorUsuario(long IDUsuario)
         {
             return new List<Comentario>();
+        }
+
+        public bool CrearComentario(Comentario comentario)
+        {
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("INSERT INTO Comentarios(ID_Producto, ID_Usuario, Comentario) VALUES(@ID_Producto, @ID_Usuario, @Comentario)");
+                Database.SetParam("@Comentario", comentario.TextoComentario);
+                Database.SetParam("@ID_Producto", comentario.IDProducto);
+                Database.SetParam("@ID_Usuario", comentario.IDUsuario);
+
+                if (Database.RunQuery() == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally 
+            { 
+                Database.Close(); 
+            }
         }
 
         public bool EliminarComentario(long IDComentario)

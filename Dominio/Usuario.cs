@@ -23,7 +23,6 @@ namespace Dominio
         public Usuario()
         {
             TipoUser = new TipoUsuario();
-            Domicilio = new Domicilio();
         }
     }
 }
