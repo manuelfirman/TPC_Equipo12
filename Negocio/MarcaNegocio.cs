@@ -16,7 +16,7 @@ namespace Negocio
             Database = new NegocioDB();
             List<Marca> marcas = new List<Marca>();
 
-            Database.StoreProcedure("SP_ListarMarcas");
+            Database.SetQuery("SELECT M.Estado, M.Nombre, M.ID_Marca FROM Marcas AS M");
             Database.Read();
             while (Database.Reader.Read())
             {

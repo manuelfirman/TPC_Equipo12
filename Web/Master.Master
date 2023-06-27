@@ -77,9 +77,10 @@
                                     <% } %>
                                     <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="Marcas.aspx">Gestionar Marcas</a></li>
-                                    <li><a class="dropdown-item" href="Categorias.aspx">Gestionar Categorias</a></li>
-                                    <li><a class="dropdown-item" href="Productos.aspx">Gestionar Productos</a></li>
+                                    <li><a class="dropdown-item" href="Marcas.aspx?Tipo=Agregar">Agregar Marcas</a></li>
+                                    <li><a class="dropdown-item" href="Categorias.aspx?Tipo=Agregar">Agregar Categoria</a></li>
+                                    <li><a class="dropdown-item" href="Productos.aspx?Tipo=Agregar">Agregar Producto</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
                                 </ul>
                             </div>
@@ -90,7 +91,7 @@
                 <!--BUSCADOR-->
                 <div class="d-flex ms-3">
                     <asp:TextBox placeholder="Ejemplo: Celular" CssClass="form-control me-2" ID="txtbusqueda" runat="server"></asp:TextBox>
-                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" />
+                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" OnClick="BtnBusqueda_Click" />
                 </div>
 
                 <!--LOGO-->
@@ -220,7 +221,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repMarcas" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Busqueda&Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -231,7 +232,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repCategorias" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Busqueda&Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>

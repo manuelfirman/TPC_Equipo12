@@ -61,7 +61,7 @@ namespace Web
             {
                 marca.Estado = DRPEstado.SelectedItem.ToString() == "Activado" ? true : false;
                 marca.Nombre = txtNombre.Value;
-                marca.IDMarca = long.Parse(Request.QueryString["Id"]);
+                //marca.IDMarca = long.Parse(Request.QueryString["Id"]);
                 if (marcaNegocio.AgregarMarca(marca)) lblMessage.Text = "Marca agregada correctamente";
                 else lblMessage.Text = "Hubo un error";
             }
