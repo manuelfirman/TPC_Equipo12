@@ -68,7 +68,8 @@
             </div>
 
             <div class="text-center">
-                <asp:Label ID="lblMessage" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                <asp:Label ID="lblMessageError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                <asp:Label ID="lblMessageOk" runat="server" CssClass="text-succes" Visible="false"></asp:Label>
             </div>
 
 
