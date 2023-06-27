@@ -15,41 +15,51 @@ namespace Web
         private string tipo;
         private Marca marca = new Marca();
         private MarcaNegocio marcaNegocio = new MarcaNegocio();
+        private Usuario usuario = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
-            tipo = Request.QueryString["Tipo"];
-            if (!IsPostBack)
+            usuario = Session["Usuario"] as Usuario;
+            if (usuario != null && (usuario.TipoUser.Nombre == "Vendedor" || usuario.TipoUser.Nombre == "Admin"))
             {
 
-                if (tipo == null || (tipo != "Agregar" && tipo != "Modificar"))
+                tipo = Request.QueryString["Tipo"];
+                if (!IsPostBack)
                 {
-                    Response.Redirect("404.aspx");
-                }
-                ListItem item;
-                txtTitulo.InnerText = $"{tipo} Marca";
-                lblEstado.InnerText = "Estado";
-                item = new ListItem("Activado", "1");
-                DRPEstado.Items.Add(item);
-                item = new ListItem("Desactivado", "2");
-                DRPEstado.Items.Add(item);
-                btnAgregar.Text = "Agregar Marca";
 
-                if (tipo == "Modificar")
-                {
-                    if (Request.QueryString["Id"] == null || Request.QueryString["Id"] == "")
+                    if (tipo == null || (tipo != "Agregar" && tipo != "Modificar"))
                     {
                         Response.Redirect("404.aspx");
                     }
+                    ListItem item;
+                    txtTitulo.InnerText = $"{tipo} Marca";
+                    lblEstado.InnerText = "Estado";
+                    item = new ListItem("Activado", "1");
+                    DRPEstado.Items.Add(item);
+                    item = new ListItem("Desactivado", "2");
+                    DRPEstado.Items.Add(item);
+                    btnAgregar.Text = "Agregar Marca";
 
-                    long id = long.Parse(Request.QueryString["Id"]);
-                    marca = marcaNegocio.MarcaPorID(id);
-                    if (marca.IDMarca == 0) Response.Redirect("404.aspx");
-                    string estadoActual = marca.Estado == true ? "Activado" : "Desactivado";
-                    lblEstado.InnerText = $"Estado Actual: {estadoActual}";
-                    txtNombre.Value = marca.Nombre;
-                    btnAgregar.Text = "Modificar Marca";
+                    if (tipo == "Modificar")
+                    {
+                        if (Request.QueryString["Id"] == null || Request.QueryString["Id"] == "")
+                        {
+                            Response.Redirect("404.aspx");
+                        }
+
+                        long id = long.Parse(Request.QueryString["Id"]);
+                        marca = marcaNegocio.MarcaPorID(id);
+                        if (marca.IDMarca == 0) Response.Redirect("404.aspx");
+                        string estadoActual = marca.Estado == true ? "Activado" : "Desactivado";
+                        lblEstado.InnerText = $"Estado Actual: {estadoActual}";
+                        txtNombre.Value = marca.Nombre;
+                        btnAgregar.Text = "Modificar Marca";
+                    }
+
                 }
-
+            }
+            else
+            {
+                Response.Redirect("404.aspx");
             }
         }
 

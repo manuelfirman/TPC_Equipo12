@@ -190,17 +190,16 @@ namespace Negocio
             }
         }
 
-        public int Modificar(long idImagen, string url, string descripcion)
+        public int Modificar(long idImagen, string descripcion)
         {
             Database = new NegocioDB();
-            string query = "UPDATE IMAGENES SET ImagenURL = @Url, Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
+            string query = "UPDATE IMAGENES SET Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
             try
             {
                 int rowsAffected = 0;
-                Database.SetParam("@Url", url);
+                Database.SetQuery(query);
                 Database.SetParam("@IDImagen", idImagen);
                 Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
                 rowsAffected = Database.RunQuery();
                 return rowsAffected;
             }
@@ -215,14 +214,15 @@ namespace Negocio
             }
         }
 
-        public int Eliminar(long IDProductoImagen)
+        public int EstadoImagen(long IDImagen, bool estado)
         {
             Database = new NegocioDB();
-            string query = "DELETE FROM IMAGENES WHERE ID_Producto = @IDProductoImagen";
+            string query = "UPDATE IMAGENES SET Estado = @Estado WHERE ID_Imagen = @ID_Imagen";
             try
             {
                 int rowsAffected = 0;
-                Database.SetParam("@IDProductoImagen", IDProductoImagen);
+                Database.SetParam("@ID_Imagen", IDImagen);
+                Database.SetParam("@Estado", estado);
                 Database.SetQuery(query);
                 rowsAffected = Database.RunQuery();
                 return rowsAffected;

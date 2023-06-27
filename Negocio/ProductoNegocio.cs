@@ -493,7 +493,6 @@ namespace Negocio
                 dB.Close();
             }
         }
-
     }
 }
 
