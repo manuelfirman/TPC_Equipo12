@@ -33,7 +33,10 @@
                                 <span id="spnNacimiento" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToString() %></span>
                             </div>
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario">Actualizar datos personales</button>
+                                <a href="ModificarUsuario.aspx">
+                                    <button type="button" class="btn btn-primary">Actualizar datos personales</button>
+                                </a>
+                                <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario">Actualizar datos personales</button>--%>
                             </div>
                         </div>
 
@@ -65,7 +68,7 @@
                                 <span id="spnCalle" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Calle %> <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Altura %></span>
                             </div>  
                             <div class="form-group">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarDomicilio">Actualizar Domicilio</button>
+                                <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarDomicilio">Actualizar Domicilio</button>--%>
                             </div>
                         </div>
                     </div>
@@ -74,7 +77,7 @@
 
 
 
-        <!-- MODAL DATOS PERSONALES -->
+       <%-- <!-- MODAL DATOS PERSONALES -->
         <div class="modal fade" id="modalModificarUsuario" tabindex="-1" aria-labelledby="modalModificarUsuarioLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -171,7 +174,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--%>
 
 
 

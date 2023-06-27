@@ -12,7 +12,6 @@ namespace Negocio
         private NegocioDB Database { get; set; }
         private Crypt Crypt { get; set; } = new Crypt();
 
-
         public Usuario BuscarUsuario(string tipo, string valor)
         {
             Database = new NegocioDB();
@@ -108,7 +107,7 @@ namespace Negocio
                     if (!(Database.Reader["Contrasena"] is DBNull)) hashPass = (string)Database.Reader["Contrasena"];
                 }
 
-                if(Crypt.VerificarPassword(password, hashPass)) return true;
+                if (Crypt.VerificarPassword(password, hashPass)) return true;
 
                 return false;
             }
@@ -124,12 +123,126 @@ namespace Negocio
 
         public bool ActualizarUsuario(Usuario usuario)
         {
-            return true;
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("UPDATE TABLE Usuarios SET ID_TipoUsuario = @ID_TipoUsuario, ID_Domicilio = @ID_Domicilio, Dni = @Dni, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Contrasena = @Contraseña, Telefono = @Telefono, FechaNacimiento = @FechaNacimiento, Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
+                Database.SetParam("@ID_Usuario", usuario.IDUsuario);
+                Database.SetParam("@ID_TipoUsuario", usuario.TipoUser.IDTipo);
+                Database.SetParam("@ID_Domicilio", usuario.Domicilio.IDDomicilio);
+                Database.SetParam("@Dni", usuario.DNI);
+                Database.SetParam("@Nombre", usuario.Nombre);
+                Database.SetParam("@Apellido", usuario.Apellido);
+                Database.SetParam("@Email", usuario.Email);
+                Database.SetParam("@Contrasena", usuario.Contraseña);
+                Database.SetParam("@Telefono", usuario.Telefono);
+                Database.SetParam("@FechaNacimiento", usuario.FechaNacimiento);
+                Database.SetParam("@Estado", usuario.Estado);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
         }
 
-        public bool ActualizarDomicilio()
+        public bool CrearDomicilio(long IDUsuario, Domicilio domicilio)
         {
-            return true;
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("INSERT INTO TABLE Domicilios (ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado) VALUES(@ID_Provincia, @Localidad, @Calle, @Numero, @CodigoPostal, @Piso, @Referencia, @Alias, @Estado)" + "SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;");
+                Database.SetParam("@ID_Provincia", domicilio.Provincia.IDProvincia);
+                Database.SetParam("@Localidad", domicilio.Localidad);
+                Database.SetParam("@Calle", domicilio.Calle);
+                Database.SetParam("@Numero", domicilio.Altura);
+                Database.SetParam("@CodigoPostal", domicilio.CodigoPostal);
+                Database.SetParam("@Piso", domicilio.Piso);
+                Database.SetParam("@Referencia", domicilio.Referencia);
+                Database.SetParam("@Alias", domicilio.Alias);
+                Database.SetParam("@Estado", domicilio.Estado);
+                if (Database.RunQuery() == 1)
+                {
+                    long IDDomicilio = (int)Database.Reader["ID"];
+
+                    Database.SetQuery("UPDATE TABLE Usuarios SET ID_Domicilio = @ID_Domicilio WHERE ID_Usuario = @ID_Usuario");
+                    Database.SetParam("@ID_Usuario", IDUsuario);
+                    Database.SetParam("@ID_Domicilio", IDDomicilio);
+                    if (Database.RunQuery() == 1) return true;
+                    else return false;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public bool ActualizarDomicilio(Domicilio domicilio)
+        {
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("UPDATE TABLE Domicilios SET ID_Provincia = @ID_Provincia, Localidad = @Localidad, Calle = @Calle, Numero = @Numero, CodigoPostal = @CodigoPostal, Piso = @Piso, Referencia = @Referencia, Alias = @Alias, Estado = @Estado WHERE ID_Domicilio = @ID_Domicilio");
+                Database.SetParam("@ID_Domicilio", domicilio.IDDomicilio);
+                Database.SetParam("@ID_Provincia", domicilio.Provincia.IDProvincia);
+                Database.SetParam("@Localidad", domicilio.Localidad);
+                Database.SetParam("@Calle", domicilio.Calle);
+                Database.SetParam("@Numero", domicilio.Altura);
+                Database.SetParam("@CodigoPostal", domicilio.CodigoPostal);
+                Database.SetParam("@Piso", domicilio.Piso);
+                Database.SetParam("@Referencia", domicilio.Referencia);
+                Database.SetParam("@Alias", domicilio.Alias);
+                Database.SetParam("@Estado", domicilio.Estado);
+
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public bool EstadoUsuario(long IDUsuario, int estado)
+        {
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("UPDATE TABLE Usuarios SET Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
+                Database.SetParam("@ID_Usuario", IDUsuario);
+                Database.SetParam("@Estado", estado);
+
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
         }
 
         public bool EliminarUsuario(long IDUsuario)
@@ -140,12 +253,12 @@ namespace Negocio
             {
                 Database.SetQuery("DELETE FROM Usuarios WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
+
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

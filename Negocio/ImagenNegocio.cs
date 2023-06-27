@@ -153,28 +153,32 @@ namespace Negocio
             }
         }
 
-        public long Guardar(Imagen imagen)
+        public bool Guardar(List<Imagen> imagenes)
         {
             Database = new NegocioDB();
-            long idImagen = -1;
-            long IDProducto = imagen.IDProducto;
-            string urlImagen = imagen.Url;
-            string descripcion = imagen.Descripcion;
+            int cantidad = imagenes.Count;
+            int columnasAfectadas = 0;
+            long IDProducto;
+            string urlImagen;
+            string descripcion;
             string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion); SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID";
             try
             {
-                Database.SetParam("@IDProducto", IDProducto);
-                Database.SetParam("@ImagenURL", urlImagen);
-                Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
-                Database.Read();
-
-                if (Database.Reader.Read())
+                foreach (var imagen in imagenes)
                 {
-                    idImagen = (int)Database.Reader["ID"];
+                    IDProducto = imagen.IDProducto;
+                    urlImagen = imagen.Url;
+                    descripcion = imagen.Descripcion;
+                    Database.SetQuery(query);
+                    Database.SetParam("@IDProducto", IDProducto);
+                    Database.SetParam("@ImagenURL", urlImagen);
+                    Database.SetParam("@Descripcion", descripcion);
+                    Database.Read();
+                    if (Database.RunQuery() == 1) columnasAfectadas++;
                 }
 
-                return idImagen;
+                if (columnasAfectadas == cantidad) return true;
+                else return false;
             }
             catch (Exception ex)
             {

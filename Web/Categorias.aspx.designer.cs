@@ -11,16 +11,7 @@ namespace Web
 {
 
 
-    public partial class PerfilUsuario
+    public partial class Categorias
     {
-
-        /// <summary>
-        /// Control rptUsuario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptUsuario;
     }
 }

@@ -58,23 +58,89 @@ namespace Negocio
             }
             finally
             {
-                Database.Close();
+                Database?.Close();
             }
         }
 
-        public bool AgregarCategoria(Categoria categoria)
+        public bool AgregarCategoria(string categoria)
         {
-            return true;
+            Database = new NegocioDB();
+            try
+            {
+                Database.SetQuery("INSERT INTO Categorias(Nombre) VALUES(@Nombre)");
+                Database.SetParam("@Nombre", categoria);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database?.Close();
+            }
         }
 
         public bool ModificarCategoria(Categoria categoria)
         {
-            return true;
+            Database = new NegocioDB();
+            try
+            {
+                Database.SetQuery("UPDATE TABLE Categorias SET Nombre = @Nombre WHERE ID_Categoria = @ID_Categoria");
+                Database.SetParam("@Nombre", categoria.Nombre);
+                Database.SetParam("@ID_Categoria", categoria.IDCategoria);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database?.Close();
+            }
+        }
+
+        public bool BajaCategoria(long IDCategoria)
+        {
+            Database = new NegocioDB();
+            try
+            {
+                Database.SetQuery("UPDATE TABLE Categorias SET Estado = 0 WHERE ID_Categoria = @ID_Categoria");
+                Database.SetParam("@ID_Categoria", IDCategoria);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database?.Close();
+            }
         }
 
         public bool EliminarCategoria(long IDCategoria)
         {
-            return true;
+            Database = new NegocioDB();
+            try
+            {
+                Database.SetQuery("DELETE FROM Categorias WHERE ID_Categoria = @ID_Categoria");
+                Database.SetParam("@ID_Categoria", IDCategoria);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database?.Close();
+            }
         }
 
     }
