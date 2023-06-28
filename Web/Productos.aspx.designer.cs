@@ -24,6 +24,24 @@ namespace Web
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtTitulo;
 
         /// <summary>
+        /// Control lblMessageError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMessageError;
+
+        /// <summary>
+        /// Control lblMessageOk.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMessageOk;
+
+        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -130,23 +148,5 @@ namespace Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAgregar;
-
-        /// <summary>
-        /// Control lblMessageError.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageError;
-
-        /// <summary>
-        /// Control lblMessageOk.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageOk;
     }
 }
