@@ -127,5 +127,20 @@ namespace Web
 
             ActualizarComentarios(((Producto)Session["Producto"]).IDProducto);
         }
+
+        protected void BotonEditarProducto(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "Eliminar")
+            {
+                long IDProducto = long.Parse(e.CommandArgument.ToString());
+                ProductoNegocioDetalle.EstadoProducto(IDProducto, false);
+                Response.Redirect("Filtro.aspx?Filtro=Detalle&Nombre=Remeras&Tipo=Categoria");
+            }
+            else if (e.CommandName == "Editar")
+            {
+                string IDProducto = e.CommandArgument.ToString();
+                Response.Redirect("Productos.aspx?Tipo=Modificar&Id=" + IDProducto);
+            }
+        }
     }
 }

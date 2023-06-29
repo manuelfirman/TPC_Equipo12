@@ -243,7 +243,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE '%' + @Busqueda + '%' OR M.Nombre LIKE '%' + @Busqueda + '%' OR C.Nombre LIKE '%' + @Busqueda + '%' OR P.Descripcion LIKE '%' + @Busqueda + '%'");
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE @Busqueda + '%' OR M.Nombre LIKE @Busqueda + '%' OR C.Nombre LIKE @Busqueda + '%' OR P.Descripcion LIKE @Busqueda + '%'");
                 Database.SetParam("@Busqueda", busqueda);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -347,13 +347,13 @@ namespace Negocio
 
         public bool EstadoProducto(long ID_Producto, bool Estado)
         {
-            NegocioDB db = new NegocioDB();
+            Database = new NegocioDB();
             try
             {
-                db.SetQuery($"UPDATE Productos SET Estado = @Estado WHERE ID_Producto = @ID_Producto");
-                db.SetParam("@Estado", Estado);
-                db.SetParam("@ID_Producto", ID_Producto);
-                if (db.RunQuery() == 1) return true;
+                Database.SetQuery($"UPDATE Productos SET Estado = @Estado WHERE ID_Producto = @ID_Producto");
+                Database.SetParam("@Estado", Estado);
+                Database.SetParam("@ID_Producto", ID_Producto);
+                if (Database.RunQuery() == 1) return true;
                 else return false;
             }
             catch (Exception ex)
@@ -363,18 +363,18 @@ namespace Negocio
             }
             finally
             {
-                db.Close();
+                Database.Close();
             }
         }
 
         public bool EliminarProducto(long IDProducto)
         {
-            NegocioDB db = new NegocioDB();
+            Database = new NegocioDB();
             try
             {
-                db.SetQuery($"DELETE FROM Productos WHERE ID_Producto = @ID_Producto");
-                db.SetParam("@ID_Producto", IDProducto);
-                if (db.RunQuery() == 1) return true;
+                Database.SetQuery($"DELETE FROM Productos WHERE ID_Producto = @ID_Producto");
+                Database.SetParam("@ID_Producto", IDProducto);
+                if (Database.RunQuery() == 1) return true;
                 else return false;
             }
             catch (Exception ex)
@@ -384,25 +384,25 @@ namespace Negocio
             }
             finally
             {
-                db.Close();
+                Database.Close();
             }
         }
 
         public bool AgregarImagenes(Producto producto)
         {
-            NegocioDB dB = new NegocioDB();
+            Database = new NegocioDB();
             int cantidad = producto.Imagenes.Count;
             int columnasAfectadas = 0;
             try
             {
                 foreach (Imagen imagen in producto.Imagenes)
                 {
-                    dB.SetQuery($"INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@ID_Producto, @ImagenURL, @Descripcion, @Estado)");
-                    dB.SetParam("@ID_Producto", producto.IDProducto);
-                    dB.SetParam("@ImagenURL", imagen.Url);
-                    dB.SetParam("@Descripcion", imagen.Descripcion);
-                    dB.SetParam("@Estado", 1);
-                    if (dB.RunQuery() == 1) columnasAfectadas++;
+                    Database.SetQuery($"INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@ID_Producto, @ImagenURL, @Descripcion, @Estado)");
+                    Database.SetParam("@ID_Producto", producto.IDProducto);
+                    Database.SetParam("@ImagenURL", imagen.Url);
+                    Database.SetParam("@Descripcion", imagen.Descripcion);
+                    Database.SetParam("@Estado", 1);
+                    if (Database.RunQuery() == 1) columnasAfectadas++;
                 }
 
                 if (columnasAfectadas == cantidad) return true;
@@ -415,26 +415,26 @@ namespace Negocio
             }
             finally
             {
-                dB.Close();
+                Database.Close();
             }
         }
 
         public bool ModificarImagenes(Producto producto)
         {
-            NegocioDB dB = new NegocioDB();
+            Database = new NegocioDB();
             int cantidad = producto.Imagenes.Count;
             int columnasAfectadas = 0;
             try
             {
                 foreach (Imagen imagen in producto.Imagenes)
                 {
-                    dB.SetQuery($"UPDATE Imagenes SET ID_Producto = @ID_Producto, ImagenURL = @ImagenURL, Descripcion = @Descripcion, Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
-                    dB.SetParam("@ID_Imagen", imagen.IDImagen);
-                    dB.SetParam("@ID_Producto", producto.IDProducto);
-                    dB.SetParam("@ImagenURL", imagen.Url);
-                    dB.SetParam("@Descripcion", imagen.Descripcion);
-                    dB.SetParam("@Estado", 1);
-                    if (dB.RunQuery() == 1) columnasAfectadas++;
+                    Database.SetQuery($"UPDATE Imagenes SET ID_Producto = @ID_Producto, ImagenURL = @ImagenURL, Descripcion = @Descripcion, Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
+                    Database.SetParam("@ID_Imagen", imagen.IDImagen);
+                    Database.SetParam("@ID_Producto", producto.IDProducto);
+                    Database.SetParam("@ImagenURL", imagen.Url);
+                    Database.SetParam("@Descripcion", imagen.Descripcion);
+                    Database.SetParam("@Estado", 1);
+                    if (Database.RunQuery() == 1) columnasAfectadas++;
                 }
 
                 if (columnasAfectadas == cantidad) return true;
@@ -447,19 +447,19 @@ namespace Negocio
             }
             finally
             {
-                dB.Close();
+                Database.Close();
             }
         }
 
         public bool EstadoImagen(long ID_Imagen, bool Estado)
         {
-            NegocioDB dB = new NegocioDB();
+            Database = new NegocioDB();
             try
             {
-                dB.SetQuery($"UPDATE Imagenes SET Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
-                dB.SetParam("@ID_Imagen", ID_Imagen);
-                dB.SetParam("@Estado", Estado);
-                if (dB.RunQuery() == 1) return true;
+                Database.SetQuery($"UPDATE Imagenes SET Estado = @Estado WHERE ID_Imagen = @ID_Imagen)");
+                Database.SetParam("@ID_Imagen", ID_Imagen);
+                Database.SetParam("@Estado", Estado);
+                if (Database.RunQuery() == 1) return true;
                 else return false;
             }
             catch (Exception ex)
@@ -469,18 +469,18 @@ namespace Negocio
             }
             finally
             {
-                dB.Close();
+                Database.Close();
             }
         }
 
         public bool EliminarImagen(long ID_Imagen)
         {
-            NegocioDB dB = new NegocioDB();
+            Database = new NegocioDB();
             try
             {
-                dB.SetQuery($"DELETE FROM Imagenes WHERE ID_Imagen = @ID_Imagen)");
-                dB.SetParam("@ID_Imagen", ID_Imagen);
-                if (dB.RunQuery() == 1) return true;
+                Database.SetQuery($"DELETE FROM Imagenes WHERE ID_Imagen = @ID_Imagen)");
+                Database.SetParam("@ID_Imagen", ID_Imagen);
+                if (Database.RunQuery() == 1) return true;
                 else return false;
             }
             catch (Exception ex)
@@ -490,7 +490,7 @@ namespace Negocio
             }
             finally
             {
-                dB.Close();
+                Database.Close();
             }
         }
     }

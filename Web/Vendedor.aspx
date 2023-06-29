@@ -86,7 +86,15 @@
             </div>
         </div>
 
-
+        <div class="row">
+            <div class="col-md-12 mb-5">
+                <div class="form-group">
+                    <h4>Buscar Producto</h4>
+                    <asp:TextBox placeholder="Ejemplo: Celular" CssClass="form-control me-2" ID="txtbusqueda" runat="server"></asp:TextBox>
+                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" OnClick="BtnBusqueda_Click" />
+                </div>
+            </div>
+        </div>
 
     </div>
 

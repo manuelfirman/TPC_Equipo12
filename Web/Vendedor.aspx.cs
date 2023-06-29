@@ -74,5 +74,14 @@ namespace Web
             }
 
         }
+
+        protected void BtnBusqueda_Click(object sender, EventArgs e)
+        {
+            string busqueda = txtbusqueda.Text;
+            if (busqueda.Length > 2)
+            {
+                Response.Redirect($"Filtro.aspx?Filtro=Busqueda&Busqueda={busqueda}");
+            }
+        }
     }
 }

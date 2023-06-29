@@ -14,7 +14,7 @@
                 <div class="row my-5"></div>
                 <div class="row my-5"></div>
                 <div class="row my-5">
-
+                    
                     <div class="col-md-2">
                         <div class="thumbnail-gallery">
                             <asp:Repeater ID="rptMiniaturas" runat="server">
@@ -59,6 +59,38 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
+                                <%if ((Session["Usuario"] != null && (((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Admin") || ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Vendedor"))))
+                                    { %>
+                                <div>
+                                    <asp:Button ID="BtnEditar" runat="server" CssClass="btn btn-sm btn-primary" Text='Editar' CommandName="Editar" CommandArgument='<%# Eval("IDProducto") %>' OnCommand="BotonEditarProducto" />
+                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarModal">Eliminar</button>
+
+
+                                    <!-- Modal de confirmación -->
+                                    <div class="modal fade" id="confirmarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmarModalLabel">Confirmar eliminación</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ¿Estás seguro de que deseas eliminar este producto?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                                    <asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn btn-danger"
+                                                        Text="Eliminar" CommandName="Eliminar" CommandArgument='<%= Producto.IDProducto %>'
+                                                        OnCommand="BotonEditarProducto" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <%} %>
                                 <h2 class="card-title"><%= Producto.Nombre %></h2>
                                 <!-- Calificacion -->
                                 <div class="rating mb-3">

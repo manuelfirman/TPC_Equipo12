@@ -221,7 +221,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repMarcas" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Busqueda&Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Detalle&Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -232,7 +232,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repCategorias" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Busqueda&Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Detalle&Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>

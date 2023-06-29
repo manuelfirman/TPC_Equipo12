@@ -18,27 +18,29 @@ namespace Web
         {
             if (!IsPostBack)
             {
+                // Sugeridos
+                rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
+                rptProductos.DataBind();
+
                 string filtro = Request.QueryString["Filtro"];
                 string tipo = Request.QueryString["Tipo"];
                 string nombre = Request.QueryString["Nombre"];
                 string busqueda = Request.QueryString["Busqueda"];
 
-                if(filtro == null)
+                if (filtro == null)
                 {
-                    lblTitulo.Text = "NO SE HA SELECCIONADO NADA";
+                    lblTitulo.Text = "Lo sentimos. No se encontraron resultados :(";
                     return;
                 }
-                else if(filtro == "busqueda")
+                else if (filtro == "Busqueda")
                 {
                     FiltroBusqueda(busqueda);
                 }
-                else if (filtro == "detalle")
+                else if (filtro == "Detalle")
                 {
                     FiltroDetalle(nombre, tipo);
                 }
 
-                rptProductos.DataSource = productoNegocio.ProductosAlAzar(4);
-                rptProductos.DataBind();
             }
         }
 
@@ -46,17 +48,16 @@ namespace Web
         {
             if (nombre == null || tipo == null)
             {
-
-                lblTitulo.Text = "NO SE HA SELECCIONADO NADA";
+                lblTitulo.Text = "No se recibieron parametros para la busqueda";
                 return;
             }
             else if (tipo == "Marca" || tipo == "Categoria")
             {
                 listaProductos = productoNegocio.ListarPorTipo(nombre, tipo);
-                lblTitulo.Text = tipo.ToUpper() + " " + nombre.ToUpper();
+                lblTitulo.Text = $"{tipo} {nombre}";
                 if (listaProductos.Count == 0)
                 {
-                    lblTitulo.Text = "NO EXISTEN PRODUCTOS PARA " + nombre.ToUpper();
+                    lblTitulo.Text = $"No hay productos para la busqueda {nombre}";
                     return;
                 }
                 RepFiltro.DataSource = listaProductos;
@@ -64,7 +65,7 @@ namespace Web
             }
             else
             {
-                lblTitulo.Text = nombre.ToUpper() + " NO EXISTE";
+                lblTitulo.Text = $"No existen productos con el nombre {nombre}";
             }
         }
 
@@ -74,7 +75,7 @@ namespace Web
             lblTitulo.Text = "Resultado de la busqueda: " + busqueda;
             if (listaProductos.Count == 0)
             {
-                lblTitulo.Text = "NO SE ENCONTRARON PRODUCTOS PARA LA BUSQUEDA: " + busqueda;
+                lblTitulo.Text = $"No se encontraron productos para la busqueda: {busqueda}";
                 return;
             }
             RepFiltro.DataSource = listaProductos;
@@ -97,5 +98,20 @@ namespace Web
 
             return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
         }
+
+        protected void BotonEditarProducto(object sender, CommandEventArgs e)
+        {
+            string IDProducto = e.CommandArgument.ToString();
+            if (e.CommandName == "Eliminar")
+            {
+                productoNegocio.EstadoProducto(int.Parse(IDProducto), false);
+                Response.Redirect("Filtro.aspx?Tipo=Categorias&Nombre=Remeras" + IDProducto);
+            }
+            else if (e.CommandName == "Editar")
+            {
+                Response.Redirect("Productos.aspx?Tipo=Modificar&Id=" + IDProducto);
+            }
+        }
+
     }
 }
