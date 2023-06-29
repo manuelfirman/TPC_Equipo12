@@ -132,15 +132,15 @@ namespace Web
         {
             if (e.CommandName == "Eliminar")
             {
-                long IDProducto = long.Parse(e.CommandArgument.ToString());
-                ProductoNegocioDetalle.EstadoProducto(IDProducto, false);
-                Response.Redirect("Filtro.aspx?Filtro=Detalle&Nombre=Remeras&Tipo=Categoria");
+                
+                ProductoNegocioDetalle.EstadoProducto(Producto.IDProducto, false);
+                Response.Redirect($"Filtro.aspx?Filtro=Eliminar&Nombre={Producto.Nombre}");
             }
             else if (e.CommandName == "Editar")
             {
-                string IDProducto = e.CommandArgument.ToString();
-                Response.Redirect("Productos.aspx?Tipo=Modificar&Id=" + IDProducto);
+                Response.Redirect("Productos.aspx?Tipo=Modificar&Id=" + Producto.IDProducto);
             }
+
         }
     }
 }

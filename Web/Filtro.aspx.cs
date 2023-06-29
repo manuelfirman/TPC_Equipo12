@@ -27,6 +27,24 @@ namespace Web
                 string nombre = Request.QueryString["Nombre"];
                 string busqueda = Request.QueryString["Busqueda"];
 
+
+                switch (filtro)
+                {
+                    case null:
+                        lblTitulo.Text = "Lo sentimos. No se encontraron resultados :(";
+                        return;
+
+                    case "Busqueda":
+                        FiltroBusqueda(busqueda);
+                        break;
+                    case "Detalle":
+                        FiltroDetalle(nombre, tipo);
+                        break;
+                    case "Eliminar":
+                        lblTitulo.Text = $"Producto '{nombre}' eliminado correctamente.";
+                        break;
+                }
+
                 if (filtro == null)
                 {
                     lblTitulo.Text = "Lo sentimos. No se encontraron resultados :(";
@@ -105,7 +123,7 @@ namespace Web
             if (e.CommandName == "Eliminar")
             {
                 productoNegocio.EstadoProducto(int.Parse(IDProducto), false);
-                Response.Redirect("Filtro.aspx?Tipo=Categorias&Nombre=Remeras" + IDProducto);
+                Response.Redirect($"Filtro.aspx?Filtro=Eliminar&Nombre={IDProducto}");
             }
             else if (e.CommandName == "Editar")
             {

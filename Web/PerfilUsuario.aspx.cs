@@ -10,12 +10,14 @@ namespace Web
 {
     public partial class PerfilUsuario : System.Web.UI.Page
     {
-        private Usuario Usuario { get; set; }
+        protected Usuario Usuario { get; set; }
+        private bool HayDomicilio { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Usuario = Session["Usuario"] as Usuario;
             if (Usuario == null) Response.Redirect("Ingresar.aspx");
+            if (Usuario.Domicilio != null) HayDomicilio = true;
 
             if (!IsPostBack)
             {

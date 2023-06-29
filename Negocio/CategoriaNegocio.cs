@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Negocio
@@ -62,13 +63,44 @@ namespace Negocio
             }
         }
 
-        public bool AgregarCategoria(string categoria)
+        public Categoria CategoriaPorID(long IDCategoria)
+        {
+            Database = new NegocioDB();
+            Categoria auxCategoria = new Categoria();
+
+            try
+            {
+                Database.SetQuery($"SELECT Nombre, Estado, ID_Categoria FROM Categorias WHERE ID_Categoria = @ID_Categoria");
+                Database.SetParam("ID_Categoria", IDCategoria);
+                Database.Read();
+                if (Database.Reader.Read())
+                {
+                    if (!(Database.Reader["Nombre"] is DBNull)) auxCategoria.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxCategoria.Estado = (bool)Database.Reader["Estado"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxCategoria.IDCategoria = (long)Database.Reader["ID_Categoria"];
+
+
+                }
+                return auxCategoria;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database?.Close();
+            }
+        }
+
+        public bool AgregarCategoria(Categoria categoria)
         {
             Database = new NegocioDB();
             try
             {
-                Database.SetQuery("INSERT INTO Categorias(Nombre) VALUES(@Nombre)");
-                Database.SetParam("@Nombre", categoria);
+                Database.SetQuery("INSERT INTO Categorias(Nombre, Estado) VALUES(@Nombre, @Estado)");
+                Database.SetParam("@Nombre", categoria.Nombre);
+                Database.SetParam("@Estado", categoria.Estado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
@@ -87,9 +119,11 @@ namespace Negocio
             Database = new NegocioDB();
             try
             {
-                Database.SetQuery("UPDATE TABLE Categorias SET Nombre = @Nombre WHERE ID_Categoria = @ID_Categoria");
+                Database.SetQuery("UPDATE Categorias SET Nombre = @Nombre, Estado = @Estado WHERE ID_Categoria = @ID_Categoria");
                 Database.SetParam("@Nombre", categoria.Nombre);
                 Database.SetParam("@ID_Categoria", categoria.IDCategoria);
+                Database.SetParam("@Estado", categoria.Estado);
+
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
@@ -103,13 +137,14 @@ namespace Negocio
             }
         }
 
-        public bool BajaCategoria(long IDCategoria)
+        public bool EstadoCategoria(long IDCategoria, bool Estado)
         {
             Database = new NegocioDB();
             try
             {
-                Database.SetQuery("UPDATE TABLE Categorias SET Estado = 0 WHERE ID_Categoria = @ID_Categoria");
+                Database.SetQuery($"UPDATE Categorias SET Estado = @Estado WHERE ID_Categoria = @ID_Categoria");
                 Database.SetParam("@ID_Categoria", IDCategoria);
+                Database.SetParam("@Estado", Estado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }

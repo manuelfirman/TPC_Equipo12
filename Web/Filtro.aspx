@@ -65,6 +65,8 @@
 
         <div class="row my-5"></div>
         <!--CARDS PRODUCTOS SUGERIDOS-->
+        <%if ((Session["Usuario"] == null || (((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Usuario"))))
+            { %>
         <section class="container-fluid section-productos">
             <div class="row">
                 <div class="col">
@@ -93,6 +95,7 @@
 
             <div class="row my-5"></div>
         </section>
+        <% } %>
 
         <!-- Modal Eliminar -->
        

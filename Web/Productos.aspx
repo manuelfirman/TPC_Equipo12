@@ -14,7 +14,7 @@
             background-color: #fff;
         }
     </style>
-    <div class="container min-vh-100">
+    <div class="container min-vh-100 mb-5">
         <div class="container login-container">
             <h2 class="text-center mb-4" id="txtTitulo" runat="server"></h2>
             <hr />
