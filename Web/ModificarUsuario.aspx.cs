@@ -15,6 +15,7 @@ namespace Web
         private Domicilio domicilio;
         private UsuarioNegocio usuarioNegocio { get; set; } = new UsuarioNegocio();
         private DomicilioNegocio domicilioNegocio { get; set; } = new DomicilioNegocio();
+        private TipoUsuarioNegocio tipoUsuarioNegocio { get; set; } = new TipoUsuarioNegocio();
         private long IDUsuario;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -40,6 +41,16 @@ namespace Web
                 itemUser = new ListItem("Desactivado", "2");
                 DRPEstadoUser.Items.Add(itemUser);
 
+
+                List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
+                lblTipoUsuario.InnerText = "Rol de usuario";
+                foreach(TipoUsuario tipo in tipousuarios)
+                {
+                    itemUser = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
+                    DRPTipoUsuario.Items.Add(itemUser);
+                }
+               
+
                 List<Provincia> provincias = domicilioNegocio.ListarProvincias();
                 ListItem itemProvincias;
                 foreach (Provincia provincia in provincias)
@@ -54,11 +65,11 @@ namespace Web
                 txtPiso.Value = usuario.Domicilio.Piso;
                 txtAlias.Value = usuario.Domicilio.Alias;
                 ListItem itemDom;
-                lblEstadoUser.InnerText = "Estado";
+                lblEstadoDomicilio.InnerText = "Estado";
                 itemDom = new ListItem("Activado", "1");
-                DRPEstadoUser.Items.Add(itemDom);
+                DRPEstadoDomicilio.Items.Add(itemDom);
                 itemDom = new ListItem("Desactivado", "2");
-                DRPEstadoUser.Items.Add(itemDom);
+                DRPEstadoDomicilio.Items.Add(itemDom);
 
             }
             else
@@ -67,10 +78,6 @@ namespace Web
             }
         }
 
-        protected void btnAgregar_Click(object sender, EventArgs e)
-        {
-
-        }
 
         protected void btnAgregarDomicilio_Click(object sender, EventArgs e)
         {

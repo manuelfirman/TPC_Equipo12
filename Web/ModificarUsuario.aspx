@@ -49,7 +49,7 @@
                 <input type="date" id="txtFechaNacimiento" runat="server" class="form-control" />
             </div>
 
-            <%if (Session["Usuario"] == null || ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre != "Vendedor" && (((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre != "Admin"))
+            <%if (Session["Usuario"] != null && ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Vendedor" || (((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Admin"))
                 { %>
             <div class="mb-3">
                 <label class="form-label" runat="server" id="lblEstadoUser"></label>
@@ -59,7 +59,7 @@
             <% } %>
 
             <div class="text-center mt-2 mb-2">
-                <asp:Button ID="btnAgregarDatos" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregarDatos_Click" />
+                <asp:Button ID="btnAgregarDatos" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnAgregarDatos_Click" />
             </div>
         </div>
 
@@ -75,7 +75,7 @@
             </div>
 
             <div class="text-center mt-2 mb-2">
-                <asp:Button ID="btnCambioContraseña" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnCambioContraseña_Click" />
+                <asp:Button ID="btnCambioContraseña" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnCambioContraseña_Click" />
             </div>
         </div>
 
@@ -116,18 +116,24 @@
                 <input type="text" id="txtAlias" runat="server" class="form-control" />
             </div>
 
-            <%if (Session["Usuario"] == null || ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre != "Vendedor" && (((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre != "Admin"))
+            <%if (Session["Usuario"] != null && ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Vendedor" || (((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Admin"))
                 { %>
             <div class="mb-3">
                 <label class="form-label" runat="server" id="lblEstadoDomicilio"></label>
                 <asp:DropDownList CssClass="form-select" ID="DRPEstadoDomicilio" runat="server">
                 </asp:DropDownList>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label" runat="server" id="lblTipoUsuario"></label>
+                <asp:DropDownList CssClass="form-select" ID="DRPTipoUsuario" runat="server">
+                </asp:DropDownList>
+            </div>
             <% } %>
 
 
             <div class="text-center mt-2 mb-2">
-                <asp:Button ID="btnAgregarDomicilio" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregarDomicilio_Click" />
+                <asp:Button ID="btnAgregarDomicilio" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnAgregarDomicilio_Click" />
             </div>
         </div>
     </div>
