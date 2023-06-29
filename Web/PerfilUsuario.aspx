@@ -33,7 +33,7 @@
                                 <span id="spnNacimiento" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToString() %></span>
                             </div>
                             <div class="form-group">
-                                <a href="ModificarUsuario.aspx">
+                                <a href="ModificarUsuario.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
                                     <button type="button" class="btn btn-primary">Actualizar datos personales</button>
                                 </a>
                                 <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario">Actualizar datos personales</button>--%>
@@ -41,6 +41,8 @@
                         </div>
 
                         <!--DATOS DOMICILIO-->
+                        <% if (Usuario.Domicilio != null) { %>
+                        
                         <div class="card card-body bg-dark text-light mb-1 mx-1">
                             <h4 class="text-primary">Dirección - <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Alias %></h4>
                             <div class="form-group">
@@ -71,6 +73,8 @@
                                 <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarDomicilio">Actualizar Domicilio</button>--%>
                             </div>
                         </div>
+
+                        <%} %>
                     </div>
             </ItemTemplate>
         </asp:Repeater>

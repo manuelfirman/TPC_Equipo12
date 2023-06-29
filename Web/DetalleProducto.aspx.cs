@@ -127,5 +127,20 @@ namespace Web
 
             ActualizarComentarios(((Producto)Session["Producto"]).IDProducto);
         }
+
+        protected void BotonEditarProducto(object sender, CommandEventArgs e)
+        {
+            if (e.CommandName == "Eliminar")
+            {
+                
+                ProductoNegocioDetalle.EstadoProducto(Producto.IDProducto, false);
+                Response.Redirect($"Filtro.aspx?Filtro=Eliminar&Nombre={Producto.Nombre}");
+            }
+            else if (e.CommandName == "Editar")
+            {
+                Response.Redirect("Productos.aspx?Tipo=Modificar&Id=" + Producto.IDProducto);
+            }
+
+        }
     }
 }

@@ -14,10 +14,14 @@
             background-color: #fff;
         }
     </style>
-    <div class="container min-vh-100">
+    <div class="container min-vh-100 mb-5">
         <div class="container login-container">
             <h2 class="text-center mb-4" id="txtTitulo" runat="server"></h2>
             <hr />
+            <div class="text-center m-4">
+                <asp:Label ID="lblMessageError" runat="server" CssClass="alert alert-danger" role="alert" Visible="false"></asp:Label>
+                <asp:Label ID="lblMessageOk" runat="server" CssClass="alert alert-success" role="alert" Visible="false"></asp:Label>
+            </div>
 
             <div class="mb-3">
                 <label for="txtNombre" class="form-label ">Nombre:</label>
@@ -31,7 +35,7 @@
 
             <div class="mb-3">
                 <label for="txtDesc" class="form-label">Descripción:</label>
-                <textarea id="txtDesc" runat="server" class="form-control" rows="8" style="resize:none"></textarea>
+                <textarea id="txtDesc" runat="server" class="form-control" rows="8" style="resize: none"></textarea>
             </div>
 
             <div class="mb-3">
@@ -48,7 +52,7 @@
                 <label class="form-label" runat="server" id="lblMarca"></label>
                 <asp:DropDownList CssClass="form-select" ID="DRPMarca" runat="server">
                 </asp:DropDownList>
-                
+
             </div>
 
             <div class="mb-3">
@@ -57,7 +61,7 @@
                 </asp:DropDownList>
             </div>
 
-            <div class="mb-3" >
+            <div class="mb-3">
                 <label class="form-label" runat="server" id="lblEstado"></label>
                 <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
                 </asp:DropDownList>
@@ -66,13 +70,6 @@
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregar_Click" />
             </div>
-
-            <div class="text-center">
-                <asp:Label ID="lblMessageError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
-                <asp:Label ID="lblMessageOk" runat="server" CssClass="text-succes" Visible="false"></asp:Label>
-            </div>
-
-
         </div>
     </div>
 </asp:Content>
