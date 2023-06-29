@@ -11,97 +11,88 @@ namespace Web
 {
 
 
-    public partial class DetalleProducto
+    public partial class Imagenes
     {
 
         /// <summary>
-        /// Control lblError.
+        /// Control txtTitulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtTitulo;
 
         /// <summary>
-        /// Control BtnEditar.
+        /// Control lblMessageError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnEditar;
+        protected global::System.Web.UI.WebControls.Label lblMessageError;
 
         /// <summary>
-        /// Control btnConfirmarEliminar.
+        /// Control lblMessageOk.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnConfirmarEliminar;
+        protected global::System.Web.UI.WebControls.Label lblMessageOk;
 
         /// <summary>
-        /// Control rptMiniaturas.
+        /// Control contUrl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptMiniaturas;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contUrl;
 
         /// <summary>
-        /// Control rptImagenes.
+        /// Control txtUrl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptImagenes;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtUrl;
 
         /// <summary>
-        /// Control BtnAgregarCarrito.
+        /// Control txtDesc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnAgregarCarrito;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtDesc;
 
         /// <summary>
-        /// Control rptComments.
+        /// Control lblEstado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptComments;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstado;
 
         /// <summary>
-        /// Control txtComment.
+        /// Control DRPEstado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtComment;
+        protected global::System.Web.UI.WebControls.DropDownList DRPEstado;
 
         /// <summary>
-        /// Control BtnComentar.
+        /// Control btnAceptar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BtnComentar;
-
-        /// <summary>
-        /// Control rptProductos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptProductos;
+        protected global::System.Web.UI.WebControls.Button btnAceptar;
     }
 }

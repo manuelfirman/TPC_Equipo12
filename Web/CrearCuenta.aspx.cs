@@ -13,8 +13,14 @@ namespace Web
     {
 
         UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+        Usuario usuario = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
+            usuario = Session["Usuario"] as Usuario;
+            if (usuario != null)
+            {
+                Response.Redirect("404.aspx");
+            }
         }
 
         protected void btnIniciarSesion_Click(object sender, EventArgs e)

@@ -48,6 +48,37 @@ namespace Negocio
             }
         }
 
+        public Imagen ImagenPorId(long IDImagen)
+        {
+            Database = new NegocioDB();
+            string query = "SELECT ID_Producto, ImagenURL, ID_Imagen, Descripcion, Estado FROM Imagenes WHERE ID_Imagen = @ID_Imagen";
+            Imagen imagen = new Imagen();
+
+            try
+            {
+                Database.SetQuery(query);
+                Database.SetParam("@ID_Imagen", IDImagen);
+                Database.Read();
+                if (Database.Reader.Read())
+                {
+                    if (!(Database.Reader["ID_Producto"] is DBNull)) imagen.IDProducto = (long)Database.Reader["ID_Producto"];
+                    if (!(Database.Reader["ID_Imagen"] is DBNull)) imagen.IDImagen = (long)Database.Reader["ID_Imagen"];
+                    if (!(Database.Reader["ImagenURL"] is DBNull)) imagen.Url = (string)Database.Reader["ImagenURL"];
+                    if (!(Database.Reader["Descripcion"] is DBNull)) imagen.Descripcion = (string)Database.Reader["Descripcion"];
+                    if (!(Database.Reader["Estado"] is DBNull)) imagen.Estado = (bool)Database.Reader["Estado"];
+                }
+                return imagen;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
         public List<Imagen> ImagenesAlAzar(int cantidad)
         {
             Database = new NegocioDB();
@@ -153,28 +184,27 @@ namespace Negocio
             }
         }
 
-        public long Guardar(Imagen imagen)
+        public bool Guardar(Imagen imagen)
         {
             Database = new NegocioDB();
-            long idImagen = -1;
-            long IDProducto = imagen.IDProducto;
-            string urlImagen = imagen.Url;
-            string descripcion = imagen.Descripcion;
-            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion); SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID";
+            long IDProducto;
+            string urlImagen;
+            string descripcion;
+            bool estado;
+            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@IDProducto, @ImagenURL, @Descripcion, @Estado)";
             try
             {
+                IDProducto = imagen.IDProducto;
+                urlImagen = imagen.Url;
+                descripcion = imagen.Descripcion;
+                estado = imagen.Estado;
+                Database.SetQuery(query);
                 Database.SetParam("@IDProducto", IDProducto);
                 Database.SetParam("@ImagenURL", urlImagen);
                 Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
-                Database.Read();
-
-                if (Database.Reader.Read())
-                {
-                    idImagen = (int)Database.Reader["ID"];
-                }
-
-                return idImagen;
+                Database.SetParam("@Estado", estado);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
             }
             catch (Exception ex)
             {
@@ -186,19 +216,19 @@ namespace Negocio
             }
         }
 
-        public int Modificar(long idImagen, string url, string descripcion)
+        public bool Modificar(long idImagen, string descripcion, bool estado)
         {
             Database = new NegocioDB();
-            string query = "UPDATE IMAGENES SET ImagenURL = @Url, Descripcion = @Descripcion  WHERE ID_Imagen = @IDImagen";
+            string query = "UPDATE IMAGENES SET Descripcion = @Descripcion, Estado = @Estado  WHERE ID_Imagen = @IDImagen";
             try
             {
-                int rowsAffected = 0;
-                Database.SetParam("@Url", url);
+
+                Database.SetQuery(query);
                 Database.SetParam("@IDImagen", idImagen);
                 Database.SetParam("@Descripcion", descripcion);
-                Database.SetQuery(query);
-                rowsAffected = Database.RunQuery();
-                return rowsAffected;
+                Database.SetParam("@Estado", estado);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
             }
             catch (Exception)
             {
@@ -211,17 +241,17 @@ namespace Negocio
             }
         }
 
-        public int Eliminar(long IDProductoImagen)
+        public bool EstadoImagen(long IDImagen, bool estado)
         {
             Database = new NegocioDB();
-            string query = "DELETE FROM IMAGENES WHERE ID_Producto = @IDProductoImagen";
+            string query = "UPDATE IMAGENES SET Estado = @Estado WHERE ID_Imagen = @ID_Imagen";
             try
             {
-                int rowsAffected = 0;
-                Database.SetParam("@IDProductoImagen", IDProductoImagen);
+                Database.SetParam("@ID_Imagen", IDImagen);
+                Database.SetParam("@Estado", estado);
                 Database.SetQuery(query);
-                rowsAffected = Database.RunQuery();
-                return rowsAffected;
+                if (Database.RunQuery() == 1) return true;
+                else return false;
             }
             catch (Exception ex)
             {

@@ -77,7 +77,10 @@
                                     <% } %>
                                     <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Stock y Ventas</a></li>
+                                    <li><a class="dropdown-item" href="Marcas.aspx?Tipo=Agregar">Agregar Marcas</a></li>
+                                    <li><a class="dropdown-item" href="Categorias.aspx?Tipo=Agregar">Agregar Categoria</a></li>
+                                    <li><a class="dropdown-item" href="Productos.aspx?Tipo=Agregar">Agregar Producto</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
                                 </ul>
                             </div>
@@ -87,22 +90,36 @@
 
                 <!--BUSCADOR-->
                 <div class="d-flex ms-3">
-                    <asp:TextBox placeholder="Ejemplo: Celular" CssClass="form-control me-2" ID="txtbusqueda" runat="server"></asp:TextBox>
-                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" />
+                    <asp:TextBox placeholder="Ejemplo: zapatillas" CssClass="form-control me-2" ID="txtbusqueda" runat="server"></asp:TextBox>
+                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-info" runat="server" Text="Buscar" OnClick="BtnBusqueda_Click" />
                 </div>
 
                 <!--LOGO-->
                 <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
                     <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
-                <% if(HayUser) { %>
-                    <% if ((Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
-                        <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
+                <!-- BOTON PERFIL -->
+                <div class="ml-auto ms-3">
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user fa-xl" style="color: #1083d5;"></i>
+                            <span class="badge rounded-pill bg-danger text-white ms-1">Perfil</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="PerfilUsuario.aspx">Ver Perfil</a></li>
+                            <li><a class="dropdown-item" href="Index.aspx?salir=true">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <% if (HayUser && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
+                        <button type="button" class="btn d-flex justify-content-center align-items-center"">
                             <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
                             <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
                         </button>
                     <% } %>
-                <% } else { %>
+
+                <% if(!HayUser || Usuario.TipoUser.IDTipo == 1) { %>
                 <!--BOTON CARRITO-->
                     <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
                         <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
@@ -218,7 +235,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repMarcas" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Detalle&Nombre=<%#Eval("Nombre") %>&Tipo=Marca"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -229,7 +246,7 @@
                                 <ul class="dropdown-menu dropdown-menu-dark">
                                     <asp:Repeater ID="repCategorias" runat="server">
                                         <ItemTemplate>
-                                            <li><a class="dropdown-item" href="Filtro.aspx?Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
+                                            <li><a class="dropdown-item" href="Filtro.aspx?Filtro=Detalle&Nombre=<%#Eval("Nombre") %>&Tipo=Categoria"><%#Eval("Nombre") %></a></li>
                                         </ItemTemplate>
                                     </asp:Repeater>
                                 </ul>
@@ -255,7 +272,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="CrearCuenta.aspx">CREAR CUENTA</a>
                             </li>
-                        </ul
+                        </ul>
                     <%} %>
                     </div>
                 </div>

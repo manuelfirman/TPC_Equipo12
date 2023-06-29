@@ -114,7 +114,6 @@ CREATE TABLE Banners (
     Texto VARCHAR(200) NOT NULL,
     Referencia VARCHAR(50) NOT NULL,
     ImagenURL VARCHAR(1000) NOT NULL,
-
 )
 
 ----------------------------------------------------------------------------------

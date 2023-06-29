@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace Web
     public partial class Ingresar : System.Web.UI.Page
     {
         private UsuarioNegocio UsuarioNegocioLogin { get; set; } = new UsuarioNegocio();
-
+        private Usuario usuario = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            usuario = Session["Usuario"] as Usuario;
+            if (usuario != null){
+                Response.Redirect("404.aspx");
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)

@@ -186,7 +186,8 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw8be6443b/products/ADGT0168/ADGT0168-1.JPG', 'Pantalon adidas Mat Pt'),
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw4b603f6b/products/ADGT0168/ADGT0168-2.JPG', 'Pantalon adidas Mat Pt'),
        (20, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwaea7c3d2/products/ADGT0168/ADGT0168-3.JPG', 'Pantalon adidas Mat Pt'),
-        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
+
+       (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw6195a924/products/COD5602401/COD5602401-1.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwcfa4c7bc/products/COD5602401/COD5602401-2.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw1647078d/products/COD5602401/COD5602401-3.JPG', 'Remera Converse Laces'),
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dwb43c5bad/products/COD5602401/COD5602401-4.JPG', 'Remera Converse Laces'),
@@ -213,4 +214,3 @@ VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', '7f25da57311
 -- USER ADMIN (TODAS LAS PASS SON luis1234)
 INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
 VALUES (3, 2, '0000000', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
-
