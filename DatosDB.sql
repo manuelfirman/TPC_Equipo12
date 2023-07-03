@@ -32,7 +32,7 @@ INSERT INTO Marcas (Nombre, Estado)
 VALUES ('Nike', 1),
        ('Converse', 1),
        ('Calvin Klein', 1),
-       ('Tommy Hilfiger', 1),
+       ('Rebook', 1),
        ('Puma', 1),
        ('Vans', 1),
        ('Red Bull', 1),
@@ -56,6 +56,15 @@ VALUES  ('Usuario'),
         ('Vendedor'),
         ('Admin');
 
+-- ESTADOS VENTA
+INSERT INTO EstadoVenta (Estado)
+VALUES ('PAGO PENDIENTE'),
+       ('EN ESPERA'),
+       ('EN PROCESO'),
+       ('ENVIADO'),
+       ('ENTREGADO'),
+       ('CANCELADO');
+       
 -- PRODUCTOS
 INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado)
 VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo running pero agregando un estilo deportivo muy moderno, las Zapatillas Nike Air Max Pre-Day llegan a tus días para sacar la audacia que hay dentro tuyo. Con estampados de animales potentes y colores animados este calzado construye un patchwork ideal para tu look salvaje y atrevido.', 75000, 10, 1),
@@ -195,22 +204,32 @@ VALUES (1, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catal
        (21, 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw5b14c102/products/COD5602401/COD5602401-5.JPG', 'Remera Converse Laces');
 
 
--- DOMICILIO VENDEDOR
-INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Estado)
-VALUES (14, 'Neuquen', 'Belgrano', '1500', '8300', 1);
-
--- DOMICILIO USER
-INSERT INTO Domicilios(ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado)
-VALUES (14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
 
 -- USER COMUN
-INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (1, 2, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995323232', GETDATE(), 1);
+INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (1, '34655789', 'Juan', 'Perez', 'juanperez@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995323232', GETDATE(), 1);
 
 -- USER VENDEDOR
-INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (2, 1, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995123123', GETDATE(), 1);
+INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (2, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '2995123123', GETDATE(), 1);
 
 -- USER ADMIN (TODAS LAS PASS SON luis1234)
-INSERT INTO Usuarios (ID_TipoUsuario, ID_Domicilio, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (3, 2, '0000000', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
+INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (3, '0000000', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
+
+-- USER ADMIN (TODAS LAS PASS SON luis1234)
+INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (3, '0000000', 'Admin1', 'Admin1', 'admin1@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
+
+-- USER ADMIN (TODAS LAS PASS SON luis1234)
+use E_COMMERCE12
+INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
+VALUES (3, '0000000', 'teguiu', 'stin', 'agustin@gmail.com', 'EstaEsLaPassDeTeguiu', '0000000', GETDATE(), 1);
+
+-- DOMICILIO VENDEDOR
+INSERT INTO Domicilios(ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Estado)
+VALUES (1, 14, 'Neuquen', 'Belgrano', '1500', '8300', 1);
+
+-- DOMICILIO USER
+INSERT INTO Domicilios(ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado)
+VALUES (2, 14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);

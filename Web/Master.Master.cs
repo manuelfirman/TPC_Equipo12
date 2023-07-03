@@ -15,6 +15,7 @@ namespace Web
         private List<Marca> Marcas{ get; set; }
         private CategoriaNegocio CategoriaNegocioMaster { get; set; }
         private MarcaNegocio MarcaNegocioMaster { get; set; }
+        private UsuarioNegocio UsuarioNegocio { get; set; }
         protected CarritoNegocio Carrito { get; set; }
         protected Usuario Usuario { get; set; }
         public bool HayUser { get; set; }
@@ -79,10 +80,6 @@ namespace Web
             rptModal.DataBind();
         }
 
-        public void MostrarCarrito()
-        {
-
-        }
 
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
@@ -129,5 +126,8 @@ namespace Web
                 Response.Redirect($"Filtro.aspx?Filtro=Busqueda&Busqueda={busqueda}");
             }
         }
+
+
+
     }
 }

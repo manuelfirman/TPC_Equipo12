@@ -11,79 +11,61 @@ namespace Web
 {
 
 
-    public partial class Categorias
+    public partial class CambiarContraseña
     {
 
         /// <summary>
-        /// Control txtTitulo.
+        /// Control txtContraseña1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtTitulo;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtContraseña1;
 
         /// <summary>
-        /// Control lblMessageError.
+        /// Control txtContraseña2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageError;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtContraseña2;
 
         /// <summary>
-        /// Control lblMessageOk.
+        /// Control lblMessageContraseñaError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageOk;
+        protected global::System.Web.UI.WebControls.Label lblMessageContraseñaError;
 
         /// <summary>
-        /// Control lblMessageRedirect.
+        /// Control lblMessageContraseñaOk.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageRedirect;
+        protected global::System.Web.UI.WebControls.Label lblMessageContraseñaOk;
 
         /// <summary>
-        /// Control txtNombre.
+        /// Control lblMessageContraseñaRedirect.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNombre;
+        protected global::System.Web.UI.WebControls.Label lblMessageContraseñaRedirect;
 
         /// <summary>
-        /// Control lblEstado.
+        /// Control btnCambioContraseña.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstado;
-
-        /// <summary>
-        /// Control DRPEstado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPEstado;
-
-        /// <summary>
-        /// Control btnAgregar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregar;
+        protected global::System.Web.UI.WebControls.Button btnCambioContraseña;
     }
 }

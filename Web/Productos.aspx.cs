@@ -131,6 +131,9 @@ namespace Web
                 {
                     lblMessageOk.Visible = true;
                     lblMessageOk.Text = "Producto agregado correctamente";
+                    lblMessageRedirect.Visible = true;
+                    lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                    Redireccion("Vendedor");
                     return;
                 }
                 lblMessageError.Visible = true;
@@ -144,6 +147,9 @@ namespace Web
                 {
                     lblMessageOk.Visible = true;
                     lblMessageOk.Text = "Producto Modificado correctamente";
+                    lblMessageRedirect.Visible = true;
+                    lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                    Redireccion("Vendedor");
                     return;
                 }
                 lblMessageError.Visible = true;
@@ -151,14 +157,11 @@ namespace Web
             }
         }
 
-        protected void Unnamed_Click(object sender, EventArgs e)
+        protected void Redireccion(string pagina)
         {
-
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 3000);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
         }
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

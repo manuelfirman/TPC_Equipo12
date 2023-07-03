@@ -21,27 +21,26 @@ namespace Negocio
         {
             Database = new NegocioDB();
             List<TipoUsuario> tiposUsuario = new List<TipoUsuario>();
-            TipoUsuario tipo;
+            TipoUsuario auxTipo;
             try
             {
                 Database.SetQuery("SELECT ID_Tipo, Nombre FROM TipoUsuario");
                 Database.Read();
-                if (Database.Reader.Read())
+                while (Database.Reader.Read())
                 {
-                    tipo = new TipoUsuario();
+                    auxTipo = new TipoUsuario();
 
-                    if (!(Database.Reader["ID_Tipo"] is DBNull)) tipoUsuario.IDTipo = (long)Database.Reader["ID_Tipo"];
-                    if (!(Database.Reader["Nombre"] is DBNull)) tipoUsuario.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["ID_Tipo"] is DBNull)) auxTipo.IDTipo = (long)Database.Reader["ID_Tipo"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) auxTipo.Nombre = (string)Database.Reader["Nombre"];
 
-                    tiposUsuario.Add(tipo);
+                    tiposUsuario.Add(auxTipo);
                 }
 
                 return tiposUsuario;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
             finally
             {

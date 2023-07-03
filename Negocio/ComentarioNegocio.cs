@@ -69,9 +69,9 @@ namespace Negocio
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally 
             { 
@@ -92,9 +92,9 @@ namespace Negocio
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {

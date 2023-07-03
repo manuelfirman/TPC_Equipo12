@@ -87,7 +87,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesAlAzar");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -122,7 +122,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesRandomPorCategoria");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE C.Nombre = @Categoria ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.SetParam("@Categoria", categoria);
                 Database.Read();
@@ -157,7 +157,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesRandomPorMarca");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca WHERE M.Nombre = @Marca ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.SetParam("@Marca", marca);
                 Database.Read();
@@ -206,9 +206,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -233,7 +233,7 @@ namespace Negocio
             catch (Exception)
             {
 
-                throw;
+                return false;
             }
             finally
             {
@@ -253,9 +253,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
