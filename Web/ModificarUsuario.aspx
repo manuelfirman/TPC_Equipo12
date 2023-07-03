@@ -4,15 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
+
     </style>
 
     <div class="container min-vh-100 mb-5">
@@ -37,8 +29,8 @@
 
             <div class="mb-3">
                 <label for="txtFechaNacimiento" class="form-label">Fecha de Nacimiento:</label>
-                <input type="date" id="txtFechaNacimiento" runat="server" class="form-control" />
-            </div>
+                    <input type="date" id="txtFechaNacimiento" runat="server" class="form-control" />
+                </div>
 
             <%if (Session["Usuario"] != null && ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Vendedor" || (((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Admin"))
                 { %>
@@ -72,6 +64,7 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregarDatos" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnAgregarDatos_Click" />
+                <a href="PerfilUsuario.aspx" class="btn btn-secondary">Volver al perfil</a>
             </div>
         </div>
     </div>

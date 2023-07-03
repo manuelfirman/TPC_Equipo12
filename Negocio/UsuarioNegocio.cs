@@ -54,6 +54,48 @@ namespace Negocio
             }
         }
 
+        public Usuario UsuarioPorID(long IDUsuario)
+        {
+            Database = new NegocioDB();
+            Usuario usuario = new Usuario();
+            DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
+            try
+            {
+                Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U LEFT JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo WHERE ID_Usuario = @ID_Usuario");
+                Database.SetParam($"@ID_Usuario", IDUsuario);
+                Database.Read();
+                if (Database.Reader.Read())
+                {
+                    if (!(Database.Reader["ID_Usuario"] is DBNull)) usuario.IDUsuario = (long)Database.Reader["ID_Usuario"];
+                    if (!(Database.Reader["Dni"] is DBNull)) usuario.DNI = (string)Database.Reader["Dni"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) usuario.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Apellido"] is DBNull)) usuario.Apellido = (string)Database.Reader["Apellido"];
+                    if (!(Database.Reader["Email"] is DBNull)) usuario.Email = (string)Database.Reader["Email"];
+                    if (!(Database.Reader["Telefono"] is DBNull)) usuario.Telefono = (string)Database.Reader["Telefono"];
+                    if (!(Database.Reader["FechaNacimiento"] is DBNull)) usuario.FechaNacimiento = (DateTime)Database.Reader["FechaNacimiento"];
+                    if (!(Database.Reader["Estado"] is DBNull)) usuario.Estado = (bool)Database.Reader["Estado"];
+
+                    usuario.TipoUser = new TipoUsuario();
+                    if (!(Database.Reader["ID_TipoUsuario"] is DBNull)) usuario.TipoUser.IDTipo = (long)Database.Reader["ID_TipoUsuario"];
+                    if (!(Database.Reader["TipoUsuario"] is DBNull)) usuario.TipoUser.Nombre = (string)Database.Reader["TipoUsuario"];
+
+                    usuario.Domicilios = new List<Domicilio>();
+                    usuario.Domicilios = domicilioNegocio.DomiciliosUsuario(usuario.IDUsuario);
+
+                }
+
+                return usuario;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
         public bool RegistroUsuario(Usuario usuario)
         {
             Database = new NegocioDB();
@@ -116,7 +158,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("UPDATE TABLE Usuarios SET ID_TipoUsuario = @ID_TipoUsuario, Dni = @Dni, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Telefono = @Telefono, FechaNacimiento = @FechaNacimiento, Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
+                Database.SetQuery("UPDATE Usuarios SET ID_TipoUsuario = @ID_TipoUsuario, Dni = @Dni, Nombre = @Nombre, Apellido = @Apellido, Email = @Email, Telefono = @Telefono, FechaNacimiento = @FechaNacimiento, Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", usuario.IDUsuario);
                 Database.SetParam("@ID_TipoUsuario", usuario.TipoUser.IDTipo);
                 Database.SetParam("@Dni", usuario.DNI);
@@ -145,7 +187,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("INSERT INTO TABLE Domicilios (ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado) VALUES(@ID_Usuario, @ID_Provincia, @Localidad, @Calle, @Numero, @CodigoPostal, @Piso, @Referencia, @Alias, @Estado)" + "SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;");
+                Database.SetQuery("INSERT INTO Domicilios (ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado) VALUES(@ID_Usuario, @ID_Provincia, @Localidad, @Calle, @Numero, @CodigoPostal, @Piso, @Referencia, @Alias, @Estado)" + "SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;");
                 Database.SetParam("@ID_Usuario", IDUsuario);
                 Database.SetParam("@ID_Provincia", domicilio.Provincia.IDProvincia);
                 Database.SetParam("@Localidad", domicilio.Localidad);
@@ -172,17 +214,16 @@ namespace Negocio
         public bool ActualizarDomicilio(long IDUsuario, Domicilio domicilio)
         {
             Database = new NegocioDB();
-            DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
             try
             {
-                if(domicilioNegocio.DomiciliosUsuario(IDUsuario).Count == 0)
+                if(domicilio.IDDomicilio == -1)
                 {
                     if (CrearDomicilio(IDUsuario, domicilio)) return true;
                     else return false;
                 }
                 else
                 {
-                    Database.SetQuery("UPDATE Domicilios SET ID_Provincia = @ID_Provincia, Localidad = @Localidad, Calle = @Calle, Numero = @Numero, CodigoPostal = @CodigoPostal, Piso = @Piso, Referencia = @Referencia, Alias = @Alias, Estado = @Estado WHERE ID_Domicilio = @ID_Domicilio");
+                    Database.SetQuery("UPDATE Domicilios SET ID_Provincia = @ID_Provincia, Localidad = @Localidad, Calle = @Calle, Numero = @Numero, CodigoPostal = @CodigoPostal, Piso = @Piso, Referencia = @Referencia, Alias = @Alias, Estado = @Estado WHERE ID_Domicilio = @ID_Domicilio AND ID_Usuario = @ID_Usuario");
                     Database.SetParam("@ID_Domicilio", domicilio.IDDomicilio);
                     Database.SetParam("@ID_Usuario", IDUsuario);
                     Database.SetParam("@ID_Provincia", domicilio.Provincia.IDProvincia);

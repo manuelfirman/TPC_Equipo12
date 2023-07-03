@@ -90,6 +90,9 @@ namespace Web
 
             Domicilio domicilio = new Domicilio();
 
+            if (usuario.Domicilios.Count != 0) domicilio.IDDomicilio = usuario.Domicilios.FirstOrDefault().IDDomicilio;
+            else domicilio.IDDomicilio = -1;
+
             domicilio.Localidad = txtLocalidad.Value;
             domicilio.Calle = txtCalle.Value;
             domicilio.Altura = txtAltura.Value;
@@ -99,8 +102,9 @@ namespace Web
             domicilio.Alias = txtAlias.Value;
             domicilio.Provincia.IDProvincia = long.Parse(DRPProvincia.SelectedItem.Value);
             domicilio.Provincia.Nombre = DRPProvincia.SelectedItem.Text;
+            domicilio.Estado = true;
 
-            if (usuarioNegocio.ActualizarDomicilio(usuario.IDUsuario, domicilio))
+            if (!usuarioNegocio.ActualizarDomicilio(usuario.IDUsuario, domicilio))
             {
                 lblMessageDomicilioError.Text = "Error al actualizar el domicilio.";
                 lblMessageDomicilioError.Visible = true;
@@ -109,6 +113,14 @@ namespace Web
 
             lblMessageDomicilioOk.Text = "Domicilio actualizado correctamente.";
             lblMessageDomicilioOk.Visible = true;
+
+            Usuario userActualizado = usuarioNegocio.UsuarioPorID(usuario.IDUsuario);
+            Session["Usuario"] = userActualizado;
+            usuario = Session["Usuario"] as Usuario;
+
+            setDomicilio();
         }
+
+        
     }
 }

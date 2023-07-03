@@ -47,29 +47,33 @@ namespace Web
             txtApellido.Value = usuario.Apellido;
             txtEmail.Value = usuario.Email;
             txtTelefono.Value = usuario.Telefono;
+            txtDni.Value = usuario.DNI;
             txtFechaNacimiento.Value = usuario.FechaNacimiento.ToString();
             ListItem itemUser;
             lblEstadoUser.InnerText = "Estado";
             itemUser = new ListItem("Activado", "1");
             DRPEstadoUser.Items.Add(itemUser);
-            itemUser = new ListItem("Desactivado", "2");
+            itemUser = new ListItem("Desactivado", "0");
             DRPEstadoUser.Items.Add(itemUser);
 
 
             List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
             lblTipoUsuario.InnerText = "Rol de usuario";
+            ListItem itemTipo;
             foreach (TipoUsuario tipo in tipousuarios)
             {
-                itemUser = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
-                DRPTipoUsuario.Items.Add(itemUser);
+                itemTipo = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
+                DRPTipoUsuario.Items.Add(itemTipo);
+
+            }
+
+            string nombreRol = usuario.TipoUser.Nombre;
+            ListItem rolUsuario = DRPTipoUsuario.Items.FindByText(nombreRol);
+            if (rolUsuario != null)
+            {
+                rolUsuario.Selected = true;
             }
         }
-        
-        
-
-
-
-
 
         protected void btnAgregarDatos_Click(object sender, EventArgs e)
         {
@@ -78,13 +82,13 @@ namespace Web
             string email = txtEmail.Value;
             string dni = txtDni.Value;
             string telefono = txtTelefono.Value;
-            bool estado = bool.Parse(DRPEstadoUser.SelectedValue);
+            bool estado = DRPEstadoUser.SelectedItem.Value == "1";
             int tipoUser = int.Parse(DRPTipoUsuario.SelectedItem.Value);
             string nombreTipoUser = DRPTipoUsuario.SelectedItem.Text;
             string fecha = txtFechaNacimiento.Value;
             DateTime fechaNacimiento;
 
-            if (DateTime.TryParse(fecha, out fechaNacimiento))
+            if (!DateTime.TryParse(fecha, out fechaNacimiento))
             {
                 lblMessageDatosError.Text = "Formato de fecha incorrecto.";
                 lblMessageDatosError.Visible = true;
@@ -119,6 +123,10 @@ namespace Web
 
             lblMessageDatosOk.Text = "Datos actualizados correctamente.";
             lblMessageDatosOk.Visible = true;
+
+            Usuario userActualizado = usuarioNegocio.UsuarioPorID(usuario.IDUsuario);
+            Session["Usuario"] = userActualizado;
+            usuario = Session["Usuario"] as Usuario;
         }
     }
 }

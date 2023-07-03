@@ -3,33 +3,35 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <link href="Styles/formulario.css" rel="stylesheet" />
 
     <div class="container min-vh-100 mb-5">
-        <div class="container login-container">
+        <div class="container form-container">
             <h2 class="text-center mb-4" runat="server">MODIFICAR DOMICILIO</h2>
             <div class="mb-3">
+                <label for="lblProvincia" class="form-label">* Provincia:</label>
                 <label class="form-label" runat="server" id="lblProvincia"></label>
                 <asp:DropDownList CssClass="form-select" ID="DRPProvincia" runat="server">
                 </asp:DropDownList>
             </div>
 
             <div class="mb-3">
-                <label for="txtLocalidad" class="form-label">Localidad:</label>
+                <label for="txtLocalidad" class="form-label">* Localidad:</label>
                 <input type="text" id="txtLocalidad" runat="server" class="form-control" />
             </div>
 
             <div class="mb-3">
-                <label for="txtCalle" class="form-label">Calle:</label>
+                <label for="txtCalle" class="form-label">* Calle:</label>
                 <input type="text" id="txtCalle" runat="server" class="form-control" />
             </div>
 
             <div class="mb-3">
-                <label for="txtAltura" class="form-label">Altura:</label>
+                <label for="txtAltura" class="form-label">* Altura:</label>
                 <input type="text" id="txtAltura" runat="server" class="form-control" />
             </div>
 
             <div class="mb-3">
-                <label for="txtCodigoPostal" class="form-label">Codigo Postal:</label>
+                <label for="txtCodigoPostal" class="form-label">* Codigo Postal:</label>
                 <input type="text" id="txtCodigoPostal" runat="server" class="form-control" />
             </div>
 
@@ -65,8 +67,10 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregarDomicilio" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnAgregarDomicilio_Click" />
+                <a href="PerfilUsuario.aspx" class="btn btn-secondary">Volver al perfil</a>
             </div>
         </div>
     </div>
+
 
 </asp:Content>

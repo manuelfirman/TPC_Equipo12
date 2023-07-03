@@ -21,7 +21,7 @@ namespace Web
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtContraseña1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtContraseña1;
 
         /// <summary>
         /// Control txtContraseña2.
@@ -30,7 +30,7 @@ namespace Web
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtContraseña2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txtContraseña2;
 
         /// <summary>
         /// Control lblMessageContraseñaError.

@@ -109,6 +109,7 @@
     <Content Include="Scripts\scrollPosition.js" />
     <Content Include="Styles\canvas.css" />
     <Content Include="Styles\carrito.css" />
+    <Content Include="Styles\formulario.css" />
     <Content Include="Styles\home.css" />
     <Content Include="Vendedor.aspx" />
     <Content Include="Web.config" />

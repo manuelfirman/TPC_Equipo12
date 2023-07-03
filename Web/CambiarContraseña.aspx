@@ -3,6 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <link href="Styles/formulario.css" rel="stylesheet" />
 
     <div class="container min-vh-100 mb-5">
         <div class="container login-container">
@@ -10,12 +11,12 @@
             <h2 class="text-center mb-4" runat="server">CAMBIAR CONTRASEÑA</h2>
             <div class="mb-3">
                 <label for="txtContraseña1" class="form-label">Nueva Contraseña:</label>
-                <input type="text" id="txtContraseña1" runat="server" class="form-control" />
+                <input type="password" id="txtContraseña1" runat="server" class="form-control" />
             </div>
 
             <div class="mb-3">
                 <label for="txtContraseña2" class="form-label">Repetir Nueva Contraseña:</label>
-                <input type="text" id="txtContraseña2" runat="server" class="form-control" />
+                <input type="password" id="txtContraseña2" runat="server" class="form-control" />
             </div>
 
             <div class="text-center m-4">
@@ -25,6 +26,7 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnCambioContraseña" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnCambioContraseña_Click" />
+                <a href="PerfilUsuario.aspx" class="btn btn-secondary">Volver al perfil</a>
             </div>
         </div>
 
