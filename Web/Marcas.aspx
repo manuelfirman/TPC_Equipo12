@@ -22,6 +22,9 @@
                 <asp:Label ID="lblMessageError" runat="server" CssClass="alert alert-danger" role="alert" Visible="false"></asp:Label>
                 <asp:Label ID="lblMessageOk" runat="server" CssClass="alert alert-success" role="alert" Visible="false"></asp:Label>
             </div>
+            <div class="text-center m-4">
+                <asp:Label ID="lblMessageRedirect" runat="server" CssClass="alert- alert-info" role="alert" Visible="false"></asp:Label>
+            </div>
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">Nombre Marca:</label>
                 <input type="text" id="txtNombre" runat="server" class="form-control" />
@@ -35,6 +38,7 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregar_Click" />
+                <a href="Vendedor.aspx" class="btn btn-danger">Cancelar</a>
             </div>
 
 

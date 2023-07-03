@@ -11,26 +11,42 @@ namespace Web
 {
     public partial class ModificarUsuario : System.Web.UI.Page
     {
-        protected Usuario usuario;
+        protected Usuario UsuarioSession;
+        protected Usuario UsuarioModificado;
         protected long IDUsuario;
-        private Domicilio domicilio;
+        protected bool admin;
+        protected bool propio;
         private UsuarioNegocio usuarioNegocio { get; set; } = new UsuarioNegocio();
         private DomicilioNegocio domicilioNegocio { get; set; } = new DomicilioNegocio();
         private TipoUsuarioNegocio tipoUsuarioNegocio { get; set; } = new TipoUsuarioNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            usuario = Session["Usuario"] as Usuario;
-            if (usuario != null && (usuario.TipoUser.Nombre != "Vendedor" || usuario.TipoUser.Nombre != "Admin"))
+            UsuarioSession = Session["Usuario"] as Usuario;
+            if (UsuarioSession == null) Response.Redirect("404.aspx");
+            admin = false;
+            propio = true;
+            if (UsuarioSession.TipoUser.Nombre == "Vendedor" || UsuarioSession.TipoUser.Nombre == "Admin")
             {
-                IDUsuario = long.Parse(Request.QueryString["Id"]);
-                if (IDUsuario == 0 || IDUsuario != usuario.IDUsuario)
+                admin = true;
+                string parametro = Request.QueryString["Id"];
+                if (!string.IsNullOrEmpty(parametro))
                 {
-                    Response.Redirect("404.aspx");
+                    propio = false;
+                    IDUsuario = long.Parse(parametro);
+                    UsuarioModificado = usuarioNegocio.UsuarioPorID(IDUsuario);
+                    if (!IsPostBack) setDatosUsuario(UsuarioModificado);
                 }
-
-                setDatosUsuario();
-
+                else
+                {
+                    IDUsuario = UsuarioSession.IDUsuario;
+                    if (!IsPostBack) setDatosUsuario(UsuarioSession);
+                }
+            }
+            else if (UsuarioSession != null)
+            {
+                IDUsuario = UsuarioSession.IDUsuario;
+                if (!IsPostBack) setDatosUsuario(UsuarioSession);
             }
             else
             {
@@ -39,16 +55,20 @@ namespace Web
 
             lblMessageDatosError.Visible = false;
             lblMessageDatosOk.Visible = false;
+            lblMessageDatosRedirect.Visible = false;
         }
 
-        protected void setDatosUsuario()
+        protected void setDatosUsuario(Usuario usuario)
         {
             txtNombre.Value = usuario.Nombre;
             txtApellido.Value = usuario.Apellido;
             txtEmail.Value = usuario.Email;
             txtTelefono.Value = usuario.Telefono;
             txtDni.Value = usuario.DNI;
-            txtFechaNacimiento.Value = usuario.FechaNacimiento.ToString();
+            txtFechaNacimiento.Value = usuario.FechaNacimiento.ToString("yyyy-MM-dd");
+            txtDomicilio.Text = usuario.Domicilios.Any() ? $"{usuario.Domicilios.First().Calle} {usuario.Domicilios.First().Altura}, {usuario.Domicilios.First().Localidad}" : "Sin cargar";
+
+            // DDL Estado
             ListItem itemUser;
             lblEstadoUser.InnerText = "Estado";
             itemUser = new ListItem("Activado", "1");
@@ -56,7 +76,7 @@ namespace Web
             itemUser = new ListItem("Desactivado", "0");
             DRPEstadoUser.Items.Add(itemUser);
 
-
+            // DDL Tipo Usuario
             List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
             lblTipoUsuario.InnerText = "Rol de usuario";
             ListItem itemTipo;
@@ -77,17 +97,16 @@ namespace Web
 
         protected void btnAgregarDatos_Click(object sender, EventArgs e)
         {
-            string nombre = txtNombre.Value;
-            string apellido = txtApellido.Value;
-            string email = txtEmail.Value;
-            string dni = txtDni.Value;
-            string telefono = txtTelefono.Value;
-            bool estado = DRPEstadoUser.SelectedItem.Value == "1";
-            int tipoUser = int.Parse(DRPTipoUsuario.SelectedItem.Value);
-            string nombreTipoUser = DRPTipoUsuario.SelectedItem.Text;
+            if (txtNombre.Value == "" || txtApellido.Value == "" || txtDni.Value == "")
+            {
+                lblMessageDatosError.Text = "Los campos con * no pueden quedar incompletos.";
+                lblMessageDatosError.Visible = true;
+                return;
+            }
+
+            // Fecha de Nacimiento
             string fecha = txtFechaNacimiento.Value;
             DateTime fechaNacimiento;
-
             if (!DateTime.TryParse(fecha, out fechaNacimiento))
             {
                 lblMessageDatosError.Text = "Formato de fecha incorrecto.";
@@ -95,24 +114,17 @@ namespace Web
                 return;
             }
 
-            if (nombre == "" || apellido == "" || email == "" || dni == "")
-            {
-                lblMessageDatosError.Text = "Los campos con * no pueden quedar incompletos.";
-                lblMessageDatosError.Visible = true;
-                return;
-            }
-
             Usuario user = new Usuario();
-            user.Email = email;
-            user.Nombre = nombre;
-            user.Apellido = apellido;
-            user.DNI = dni;
-            user.Telefono = telefono;
-            user.Estado = estado;
-            user.TipoUser.IDTipo = tipoUser;
-            user.TipoUser.Nombre = nombreTipoUser;
+            user.Email = propio ? UsuarioSession.Email : txtEmail.Value;
+            user.Nombre = txtNombre.Value;
+            user.Apellido = txtApellido.Value;
+            user.DNI = txtDni.Value;
+            user.Telefono = txtTelefono.Value;
+            user.Estado = DRPEstadoUser.SelectedItem.Value == "1";
+            user.TipoUser.IDTipo = int.Parse(DRPTipoUsuario.SelectedItem.Value);
+            user.TipoUser.Nombre = DRPTipoUsuario.SelectedItem.Text;
             user.FechaNacimiento = fechaNacimiento;
-            user.IDUsuario = usuario.IDUsuario;
+            user.IDUsuario = IDUsuario;
 
             if (!usuarioNegocio.ActualizarUsuario(user))
             {
@@ -121,12 +133,27 @@ namespace Web
                 return;
             }
 
-            lblMessageDatosOk.Text = "Datos actualizados correctamente.";
+            // Mensaje OK
+            lblMessageDatosOk.Text = "Usuario actualizado correctamente.";
+            lblMessageDatosRedirect.Text = "Redireccionando a perfil en 3 segundos...";
             lblMessageDatosOk.Visible = true;
+            lblMessageDatosRedirect.Visible = true;
 
-            Usuario userActualizado = usuarioNegocio.UsuarioPorID(usuario.IDUsuario);
+            ActualizarUsuario();
+            Redireccion("PerfilUsuario");
+        }
+
+        protected void ActualizarUsuario()
+        {
+            Usuario userActualizado = usuarioNegocio.UsuarioPorID(UsuarioSession.IDUsuario);
             Session["Usuario"] = userActualizado;
-            usuario = Session["Usuario"] as Usuario;
+            UsuarioSession = Session["Usuario"] as Usuario;
+        }
+
+        protected void Redireccion(string pagina)
+        {
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 3000);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
         }
     }
 }

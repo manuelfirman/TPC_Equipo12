@@ -11,36 +11,53 @@ namespace Web
 {
     public partial class Domicilios : System.Web.UI.Page
     {
-        protected Usuario usuario { get; set; }
+        protected Usuario UsuarioSession { get; set; }
+        protected Usuario UsuarioModificado { get; set; }
+        protected bool admin;
+        protected bool propio;
         protected long IDUsuario { get; set; }
         private DomicilioNegocio domicilioNegocio { get; set; } = new DomicilioNegocio();
         private UsuarioNegocio usuarioNegocio { get; set; } = new UsuarioNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            usuario = Session["Usuario"] as Usuario;
-            if (usuario != null && (usuario.TipoUser.Nombre != "Vendedor" || usuario.TipoUser.Nombre != "Admin"))
+            UsuarioSession = Session["Usuario"] as Usuario;
+            if (UsuarioSession == null) Response.Redirect("404.aspx");
+            propio = true;
+
+            if (UsuarioSession.TipoUser.Nombre == "Vendedor" || UsuarioSession.TipoUser.Nombre == "Admin")
             {
-                IDUsuario = long.Parse(Request.QueryString["Id"]);
-                if (IDUsuario == 0 || IDUsuario != usuario.IDUsuario)
+                admin = true;
+                string parametro = Request.QueryString["Id"];
+                if (!string.IsNullOrEmpty(parametro))
                 {
-                    Response.Redirect("404.aspx");
+                    propio = false;
+                    IDUsuario = long.Parse(parametro);
+                    UsuarioModificado = usuarioNegocio.UsuarioPorID(IDUsuario);
+                    if (!IsPostBack) setDomicilio(UsuarioModificado);
                 }
-
-                setDomicilio();
-
+                else
+                {
+                    IDUsuario = UsuarioSession.IDUsuario;
+                    if (!IsPostBack) setDomicilio(UsuarioSession);
+                }
+            }
+            else if(UsuarioSession != null)
+            {
+                IDUsuario = UsuarioSession.IDUsuario;
+                if (!IsPostBack) setDomicilio(UsuarioSession);
             }
             else
             {
                 Response.Redirect("404.aspx");
             }
 
-
             lblMessageDomicilioError.Visible = false;
             lblMessageDomicilioOk.Visible = false;
+            lblMessageDomicilioRedirect.Visible = false;
         }
 
-        protected void setDomicilio()
+        protected void setDomicilio(Usuario usuario)
         {
             List<Provincia> provincias = domicilioNegocio.ListarProvincias();
             ListItem itemProvincias;
@@ -71,7 +88,7 @@ namespace Web
                 lblEstadoDomicilio.InnerText = "Estado";
                 itemDom = new ListItem("Activado", "1");
                 DRPEstadoDomicilio.Items.Add(itemDom);
-                itemDom = new ListItem("Desactivado", "2");
+                itemDom = new ListItem("Desactivado", "0");
                 DRPEstadoDomicilio.Items.Add(itemDom);
             }
 
@@ -90,7 +107,7 @@ namespace Web
 
             Domicilio domicilio = new Domicilio();
 
-            if (usuario.Domicilios.Count != 0) domicilio.IDDomicilio = usuario.Domicilios.FirstOrDefault().IDDomicilio;
+            if (UsuarioSession.Domicilios.Count != 0) domicilio.IDDomicilio = UsuarioSession.Domicilios.FirstOrDefault().IDDomicilio;
             else domicilio.IDDomicilio = -1;
 
             domicilio.Localidad = txtLocalidad.Value;
@@ -104,7 +121,7 @@ namespace Web
             domicilio.Provincia.Nombre = DRPProvincia.SelectedItem.Text;
             domicilio.Estado = true;
 
-            if (!usuarioNegocio.ActualizarDomicilio(usuario.IDUsuario, domicilio))
+            if (!usuarioNegocio.ActualizarDomicilio(IDUsuario, domicilio))
             {
                 lblMessageDomicilioError.Text = "Error al actualizar el domicilio.";
                 lblMessageDomicilioError.Visible = true;
@@ -112,15 +129,25 @@ namespace Web
             }
 
             lblMessageDomicilioOk.Text = "Domicilio actualizado correctamente.";
+            lblMessageDomicilioRedirect.Text = "Redireccionando a perfil en 3 segundos...";
             lblMessageDomicilioOk.Visible = true;
+            lblMessageDomicilioRedirect.Visible = true;
 
-            Usuario userActualizado = usuarioNegocio.UsuarioPorID(usuario.IDUsuario);
+            Usuario userActualizado = usuarioNegocio.UsuarioPorID(IDUsuario);
             Session["Usuario"] = userActualizado;
-            usuario = Session["Usuario"] as Usuario;
+            UsuarioSession = Session["Usuario"] as Usuario;
 
-            setDomicilio();
+            setDomicilio(userActualizado);
+
+            // Redireccion
+            Redireccion("PerfilUsuario");
         }
 
-        
+        protected void Redireccion(string pagina)
+        {
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 3000);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
+        }
+
     }
 }

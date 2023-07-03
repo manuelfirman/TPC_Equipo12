@@ -96,6 +96,24 @@ namespace Web
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtAlias;
 
         /// <summary>
+        /// Control lblEstadoDomicilio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstadoDomicilio;
+
+        /// <summary>
+        /// Control DRPEstadoDomicilio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList DRPEstadoDomicilio;
+
+        /// <summary>
         /// Control lblMessageDomicilioError.
         /// </summary>
         /// <remarks>
@@ -114,22 +132,13 @@ namespace Web
         protected global::System.Web.UI.WebControls.Label lblMessageDomicilioOk;
 
         /// <summary>
-        /// Control lblEstadoDomicilio.
+        /// Control lblMessageDomicilioRedirect.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstadoDomicilio;
-
-        /// <summary>
-        /// Control DRPEstadoDomicilio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPEstadoDomicilio;
+        protected global::System.Web.UI.WebControls.Label lblMessageDomicilioRedirect;
 
         /// <summary>
         /// Control btnAgregarDomicilio.

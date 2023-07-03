@@ -23,6 +23,9 @@
                 <asp:Label ID="lblMessageContraseñaError" runat="server" CssClass="alert alert-danger" role="alert" Visible="false"></asp:Label>
                 <asp:Label ID="lblMessageContraseñaOk" runat="server" CssClass="alert alert-success" role="alert" Visible="false"></asp:Label>
             </div>
+            <div class="text-center m-4">
+                <asp:Label ID="lblMessageContraseñaRedirect" runat="server" CssClass="alert- alert-info" role="alert" Visible="false"></asp:Label>
+            </div>
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnCambioContraseña" runat="server" CssClass="btn btn-primary" Text="Aceptar" OnClick="btnCambioContraseña_Click" />

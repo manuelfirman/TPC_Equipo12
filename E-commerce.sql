@@ -114,18 +114,3 @@ CREATE TABLE Banners (
     Referencia VARCHAR(50) NOT NULL,
     ImagenURL VARCHAR(1000) NOT NULL,
 )
-
-----------------------------------------------------------------------------------
-
---     DECLARE @Busqueda VARCHAR(10)
---     SELECT @Busqueda = 'remera'
---     SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE @Busqueda + '%' OR M.Nombre LIKE @Busqueda + '%' OR C.Nombre LIKE @Busqueda + '%' OR P.Descripcion LIKE @Busqueda + '%'
-
---     select * from Productos where Estado = 0
--- UPDATE Productos SET Estado = 1
--- SELECT ID_Provincia, Nombre FROM Provincias
-
--- select * from Marcas
-
--- use E_COMMERCE12
--- SELECT ID_Usuario, ID_Domicilio, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, EstadoDomicilio, ID_Provincia, Provincia  FROM Domicilios D INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE ID_Usuario = 1

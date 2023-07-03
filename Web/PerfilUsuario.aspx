@@ -3,133 +3,126 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container-fluid">
-
-        <asp:Repeater ID="rptUsuario" runat="server">
-            <ItemTemplate>
-                <h2 class="text-bg-primary text-center">PERFIL DE <%# ((Dominio.Usuario)Container.DataItem).Nombre.ToUpper() %></h2>
+    <asp:Repeater ID="rptUsuario" runat="server">
+        <ItemTemplate>
+            <div class="container">
                 <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
-                            <h4 class="text-primary">Datos Personales</h4>
-                            <div class="form-group">
-                                <label>Nombre:</label>
-                                <span id="spnNombre" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Nombre %> <%# ((Dominio.Usuario)Container.DataItem).Apellido %></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <span id="spnEmail" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Email %></span>
-                            </div>
-                            <div class="form-group">
-                                <label>DNI:</label>
-                                <span id="spnDni" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).DNI %></span>
-                            </div>
-                             <div class="form-group">
-                                <label>Telefono:</label>
-                                <span id="spnTelefono" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
-                            </div> 
-                             <div class="form-group">
-                                <label>Fecha de Nacimiento:</label>
-                                <span id="spnNacimiento" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToString() %></span>
-                            </div>
-                            <div class="form-group">
-                                <a href="ModificarUsuario.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
-                                    <button type="button" class="btn btn-primary">Actualizar datos personales</button>
-                                </a>
-                            </div>
-                            <div class="form-group">
-                                <a href="CambiarContraseña.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
-                                    <button type="button" class="btn btn-primary">Cambiar contraseña</button>
-                                </a>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Imagen de perfil" class="rounded-circle img-thumbnail">
+                                <h4 class="mt-3"><%# ((Dominio.Usuario)Container.DataItem).Nombre.ToUpper() %></h4>
                             </div>
                         </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
 
-                        <!--DATOS DOMICILIO-->
-                        <% if (Usuario.Domicilios.Count > 0)
-                            { %>
-                        
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
-                            <h4 class="text-primary">Dirección - <%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Alias : "Predeterminada" %></h4>
-                            <div class="form-group">
-                                <label>Provincia:</label>
-                                <span id="spnProvincia" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Provincia.Nombre : "Sin cargar" %></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Localidad:</label>
-                                <span id="spnLocalidad" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Localidad: "Sin cargar"%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Código Postal:</label>
-                                <span id="spnCP" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().CodigoPostal : "Sin cargar"%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Piso:</label>
-                                <span id="spnPiso" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Piso : "Sin cargar"%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Referencia:</label>
-                                <span id="spnReferencia" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Referencia : "Sin cargar"%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Domicilio:</label>
-                                <span id="spnCalle" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? (((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Calle + " " + ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Altura) : "Sin cargar" %></span>
-                            </div>
-                            <div class="form-group">
-                                <a href="Domicilios.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
+                                <!--DATOS DOMICILIO-->
+                                <% if (Usuario.Domicilios.Count > 0)
+                                    { %>
+                                <h5 class="card-title">Información de Envío</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Alias:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Alias : "Casa" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Dirección:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? $"{((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Calle} {((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Altura}, {((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Localidad}": "Sin cargar" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Ubicacion:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? $"{((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Provincia}, Argentina." : "Sin cargar" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Codigo Postal:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().CodigoPostal : "Sin cargar"%></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Piso:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Piso : "Sin cargar"%></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Referencia:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Referencia : "Sin cargar"%></span>
+                                    </li>
+                                </ul>
+                                <a href="Domicilios.aspx">
                                     <button type="button" class="btn btn-primary">Modificar dirección</button>
                                 </a>
+
+                                <%}
+                                    else
+                                    { %>
+                                <h5 class="card-title">Información de Envío</h5>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <span class="float-end mb-3">Aún no has cargado datos de tu direccion</span>
+                                    <a href="Domicilios.aspx">
+                                        <button type="button" class="btn btn-primary">Agregar dirección</button>
+                                    </a>
+                                </ul>
+                                <%} %>
                             </div>
                         </div>
-
-
-                        <%}
-                            else
-                            { %>
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
-                            <h4 class="text-primary">Direccion</h4>
-                            <div class="form-group">
-                                <label>Aun no has cargado datos de tu direccion</label>
-                            </div>
-                            <a href="Domicilios.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
-                                <button type="button" class="btn btn-primary">Agregar dirección</button>
-                            </a>
-
-                        </div>
-                        <%} %>
                     </div>
-            </ItemTemplate>
-        </asp:Repeater>
-
-
-
-      
-
-
-
-        <div class="col-md-6 mt-lg-5">
-            <h3>Historial de Compras</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01/05/2023</td>
-                        <td>Producto 1</td>
-                        <td>$50.00</td>
-                    </tr>
-                    <tr>
-                        <td>02/05/2023</td>
-                        <td>Producto 2</td>
-                        <td>$35.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Datos Personales</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Nombre:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Nombre %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Apellido:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Apellido %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Email:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Email %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">DNI:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).DNI %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Teléfono:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Fecha de Nacimiento:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToShortDateString() %></span>
+                                    </li>
+                                </ul>
+                                <a href="ModificarUsuario.aspx">
+                                    <button type="button" class="btn btn-primary mt-3">Actualizar datos personales</button>
+                                </a>
+                                <a href="CambiarContraseña.aspx">
+                                    <button type="button" class="btn btn-primary mt-3">Cambiar contraseña</button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Última Compra</h5>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <img src="ruta_imagen_producto.jpg" alt="Imagen del producto" class="img-thumbnail">
+                                    </div>
+                                    <div class="col-8">
+                                        <h6>Nombre del Producto</h6>
+                                        <p>Precio: $50.00</p>
+                                        <p>Fecha: 01/05/2023</p>
+                                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
 
 </asp:Content>

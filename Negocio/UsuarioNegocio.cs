@@ -86,9 +86,9 @@ namespace Negocio
 
                 return usuario;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return usuario;
             }
             finally
             {
@@ -113,9 +113,9 @@ namespace Negocio
                 if (Database.RunQuery() > 0) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -171,9 +171,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -201,9 +201,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -239,9 +239,9 @@ namespace Negocio
                     else return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception) 
             {
-                throw ex;
+                return false; 
             }
             finally
             {
@@ -262,9 +262,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
-            {
-                throw ex;
+            catch (Exception) 
+            { 
+                return false; 
             }
             finally
             {
@@ -285,9 +285,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -307,9 +307,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {

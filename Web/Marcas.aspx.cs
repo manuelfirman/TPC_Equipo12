@@ -70,6 +70,7 @@ namespace Web
 
             lblMessageError.Visible = false;
             lblMessageOk.Visible = false;
+            lblMessageRedirect.Visible = false;
             if (tipo == "Agregar")
             {
                 marca.Estado = DRPEstado.SelectedItem.ToString() == "Activado" ? true : false;
@@ -79,6 +80,9 @@ namespace Web
                 {
                     lblMessageOk.Visible = true;
                     lblMessageOk.Text = "Marca agregada correctamente";
+                    lblMessageRedirect.Visible = true;
+                    lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                    Redireccion("Vendedor");
                 }
                 else
                 {
@@ -107,6 +111,9 @@ namespace Web
                     {
                         lblMessageOk.Visible = true;
                         lblMessageOk.Text = "Marca agregada correctamente";
+                        lblMessageRedirect.Visible = true;
+                        lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                        Redireccion("Vendedor");
 
                     }
                     else
@@ -117,6 +124,12 @@ namespace Web
 
                 }
             }
+        }
+
+        protected void Redireccion(string pagina)
+        {
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 3000);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
         }
     }
 }
