@@ -38,7 +38,7 @@ namespace Negocio
             List<Marca> lista = new List<Marca>();
             try
             {
-                Database.StoreProcedure("SP_MarcasRandom");
+                Database.SetQuery("SELECT TOP (@Cantidad) M.ID_Marca, M.Nombre, M.Estado FROM Marcas M ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())

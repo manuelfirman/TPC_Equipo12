@@ -11,12 +11,12 @@ namespace Web
 {
     public partial class ModificarUsuario : System.Web.UI.Page
     {
-        private Usuario usuario;
+        protected Usuario usuario;
+        protected long IDUsuario;
         private Domicilio domicilio;
         private UsuarioNegocio usuarioNegocio { get; set; } = new UsuarioNegocio();
         private DomicilioNegocio domicilioNegocio { get; set; } = new DomicilioNegocio();
         private TipoUsuarioNegocio tipoUsuarioNegocio { get; set; } = new TipoUsuarioNegocio();
-        private long IDUsuario;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,8 +31,6 @@ namespace Web
 
                 setDatosUsuario();
 
-                setDomicilio();
-
             }
             else
             {
@@ -41,10 +39,6 @@ namespace Web
 
             lblMessageDatosError.Visible = false;
             lblMessageDatosOk.Visible = false;
-            lblMessageContraseñaError.Visible = false;
-            lblMessageContraseñaOk.Visible = false;
-            lblMessageDomicilioError.Visible = false;
-            lblMessageDomicilioOk.Visible = false;
         }
 
         protected void setDatosUsuario()
@@ -71,97 +65,11 @@ namespace Web
             }
         }
         
-        protected void setDomicilio()
-        {
-            List<Provincia> provincias = domicilioNegocio.ListarProvincias();
-            ListItem itemProvincias;
-            foreach (Provincia provincia in provincias)
-            {
-                itemProvincias = new ListItem(provincia.Nombre, provincia.IDProvincia.ToString());
-                DRPProvincia.Items.Add(itemProvincias);
-            }
-
-            string nombreProvincia = usuario.Domicilios.First().Provincia.Nombre;
-            ListItem provinciaDomicilio = DRPProvincia.Items.FindByText(nombreProvincia);
-            if (provinciaDomicilio != null)
-            {
-                provinciaDomicilio.Selected = true;
-            }
-
-            txtLocalidad.Value = usuario.Domicilios.First().Localidad;
-            txtCalle.Value = usuario.Domicilios.First().Calle;
-            txtAltura.Value = usuario.Domicilios.First().Altura;
-            txtCodigoPostal.Value = usuario.Domicilios.First().CodigoPostal;
-            txtReferencia.Value = usuario.Domicilios.First().Referencia;
-            txtPiso.Value = usuario.Domicilios.First().Piso;
-            txtAlias.Value = usuario.Domicilios.First().Alias;
-
-            ListItem itemDom;
-            lblEstadoDomicilio.InnerText = "Estado";
-            itemDom = new ListItem("Activado", "1");
-            DRPEstadoDomicilio.Items.Add(itemDom);
-            itemDom = new ListItem("Desactivado", "2");
-            DRPEstadoDomicilio.Items.Add(itemDom);
-        }
+        
 
 
-        protected void btnAgregarDomicilio_Click(object sender, EventArgs e)
-        {
 
-            if (txtLocalidad.Value == "" || txtCalle.Value == "" || txtAltura.Value == "" || txtCodigoPostal.Value == "")
-            {
-                lblMessageDomicilioError.Text = "Los campos con * no pueden estar vacios.";
-                lblMessageDomicilioError.Visible = true;
-                return;
-            }
 
-            Domicilio domicilio = new Domicilio();
-
-            domicilio.Localidad = txtLocalidad.Value;
-            domicilio.Calle = txtCalle.Value;
-            domicilio.Altura = txtAltura.Value;
-            domicilio.CodigoPostal = txtCodigoPostal.Value;
-            domicilio.Referencia = txtReferencia.Value;
-            domicilio.Piso = txtPiso.Value;
-            domicilio.Alias = txtAlias.Value;
-            domicilio.Provincia.IDProvincia = long.Parse(DRPProvincia.SelectedItem.Value);
-            domicilio.Provincia.Nombre = DRPProvincia.SelectedItem.Text;
-
-            if(usuarioNegocio.ActualizarDomicilio(usuario.IDUsuario, domicilio))
-            {
-                lblMessageDomicilioError.Text = "Error al actualizar el domicilio.";
-                lblMessageDomicilioError.Visible = true;
-                return;
-            }
-
-            lblMessageDomicilioOk.Text = "Domicilio actualizado correctamente.";
-            lblMessageDomicilioOk.Visible = true;
-        }
-
-        protected void btnCambioContraseña_Click(object sender, EventArgs e)
-        {
-            string contrasena = txtContraseña1.Value;
-            string confirmarContrasena = txtContraseña2.Value;
-
-            if (contrasena != confirmarContrasena)
-            {
-                lblMessageContraseñaError.Text = "Las contraseñas son distintas";
-                lblMessageContraseñaError.Visible = true;
-                return;
-            }
-
-            Crypt crypt = new Crypt();
-            string nuevaContraseña = crypt.GenerarHash(contrasena);
-
-            if(!usuarioNegocio.CambiarContraseña(usuario.IDUsuario, nuevaContraseña))
-            {
-                lblMessageContraseñaError.Text = "Error al actualizar la contraseña";
-                lblMessageContraseñaError.Visible = true;
-            }
-
-            lblMessageContraseñaOk.Text = "Contraseña actualizada correctamente.";
-            lblMessageContraseñaOk.Visible = true;
-        }
 
         protected void btnAgregarDatos_Click(object sender, EventArgs e)
         {

@@ -11,133 +11,133 @@ namespace Web
 {
 
 
-    public partial class ModificarUsuario
+    public partial class Domicilios
     {
 
         /// <summary>
-        /// Control txtTitulo.
+        /// Control lblProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtTitulo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblProvincia;
 
         /// <summary>
-        /// Control txtNombre.
+        /// Control DRPProvincia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtNombre;
+        protected global::System.Web.UI.WebControls.DropDownList DRPProvincia;
 
         /// <summary>
-        /// Control txtApellido.
+        /// Control txtLocalidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtApellido;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtLocalidad;
 
         /// <summary>
-        /// Control txtTelefono.
+        /// Control txtCalle.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtTelefono;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCalle;
 
         /// <summary>
-        /// Control txtFechaNacimiento.
+        /// Control txtAltura.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txtFechaNacimiento;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAltura;
 
         /// <summary>
-        /// Control txtEmail.
+        /// Control txtCodigoPostal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtEmail;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCodigoPostal;
 
         /// <summary>
-        /// Control txtDni.
+        /// Control txtPiso.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtDni;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtPiso;
 
         /// <summary>
-        /// Control lblEstadoUser.
+        /// Control txtReferencia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstadoUser;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtReferencia;
 
         /// <summary>
-        /// Control DRPEstadoUser.
+        /// Control txtAlias.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPEstadoUser;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAlias;
 
         /// <summary>
-        /// Control lblTipoUsuario.
+        /// Control lblMessageDomicilioError.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTipoUsuario;
+        protected global::System.Web.UI.WebControls.Label lblMessageDomicilioError;
 
         /// <summary>
-        /// Control DRPTipoUsuario.
+        /// Control lblMessageDomicilioOk.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPTipoUsuario;
+        protected global::System.Web.UI.WebControls.Label lblMessageDomicilioOk;
 
         /// <summary>
-        /// Control lblMessageDatosError.
+        /// Control lblEstadoDomicilio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageDatosError;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstadoDomicilio;
 
         /// <summary>
-        /// Control lblMessageDatosOk.
+        /// Control DRPEstadoDomicilio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessageDatosOk;
+        protected global::System.Web.UI.WebControls.DropDownList DRPEstadoDomicilio;
 
         /// <summary>
-        /// Control btnAgregarDatos.
+        /// Control btnAgregarDomicilio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAgregarDatos;
+        protected global::System.Web.UI.WebControls.Button btnAgregarDomicilio;
     }
 }

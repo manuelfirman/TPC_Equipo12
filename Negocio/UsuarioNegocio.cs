@@ -19,7 +19,7 @@ namespace Negocio
             DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
             try
             {
-                Database.SetQuery($"SELECT ID_Usuario, ID_TipoUsuario, TU.Nombre as TipoUsuario, Dni, U.Nombre, Apellido, Email, Telefono, FechaNacimiento, U.Estado, D.ID_Domicilio, D.ID_Provincia as ID_Provincia, P.Nombre as Provincia, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado as EstadoDomicilio FROM Usuarios U LEFT JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo LEFT JOIN Domicilios D ON U.ID_Domicilio = D.ID_Domicilio LEFT JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE {tipo} = @{tipo}");
+                Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U LEFT JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo WHERE {tipo} = @{tipo}");
                 Database.SetParam($"@{tipo}", valor);
                 Database.Read();
                 if (Database.Reader.Read())
@@ -182,7 +182,7 @@ namespace Negocio
                 }
                 else
                 {
-                    Database.SetQuery("UPDATE TABLE Domicilios SET ID_Provincia = @ID_Provincia, Localidad = @Localidad, Calle = @Calle, Numero = @Numero, CodigoPostal = @CodigoPostal, Piso = @Piso, Referencia = @Referencia, Alias = @Alias, Estado = @Estado WHERE ID_Domicilio = @ID_Domicilio");
+                    Database.SetQuery("UPDATE Domicilios SET ID_Provincia = @ID_Provincia, Localidad = @Localidad, Calle = @Calle, Numero = @Numero, CodigoPostal = @CodigoPostal, Piso = @Piso, Referencia = @Referencia, Alias = @Alias, Estado = @Estado WHERE ID_Domicilio = @ID_Domicilio");
                     Database.SetParam("@ID_Domicilio", domicilio.IDDomicilio);
                     Database.SetParam("@ID_Usuario", IDUsuario);
                     Database.SetParam("@ID_Provincia", domicilio.Provincia.IDProvincia);
@@ -214,7 +214,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("UPDATE TABLE Usuarios SET Contrasena = @Contraseña WHERE ID_Usuario = @ID_Usuario");
+                Database.SetQuery("UPDATE Usuarios SET Contrasena = @Contraseña WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
                 Database.SetParam("@Contraseña", nuevaContraseña);
 
@@ -237,7 +237,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("UPDATE TABLE Usuarios SET Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
+                Database.SetQuery("UPDATE Usuarios SET Estado = @Estado WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
                 Database.SetParam("@Estado", estado);
 

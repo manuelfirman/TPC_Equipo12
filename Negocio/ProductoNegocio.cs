@@ -21,7 +21,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ListarTodosLosProductos");
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria");
                 Database.Read();
                 while (Database.Reader.Read())
                 {
@@ -74,7 +74,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ProductosAlAzar");
+                Database.SetQuery("SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P  INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -129,7 +129,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ProductoPorID");
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.ID_Producto = @IDProducto");
                 Database.SetParam("@IDProducto", IDProductoIn);
                 Database.Read();
                 if (Database.Reader.Read())
@@ -183,12 +183,12 @@ namespace Negocio
             {
                 if (tipo == "Marca")
                 {
-                    Database.StoreProcedure("SP_ProductosPorMarca");
+                    Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE M.Nombre = @Marca");
                     Database.SetParam("@Marca", nombre);
                 }
                 else
                 {
-                    Database.StoreProcedure("SP_ProductosPorCategoria");
+                    Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE C.Nombre = @Categoria");
                     Database.SetParam("@Categoria", nombre);
                 }
                 Database.Read();

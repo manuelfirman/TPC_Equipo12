@@ -50,7 +50,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("SELECT ID_Usuario, ID_Domicilio, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, EstadoDomicilio, ID_Provincia, Provincia  FROM Domicilios D INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE ID_Usuario = @ID_Usuario");
+                Database.SetQuery("SELECT ID_Usuario, ID_Domicilio, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado, P.ID_Provincia, P.Nombre as Provincia FROM Domicilios D INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
                 Database.Read();
                 while (Database.Reader.Read()) 
@@ -66,7 +66,7 @@ namespace Negocio
                     if (!(Database.Reader["Piso"] is DBNull)) auxDomicilio.Piso = (string)Database.Reader["Piso"];
                     if (!(Database.Reader["Referencia"] is DBNull)) auxDomicilio.Referencia = (string)Database.Reader["Referencia"];
                     if (!(Database.Reader["Alias"] is DBNull)) auxDomicilio.Alias = (string)Database.Reader["Alias"];
-                    if (!(Database.Reader["EstadoDomicilio"] is DBNull)) auxDomicilio.Estado = (bool)Database.Reader["EstadoDomicilio"];
+                    if (!(Database.Reader["Estado"] is DBNull)) auxDomicilio.Estado = (bool)Database.Reader["Estado"];
                     auxDomicilio.Provincia = new Provincia();
                     if (!(Database.Reader["ID_Provincia"] is DBNull)) auxDomicilio.Provincia.IDProvincia = (long)Database.Reader["ID_Provincia"];
                     if (!(Database.Reader["Provincia"] is DBNull)) auxDomicilio.Provincia.Nombre = (string)Database.Reader["Provincia"];

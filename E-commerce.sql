@@ -54,6 +54,19 @@ CREATE TABLE Provincias (
     Nombre VARCHAR(20) NOT NULL
 )
 GO
+CREATE TABLE Usuarios (
+    ID_Usuario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_TipoUsuario BIGINT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
+    Dni VARCHAR(10) NOT NULL UNIQUE,
+    Nombre VARCHAR(15) NOT NULL,
+    Apellido VARCHAR(15) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE,
+    Contrasena VARCHAR(200) NOT NULL, 
+    Telefono VARCHAR(15) NULL,
+    FechaNacimiento DATE NULL,
+    Estado BIT NULL DEFAULT 1,
+)
+GO
 CREATE TABLE Domicilios (
     ID_Domicilio BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Usuario BIGINT NULL FOREIGN KEY REFERENCES Usuarios(ID_Usuario),
@@ -69,20 +82,6 @@ CREATE TABLE Domicilios (
 
 )
 GO
-CREATE TABLE Usuarios (
-    ID_Usuario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    ID_TipoUsuario BIGINT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
-    Dni VARCHAR(10) NOT NULL UNIQUE,
-    Nombre VARCHAR(15) NOT NULL,
-    Apellido VARCHAR(15) NOT NULL,
-    Email VARCHAR(50) NOT NULL UNIQUE,
-    Contrasena VARCHAR(200) NOT NULL, 
-    Telefono VARCHAR(15) NULL,
-    FechaNacimiento DATE NULL,
-    Estado BIT NULL DEFAULT 1,
-)
-
-
 CREATE TABLE Ventas (
     ID_Venta BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_Factura BIGINT NOT NULL FOREIGN KEY REFERENCES Facturas (ID_Factura),
@@ -117,221 +116,16 @@ CREATE TABLE Banners (
 )
 
 ----------------------------------------------------------------------------------
-------------------------- ***** STORED PROCEDURES **** ---------------------------
 
----------------------------------
----------- USUARIOS ------------
-GO
-CREATE PROCEDURE SP_UsuarioPorID(
-    @IDUsuario BIGINT
-)
-AS
-BEGIN
-    SELECT ID_Usuario, ID_TipoUsuario, TU.Nombre as TipoUsuario, Dni, U.Nombre, Apellido, Email, Telefono, FechaNacimiento, U.Estado,
-    D.ID_Domicilio, D.ID_Provincia as ID_Provincia, P.Nombre as Provincia, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado as EstadoDomicilio
-    FROM Usuarios U
-    INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo
-    INNER JOIN Domicilios D ON U.ID_Domicilio = D.ID_Domicilio
-    INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia
-    WHERE ID_Usuario = @IDUsuario
-END
+--     DECLARE @Busqueda VARCHAR(10)
+--     SELECT @Busqueda = 'remera'
+--     SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE @Busqueda + '%' OR M.Nombre LIKE @Busqueda + '%' OR C.Nombre LIKE @Busqueda + '%' OR P.Descripcion LIKE @Busqueda + '%'
 
----------------------------------
----------- PRODUCTOS ------------
-GO
-CREATE PROCEDURE SP_ListarTodosLosProductos -- TODOS LOS PRODUCTOS
-AS
-BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-END
+--     select * from Productos where Estado = 0
+-- UPDATE Productos SET Estado = 1
+-- SELECT ID_Provincia, Nombre FROM Provincias
 
-GO
-CREATE PROCEDURE SP_ProductosPorCategoria( -- PRODUCTOS POR CATEGORIA
-    @Categoria VARCHAR(20)
-)
-AS
-BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    WHERE C.Nombre = @Categoria
-END
+-- select * from Marcas
 
-GO
-CREATE PROCEDURE SP_ProductosPorMarca( -- PRODUCTOS POR  MARCA
-    @Marca VARCHAR(20)
-)
-AS
-BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    WHERE M.Nombre = @Marca
-END
-
-GO
-CREATE PROCEDURE SP_ProductosPorCategoriaMarca( -- PRODUCTOS POR CATEGORIA Y MARCA
-    @Categoria VARCHAR(20),
-    @Marca VARCHAR(20)
-)
-AS
-BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    WHERE M.Nombre = @Marca AND C.Nombre = @Categoria
-END
-
-GO
-CREATE PROCEDURE SP_ProductosAlAzar( -- PRODUCTOS AL AZAR
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    ORDER BY NEWID()
-END
-
-GO
-CREATE PROCEDURE SP_ProductoPorID( -- PRODUCTO POR ID
-    @IDProducto int
-)
-AS
-BEGIN
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock
-    FROM Productos P 
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    WHERE P.ID_Producto = @IDProducto
-END
-
-------------------------------
----------- IMAGENES ----------
-
-GO
-CREATE PROCEDURE SP_ImagenesAlAzar( -- IMAGENES AL AZAR
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
-    FROM Imagenes I
-    ORDER BY NEWID()
-END
-
-GO
-CREATE PROCEDURE SP_ImagenesRandomPorCategoria( -- IMAGENES AL AZAR POR CATEGORIA
-    @Cantidad INT,
-    @Categoria VARCHAR(20)
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
-    FROM Imagenes I
-    INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
-    INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-    WHERE C.Nombre = @Categoria
-    ORDER BY NEWID()
-END
-
-GO
-CREATE PROCEDURE SP_ImagenesRandomPorMarca( -- IMAGENES AL AZAR POR MARCA
-    @Cantidad int,
-    @Marca VARCHAR(20)
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado
-    FROM Imagenes I
-    INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto
-    INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca
-    WHERE M.Nombre = @Marca
-    ORDER BY NEWID()
-END
-
-
-----------------------------
----------- MARCAS ----------
-GO
-CREATE PROCEDURE SP_ListarMarcas -- TODAS LAS MARCAS
-AS
-BEGIN
-    SELECT M.Estado, M.Nombre, M.ID_Marca FROM Marcas AS M
-END
-
-GO
-CREATE PROCEDURE SP_MarcasRandom( -- MARCAS AL AZAR
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) M.ID_Marca, M.Nombre, M.Estado
-    FROM Marcas M
-    ORDER BY NEWID()
-END
-
-
---------------------------------
----------- CATEGORIAS ----------
-GO
-CREATE PROCEDURE SP_ListarCategorias -- TODAS LAS CATEGORIAS
-AS
-BEGIN
-    SELECT C.ID_Categoria, C.Nombre, C.Estado FROM Categorias AS C
-END
-
-GO
-CREATE PROCEDURE SP_CategoriasRandom( -- CATEGORIAS AL AZAR
-    @Cantidad int
-)
-AS
-BEGIN
-    SELECT TOP (@Cantidad) C.ID_Categoria, C.Nombre, C.Estado
-    FROM Categorias C
-    ORDER BY NEWID()
-END
-
-
--------------------------------------------------------------------------
-------------------------- ***** TRIGGERS **** ---------------------------
-
----------- IMAGENES TRIGGER ISTEAD OF DELETE ----------
-GO
-CREATE TRIGGER TR_DeleteImagen ON Imagenes
-INSTEAD OF DELETE
-AS
-BEGIN
-    DECLARE @IDImagen INT
-    SELECT @IDImagen = ID_Imagen FROM deleted
-    UPDATE Imagenes SET Estado = 0 WHERE ID_Imagen = @IDImagen
-END
-
----------- USUARIOS TRIGGER ISTEAD OF DELETE ----------
-GO
-CREATE TRIGGER TR_DeleteUsuario ON Usuarios
-INSTEAD OF DELETE
-AS
-BEGIN
-    DECLARE @IDUsuario INT
-    SELECT @IDUsuario = ID_Usuario FROM deleted
-    UPDATE Usuarios SET Estado = 0 WHERE ID_Usuario = @IDUsuario
-END
-
-    DECLARE @Busqueda VARCHAR(10)
-    SELECT @Busqueda = 'remera'
-    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE @Busqueda + '%' OR M.Nombre LIKE @Busqueda + '%' OR C.Nombre LIKE @Busqueda + '%' OR P.Descripcion LIKE @Busqueda + '%'
-
-    select * from Productos where Estado = 0
-UPDATE Productos SET Estado = 1
-SELECT ID_Provincia, Nombre FROM Provincias
-
-select * from Marcas
+-- use E_COMMERCE12
+-- SELECT ID_Usuario, ID_Domicilio, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, EstadoDomicilio, ID_Provincia, Provincia  FROM Domicilios D INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE ID_Usuario = 1
