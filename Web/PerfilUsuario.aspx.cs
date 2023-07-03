@@ -17,7 +17,7 @@ namespace Web
         {
             Usuario = Session["Usuario"] as Usuario;
             if (Usuario == null) Response.Redirect("Ingresar.aspx");
-            if (Usuario.Domicilio != null) HayDomicilio = true;
+            if (Usuario.Domicilios.First() != null) HayDomicilio = true;
 
             if (!IsPostBack)
             {

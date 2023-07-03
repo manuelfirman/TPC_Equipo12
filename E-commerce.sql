@@ -56,6 +56,7 @@ CREATE TABLE Provincias (
 GO
 CREATE TABLE Domicilios (
     ID_Domicilio BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    ID_Usuario BIGINT NULL FOREIGN KEY REFERENCES Usuarios(ID_Usuario),
     ID_Provincia BIGINT NOT NULL FOREIGN KEY REFERENCES Provincias(ID_Provincia),
     Localidad VARCHAR(20) NOT NULL,
     Calle VARCHAR(20) NOT NULL,
@@ -71,7 +72,6 @@ GO
 CREATE TABLE Usuarios (
     ID_Usuario BIGINT NOT NULL PRIMARY KEY IDENTITY(1,1),
     ID_TipoUsuario BIGINT NOT NULL FOREIGN KEY REFERENCES TipoUsuario(ID_Tipo),
-    ID_Domicilio BIGINT NULL FOREIGN KEY REFERENCES Domicilios(ID_Domicilio),
     Dni VARCHAR(10) NOT NULL UNIQUE,
     Nombre VARCHAR(15) NOT NULL,
     Apellido VARCHAR(15) NOT NULL,
@@ -325,3 +325,13 @@ BEGIN
     SELECT @IDUsuario = ID_Usuario FROM deleted
     UPDATE Usuarios SET Estado = 0 WHERE ID_Usuario = @IDUsuario
 END
+
+    DECLARE @Busqueda VARCHAR(10)
+    SELECT @Busqueda = 'remera'
+    SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.Nombre LIKE @Busqueda + '%' OR M.Nombre LIKE @Busqueda + '%' OR C.Nombre LIKE @Busqueda + '%' OR P.Descripcion LIKE @Busqueda + '%'
+
+    select * from Productos where Estado = 0
+UPDATE Productos SET Estado = 1
+SELECT ID_Provincia, Nombre FROM Provincias
+
+select * from Marcas

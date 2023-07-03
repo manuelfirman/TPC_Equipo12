@@ -17,7 +17,7 @@ namespace Dominio
         public string Contraseña { get; set; }
         public string Telefono { get; set; }
         public DateTime FechaNacimiento { get; set; }
-        public Domicilio Domicilio { get; set; }
+        public List<Domicilio> Domicilios { get; set; }
         public bool Estado { get; set; }
 
         public Usuario()
