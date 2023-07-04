@@ -191,18 +191,16 @@ namespace Negocio
             string urlImagen;
             string descripcion;
             bool estado;
-            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@IDProducto, @ImagenURL, @Descripcion, @Estado)";
+            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion)";
             try
             {
                 IDProducto = imagen.IDProducto;
                 urlImagen = imagen.Url;
                 descripcion = imagen.Descripcion;
-                estado = imagen.Estado;
                 Database.SetQuery(query);
                 Database.SetParam("@IDProducto", IDProducto);
                 Database.SetParam("@ImagenURL", urlImagen);
                 Database.SetParam("@Descripcion", descripcion);
-                Database.SetParam("@Estado", estado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }

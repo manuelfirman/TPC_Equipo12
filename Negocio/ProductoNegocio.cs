@@ -288,7 +288,7 @@ namespace Negocio
             }
         }
 
-        public bool AgregarProducto(Producto producto)
+        public long AgregarProducto(Producto producto)
         {
             NegocioDB db = new NegocioDB();
             try
@@ -302,12 +302,26 @@ namespace Negocio
                 db.SetParam("@Precio", producto.Precio);
                 db.SetParam("@Stock", producto.Stock);
                 db.SetParam("@Estado", 1);
-                if (db.RunQuery() == 1) return true;
-                else return false;
+                if (db.RunQuery() == 1)
+                {
+                    NegocioDB db2 = new NegocioDB();
+                    db2.SetQuery("Select ID_Producto FROM Productos Where Codigo = @Codigo");
+                    db2.SetParam("@Codigo", producto.Codigo);
+                    db2.Read();
+                    if (db2.Reader.Read()){
+                        long IDProducto = (long)db2.Reader["ID_Producto"];
+                        db2.Close();
+                        return IDProducto;
+                    }
+                    return -1;
+                }
+                else{
+                    return -1;
+                }
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
             finally
             {
