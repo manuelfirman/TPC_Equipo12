@@ -17,9 +17,9 @@ namespace Web
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
-            if (usuario != null)
+            if (usuario != null || usuario.TipoUser.Nombre != "Admin")
             {
-                Response.Redirect("404.aspx");
+                Response.Redirect("PerfilUsuario.aspx");
             }
         }
 

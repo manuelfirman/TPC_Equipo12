@@ -114,7 +114,6 @@ namespace Web
                         lblMessageRedirect.Visible = true;
                         lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
                         Redireccion("Vendedor");
-
                     }
                     else
                     {

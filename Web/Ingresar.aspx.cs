@@ -17,7 +17,7 @@ namespace Web
         {
             usuario = Session["Usuario"] as Usuario;
             if (usuario != null){
-                Response.Redirect("404.aspx");
+                Response.Redirect("PerfilUsuario.aspx");
             }
         }
 
