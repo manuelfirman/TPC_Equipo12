@@ -113,6 +113,7 @@
     <Content Include="Styles\home.css" />
     <Content Include="UsuariosAdmin.aspx" />
     <Content Include="Vendedor.aspx" />
+    <Content Include="Ventas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -266,6 +267,13 @@
     </Compile>
     <Compile Include="Vendedor.aspx.designer.cs">
       <DependentUpon>Vendedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas.aspx.cs">
+      <DependentUpon>Ventas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas.aspx.designer.cs">
+      <DependentUpon>Ventas.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

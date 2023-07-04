@@ -29,7 +29,6 @@
                 <input type="text" class="form-control" id="txtEmail" runat="server" />
             </div>
 
-
             <div class="mb-3">
                 <label for="txtPassword" class="form-label">Contraseña:</label>
                 <input type="password" class="form-control" id="txtPassword" runat="server" />
@@ -40,7 +39,22 @@
                 <input type="password" class="form-control" id="txtConfirmarPassword" runat="server" />
             </div>
 
+            <% if (usuario.TipoUser.Nombre == "Admin") { %>
+            <div class="row mb-3">
+                <div class="col-md-6">
 
+                    <label class="form-label" runat="server" id="lblEstado">Estado:</label>
+                    <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" runat="server" id="lblTipoUsuario">Rol de usuario</label>
+                    <asp:DropDownList CssClass="form-select" ID="DRPTipoUsuario" runat="server">
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <% } %>
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnCrear" runat="server" Text="Registrar" CssClass="btn btn-primary" OnClick="btnCrear_Click" />

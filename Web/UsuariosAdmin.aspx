@@ -4,8 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
-
     <div class="container">
         <h1>USUARIOS</h1>
                 <table class="table">
@@ -18,6 +16,7 @@
                             <th>Telefono</th>
                             <th>Rol</th>
                             <th>Estado</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

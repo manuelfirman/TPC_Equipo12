@@ -12,14 +12,46 @@ namespace Web
     public partial class CrearCuenta : System.Web.UI.Page
     {
 
-        UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-        Usuario usuario = new Usuario();
+        private UsuarioNegocio usuarioNegocio { get; set; } = new UsuarioNegocio();
+        private TipoUsuarioNegocio tipoUsuarioNegocio { get; set; } = new TipoUsuarioNegocio();
+        protected Usuario usuario = new Usuario();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
-            if (usuario != null || usuario.TipoUser.Nombre == "Admin")
+            if (usuario != null)
+            { 
+                if (usuario.TipoUser.Nombre != "Admin")
+                {
+                    Response.Redirect("PerfilUsuario.aspx");
+                }
+            }
+            else
             {
                 Response.Redirect("PerfilUsuario.aspx");
+            }
+
+            if(!IsPostBack)
+            {
+                ListItem itemEstado;
+                itemEstado = new ListItem("Activado", "1");
+                DRPEstado.Items.Add(itemEstado);
+                itemEstado = new ListItem("Desactivado", "0");
+                DRPEstado.Items.Add(itemEstado);
+
+                List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
+                ListItem itemTipo;
+                foreach (TipoUsuario tipo in tipousuarios)
+                {
+                    itemTipo = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
+                    DRPTipoUsuario.Items.Add(itemTipo);
+                }
+                string nombreRol = usuario.TipoUser.Nombre;
+                ListItem rolUsuario = DRPTipoUsuario.Items.FindByText(nombreRol);
+                if (rolUsuario != null)
+                {
+                    rolUsuario.Selected = true;
+                }
             }
         }
 

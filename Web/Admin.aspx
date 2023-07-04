@@ -13,11 +13,6 @@
         { %>
 
     <!-- CONTENIDO PAGE -->
-    <h1>Panel Administrador</h1>
-    <div class="text-center mt-2 mb-2">
-        <a href="UsuariosAdmin.aspx" class="btn btn-danger">Usuarios</a>
-    </div>
-
     <main class="bg-dark">
         <div class="container-fluid">
             <h1 class="text-light">ADMINISTRAR TIENDA</h1>
