@@ -1,4 +1,14 @@
-﻿.form-container {
+﻿.form-container-xl {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.form-container {
     max-width: 800px;
     margin: 0 auto;
     margin-top: 10px;

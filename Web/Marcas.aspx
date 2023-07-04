@@ -3,17 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-    </style>
+    <link href="Styles/formulario.css" rel="stylesheet" />
+
     <div class="container min-vh-100 mb-5">
         <div class="container login-container">
             <h2 class="text-center mb-4" id="txtTitulo" runat="server"></h2>

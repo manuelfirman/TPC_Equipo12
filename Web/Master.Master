@@ -62,12 +62,13 @@
                 <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
                     <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
-                <!-- BOTON PERFIL -->
+                <!-- BOTON PERFIL/INGRESAR -->
+                <% if (HayUser) { %>
                 <div class="ml-auto ms-3">
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user fa-xl" style="color: #1083d5;"></i>
-                            <span class="badge rounded-pill bg-danger text-white ms-1">Perfil</span>
+                            <span class="badge rounded-pill bg-danger text-white ms-1">PERFIL</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="PerfilUsuario.aspx">Ver Perfil</a></li>
@@ -75,13 +76,32 @@
                         </ul>
                     </div>
                 </div>
+                <% } else { %>
+                <div class="ml-auto ms-3">
+                    <a class="text-white" href="Ingresar.aspx" role="button">
+                        <span class="badge rounded-pill bg-danger text-white ms-1">Ingresar</span>
+                    </a>
+                </div>
+                <%} %>
 
-                <% if (HayUser && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
-                        <button type="button" class="btn d-flex justify-content-center align-items-center"">
-                            <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
-                            <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
-                        </button>
-                    <% } %>
+
+                <!-- BOTON ADMIN/VENDEDOR -->
+                <% if (HayUser && (Usuario.TipoUser.Nombre == "Admin"))
+                    { %>
+                    <a href="Admin.aspx" class="btn d-flex justify-content-center align-items-center"" role="button">
+                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
+                    </a>
+
+                    <% }
+                        else if (HayUser && Usuario.TipoUser.Nombre == "Vendedor")
+                        { %>
+                    <a href="Vendedor.aspx" class="btn d-flex justify-content-center align-items-center"" role="button">
+                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1">VENDEDOR</span>
+                    </a>
+                    
+                <%} %>
 
                 <% if(!HayUser || Usuario.TipoUser.IDTipo == 1) { %>
                 <!--BOTON CARRITO-->
@@ -89,6 +109,7 @@
                         <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
                         <span class="badge rounded-pill bg-danger text-white ms-1"><%= CantidadCarrito() %></span>
                     </button>
+                
                 <%} %>
 
 

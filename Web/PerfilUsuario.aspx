@@ -18,7 +18,7 @@
                             <div class="card-body">
 
                                 <!--DATOS DOMICILIO-->
-                                <% if (Usuario.Domicilios.Count > 0)
+                                <% if (UsuarioSession.Domicilios.Count > 0)
                                     { %>
                                 <h5 class="card-title">Información de Envío</h5>
                                 <ul class="list-group list-group-flush">
@@ -47,7 +47,7 @@
                                         <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Referencia : "Sin cargar"%></span>
                                     </li>
                                 </ul>
-                                <a href="Domicilios.aspx">
+                                <a href="Domicilios.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
                                     <button type="button" class="btn btn-primary">Modificar dirección</button>
                                 </a>
 
@@ -57,7 +57,7 @@
                                 <h5 class="card-title">Información de Envío</h5>
                                 <ul class="list-group list-group-flush mt-4">
                                     <span class="float-end mb-3">Aún no has cargado datos de tu direccion</span>
-                                    <a href="Domicilios.aspx">
+                                    <a href="Domicilios.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
                                         <button type="button" class="btn btn-primary">Agregar dirección</button>
                                     </a>
                                 </ul>
@@ -95,10 +95,10 @@
                                         <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToShortDateString() %></span>
                                     </li>
                                 </ul>
-                                <a href="ModificarUsuario.aspx">
+                                <a href="ModificarUsuario.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
                                     <button type="button" class="btn btn-primary mt-3">Actualizar datos personales</button>
                                 </a>
-                                <a href="CambiarContraseña.aspx">
+                                <a href="CambiarContraseña.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
                                     <button type="button" class="btn btn-primary mt-3">Cambiar contraseña</button>
                                 </a>
                             </div>
