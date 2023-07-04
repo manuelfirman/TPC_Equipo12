@@ -215,16 +215,16 @@ VALUES (2, '34986521', 'Elven', 'Dedor', 'elvendedor@gmail.com', '7f25da57311a42
 
 -- USER ADMIN (TODAS LAS PASS SON luis1234)
 INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (3, '0000000', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
+VALUES (3, '0000001', 'Admin', 'Admin', 'admin@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
 
 -- USER ADMIN (TODAS LAS PASS SON luis1234)
 INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (3, '0000000', 'Admin1', 'Admin1', 'admin1@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
+VALUES (3, '0000002', 'Admin1', 'Admin1', 'admin1@email.com', '7f25da57311a420ee12b065d163eecab55538f34ec017db5d34628914fc48dde', '0000000', GETDATE(), 1);
 
 -- USER ADMIN (TODAS LAS PASS SON luis1234)
 use E_COMMERCE12
 INSERT INTO Usuarios (ID_TipoUsuario, Dni, Nombre, Apellido, Email, Contrasena, Telefono, FechaNacimiento, Estado)
-VALUES (3, '0000000', 'teguiu', 'stin', 'agustin@gmail.com', 'EstaEsLaPassDeTeguiu', '0000000', GETDATE(), 1);
+VALUES (3, '0000030', 'teguiu', 'stin', 'agustin@gmail.com', 'EstaEsLaPassDeTeguiu', '0000000', GETDATE(), 1);
 
 -- DOMICILIO VENDEDOR
 INSERT INTO Domicilios(ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Estado)
