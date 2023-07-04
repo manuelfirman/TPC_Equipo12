@@ -19,9 +19,9 @@
 
         <div class="container-fluid mt-5">
 
-            <div class="row justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center d-flex">
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                     <div class="card bg-success-subtle mb-5 p-3">
                         <div class="card-body">
                             <h2 class="text-dark mt-2">PRODUCTOS</h2>
@@ -55,7 +55,7 @@
 
 
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card bg-info mb-5 p-3">
                         <div class="card-body">
                             <h2 class="text-light mt-2">MARCAS</h2>
@@ -86,7 +86,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card bg-warning-subtle mb-5 p-3">
                         <div class="card-body">
                             <h2 class="text-dark mt-2">CATEGORÍAS</h2>
