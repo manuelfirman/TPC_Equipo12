@@ -127,7 +127,19 @@ namespace Web
             }
         }
 
+        protected void btnComprar_Click(object sender, EventArgs e)
+        {
 
-
+            if(Usuario != null)
+            {
+                Response.Redirect("Checkout.aspx");
+                return;
+            }
+            else
+            {
+                alerta.Visible = true;
+                return;
+            }
+        }
     }
 }
