@@ -56,7 +56,7 @@ namespace Web
                     {
                         total += elemento.Producto.Precio * elemento.Cantidad;
                     }
-                    lblTotal.Text = $"Total a pagar: {Math.Round(total)}$";
+                    lblTotal.Text = $"Total a pagar: ${total}";
                 }
                 else
                 {

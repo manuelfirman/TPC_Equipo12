@@ -265,7 +265,6 @@ namespace Negocio
             }
         }
 
-
         public EstadoVenta EstadoVentaPorID(long IDEstado)
         {
             Database = new NegocioDB();
@@ -373,7 +372,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha FROM Ventas WHERE ID_Venta = @ID_Venta");
+                Database.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha, Monto FROM Ventas WHERE ID_Venta = @ID_Venta");
                 Database.SetParam("@ID_Venta", IDVenta);
                 Database.Read();
                 if (Database.Reader.Read())
@@ -389,6 +388,7 @@ namespace Negocio
 
                     if (!(Database.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)Database.Reader["ID_Venta"];
                     if (!(Database.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)Database.Reader["Fecha"];
+                    if (!(Database.Reader["Monto"] is DBNull)) venta.Monto = (decimal)Database.Reader["Monto"];
 
                     if (IDFactura != -1 && IDUsuario != -1 && IDEstado != -1)
                     {
@@ -413,28 +413,30 @@ namespace Negocio
 
         public List<Venta> ListarVentas()
         {
-            Database = new NegocioDB();
+            NegocioDB db = new NegocioDB();
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             List<Venta> listaVentas = new List<Venta>();
             Venta venta;
 
             try
             {
-                Database.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha FROM Ventas");
-                Database.Read();
-                while(Database.Reader.Read())
+                db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Monto, Fecha FROM Ventas");
+                db.Read();
+
+                while(db.Reader.Read())
                 {
                     venta = new Venta();
                     long IDFactura = -1;
                     long IDUsuario = -1;
                     long IDEstado = -1;
 
-                    if (!(Database.Reader["ID_Factura"] is DBNull)) IDFactura = (long)Database.Reader["ID_Factura"];
-                    if (!(Database.Reader["ID_Usuario"] is DBNull)) IDUsuario = (long)Database.Reader["ID_Usuario"];
-                    if (!(Database.Reader["ID_Estado"] is DBNull)) IDEstado = (long)Database.Reader["ID_Estado"];
+                    if (!(db.Reader["ID_Factura"] is DBNull)) IDFactura = (long)db.Reader["ID_Factura"];
+                    if (!(db.Reader["ID_Usuario"] is DBNull)) IDUsuario = (long)db.Reader["ID_Usuario"];
+                    if (!(db.Reader["ID_Estado"] is DBNull)) IDEstado = (long)db.Reader["ID_Estado"];
 
-                    if (!(Database.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)Database.Reader["ID_Venta"];
-                    if (!(Database.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)Database.Reader["Fecha"];
+                    if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
+                    if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+                    if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
 
                     if(IDFactura != -1) venta.Factura = this.FacturaPorID(IDFactura);
                     if(IDUsuario != -1) venta.Usuario = usuarioNegocio.UsuarioPorID(IDUsuario);
@@ -442,6 +444,7 @@ namespace Negocio
 
                     listaVentas.Add(venta);
                 }
+
                 return listaVentas;
             }
             catch (Exception ex)
@@ -451,7 +454,7 @@ namespace Negocio
             }
             finally
             {
-                Database.Close();
+                db.Close();
             }
         }
 

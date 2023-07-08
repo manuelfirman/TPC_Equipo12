@@ -44,6 +44,8 @@
                                     <% } %>
                                     <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
                                     <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="Ventas.aspx">Gestionar Ventas</a></li>
+                                    <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="Marcas.aspx?Tipo=Agregar">Agregar Marcas</a></li>
                                     <li><a class="dropdown-item" href="Categorias.aspx?Tipo=Agregar">Agregar Categoria</a></li>
                                     <li><a class="dropdown-item" href="Productos.aspx?Tipo=Agregar">Agregar Producto</a></li>

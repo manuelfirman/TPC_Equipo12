@@ -113,19 +113,30 @@
                     </div>
                 </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-9 mb-5">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-4 mb-5">
                         <div class="card p-3 bg-black">
-                            <h2 class="text-light mt-2">BUSCAR</h2>
+                            <h2 class="text-light mt-2">GESTIONAR VENTAS</h2>
+                            <div class="card-body mt-4">
+                                <div class="form-group">
+                                    <a href="Ventas.aspx" class="btn btn-outline-light mb-3">Ventas</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8 mb-5">
+                        <div class="card p-1 bg-black">
+                            <h2 class="text-light mt-3 ms-2">FILTRAR</h2>
                             <div class="card-body">
                                 <div class="form-group">
                                     <asp:TextBox placeholder="Ejemplo: Remera" CssClass="form-control me-2 mb-3" ID="txtbusqueda" runat="server"></asp:TextBox>
-                                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-light mb-2" runat="server" Text="Buscar" OnClick="BtnBusqueda_Click" />
+                                    <asp:Button ID="BtnBusqueda" CssClass="btn btn-outline-light" runat="server" Text="Buscar" OnClick="BtnBusqueda_Click" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
 
 
             </div>
