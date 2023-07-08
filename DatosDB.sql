@@ -58,8 +58,7 @@ VALUES  ('Usuario'),
 
 -- ESTADOS VENTA
 INSERT INTO EstadoVenta (Estado)
-VALUES ('PAGO PENDIENTE'),
-       ('EN ESPERA'),
+VALUES ('PAGADO'),
        ('EN PROCESO'),
        ('ENVIADO'),
        ('ENTREGADO'),
