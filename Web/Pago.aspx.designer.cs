@@ -11,35 +11,53 @@ namespace Web
 {
 
 
-    public partial class Checkout
+    public partial class Pago
     {
 
         /// <summary>
-        /// Control lblDomicilio.
+        /// Control lblEfectivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDomicilio;
+        protected global::System.Web.UI.WebControls.Label lblEfectivo;
 
         /// <summary>
-        /// Control DRPDomicilios.
+        /// Control CHKEfectivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPDomicilios;
+        protected global::System.Web.UI.WebControls.CheckBox CHKEfectivo;
 
         /// <summary>
-        /// Control txtCalle.
+        /// Control lblTarejta.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCalle;
+        protected global::System.Web.UI.WebControls.Label lblTarejta;
+
+        /// <summary>
+        /// Control CHKTarjeta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox CHKTarjeta;
+
+        /// <summary>
+        /// Control lblNumero.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblNumero;
 
         /// <summary>
         /// Control txtNumero.
@@ -51,49 +69,40 @@ namespace Web
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtNumero;
 
         /// <summary>
-        /// Control txtLocalidad.
+        /// Control lblFecha.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtLocalidad;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblFecha;
 
         /// <summary>
-        /// Control txtCodPos.
+        /// Control txtFecha.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtCodPos;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFecha;
 
         /// <summary>
-        /// Control txtPiso.
+        /// Control lblClave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtPiso;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblClave;
 
         /// <summary>
-        /// Control txtReferencia.
+        /// Control txtClave.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea txtReferencia;
-
-        /// <summary>
-        /// Control RPDetalle.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater RPDetalle;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtClave;
 
         /// <summary>
         /// Control lblTotal.

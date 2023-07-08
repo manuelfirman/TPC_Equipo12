@@ -44,6 +44,8 @@ namespace Web
                         lblUrls.Visible = true;
                         ImgUrl.Visible = true;
                         imagenes = imagenNegocio.ImagenesProducto(long.Parse(Request.Params["Id"]));
+                        ImgUrl.ImageUrl = imagenes[0].Url;
+                        txtDesc.Value = imagenes[0].Descripcion;
                         int indice = 1;
                         foreach(var imagen in imagenes)
                         {

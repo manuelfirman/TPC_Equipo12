@@ -29,7 +29,7 @@
 
             <div class="text-center">
                 <asp:Button ID="btnOlvidePass" runat="server" Text="Olvide mi contraseña" CssClass="nav-link text-primary" OnClick="btnOlvidePass_Click" />
-                <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="nav-link text-primary" OnClick="btnRegistrarse_Click" />
+                <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="nav-link text-primary mt-1" OnClick="btnRegistrarse_Click" />
             </div>
 
 
