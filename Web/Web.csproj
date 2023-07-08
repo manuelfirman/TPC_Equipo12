@@ -95,6 +95,7 @@
     <Content Include="Ingresar.aspx" />
     <Content Include="Marcas.aspx" />
     <Content Include="ModificarUsuario.aspx" />
+    <Content Include="Pago.aspx" />
     <Content Include="PerfilUsuario.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="RecuperarContraseña.aspx" />
@@ -223,6 +224,13 @@
     </Compile>
     <Compile Include="ModificarUsuario.aspx.designer.cs">
       <DependentUpon>ModificarUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pago.aspx.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pago.aspx.designer.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
     </Compile>
     <Compile Include="PerfilUsuario.aspx.cs">
       <DependentUpon>PerfilUsuario.aspx</DependentUpon>

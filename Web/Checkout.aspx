@@ -3,10 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <%/*if ((((Dominio.Usuario)Session["Usuario"])).TipoUser == null) { %>
-    <% Response.Redirect("404.aspx"); %>
-    <% } else { %>
-    <% } */%>
     <link href="Styles/formulario.css" rel="stylesheet" />
     <h1>Checkout compra</h1>
 
@@ -21,7 +17,7 @@
                     <div class="row">
                         <div class="col-6">
                             <label class="form-label" runat="server" id="lblDomicilio">Tus Domicilios</label>
-                            <asp:DropDownList CssClass="form-select" ID="DRPDomicilios" runat="server">
+                            <asp:DropDownList CssClass="form-select" ID="DRPDomicilios" runat="server" OnSelectedIndexChanged="DRPDomicilios_SelectedIndexChanged" AutoPostBack="true">
                             </asp:DropDownList>
                             <div class="mb-3">
                                 <label for="txtCalle" class="form-label">Calle:</label>
@@ -57,9 +53,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center mt-2 mb-2">
-                        <asp:Button ID="btnAceptar" runat="server" Text="Aceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
-                    </div>
+                    
                 </div>
             </div>
             <div class="col-6">
@@ -70,18 +64,21 @@
                         <ItemTemplate>
                             <div class="mb-3 d-flex">
                                 <div class="mx-1">
-                                    <asp:Label ID="lblNombre" runat="server" CssClass="form-label" Text="<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre.ToUpper()%>"></asp:Label>
-                                    <asp:Label runat="server"> X<%#((Dominio.ElementoCarrito)Container.DataItem).Cantidad%></asp:Label>
+                                    <asp:Label ID="lblNombre" runat="server" CssClass="text-uppercase fw-bolder" Text="<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre.ToUpper()%>"></asp:Label>
+                                    <asp:Label runat="server"> X<%#((Dominio.ElementoCarrito)Container.DataItem).Cantidad%> unidades</asp:Label>
                                 </div>
-                                <asp:Label ID="lblPrecio" runat="server" CssClass="form-label me-3" Text="<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio%> "></asp:Label>
+                                <asp:Label ID="lblPrecio" runat="server" CssClass="fw-bold me-3  text-success"><%#Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio * ((Dominio.ElementoCarrito)Container.DataItem).Cantidad)%>$</asp:Label>
                             </div>
                             <hr />
                         </ItemTemplate>
                     </asp:Repeater>
+                    <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label>
+                    <div class="text-center mt-2 mb-2">
+                        <asp:Button ID="btnAceptar" runat="server" Text="Ir al pago" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
+                    </div>
                 </div>
 
             </div>
         </div>
-    </div>
     </div>
 </asp:Content>

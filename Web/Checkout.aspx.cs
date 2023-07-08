@@ -12,49 +12,91 @@ namespace Web
 {
     public partial class Checkout : System.Web.UI.Page
     {
-        private Usuario usuario = new Usuario();
         private List<ElementoCarrito> elementoCarritos = new List<ElementoCarrito>();
-        public CarritoNegocio carritoNegocio { get; set; }
-        
-        public List<Producto> productos { get; set; }
-
-        public Checkout()
-        {
-            productos = new List<Producto>();
-            carritoNegocio = new CarritoNegocio();
-        }
+        private CarritoNegocio carritoNegocio = new CarritoNegocio();
+        private Domicilio domicilio = new Domicilio();
+        private Usuario usuario = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
-            
-            if (!IsPostBack) {
+
+            if (!IsPostBack)
+            {
                 carritoNegocio = Session["Carrito"] as CarritoNegocio;
-                ListItem item;
-                int indice = 0;
-                foreach (var domicilio in usuario.Domicilios)
+                if (usuario != null && carritoNegocio.GetCantidad() > 0)
                 {
-                    item = new ListItem($"{domicilio.Calle} {domicilio.Altura}", "1");
+                    ListItem item;
+                    int indice = 0;
+                    if (usuario.Domicilios.Count > 0)
+                    {
+                        foreach (var domicilio in usuario.Domicilios)
+                        {
+                            item = new ListItem($"{domicilio.Calle} {domicilio.Altura}", $"{indice + 1}");
+                            item.Value = $"{indice}";
+                            DRPDomicilios.Items.Add(item);
+                            indice++;
+                        }
+                        txtCalle.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Calle;
+                        txtNumero.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Altura;
+                        txtLocalidad.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Localidad;
+                        txtCodPos.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].CodigoPostal;
+                        txtPiso.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Piso == null ? "" : usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Piso;
+                        txtReferencia.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Referencia == null ? "" : usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Referencia;
+                    }
+                    item = new ListItem("Nuevo domicilio", $"{indice + 1}");
                     item.Value = $"{indice}";
                     DRPDomicilios.Items.Add(item);
-                    indice++;
+                    elementoCarritos = carritoNegocio.GetElementos();
+                    RPDetalle.DataSource = elementoCarritos;
+                    RPDetalle.DataBind();
+                    decimal total = 0;
+                    foreach (var elemento in carritoNegocio.GetElementos())
+                    {
+                        total += elemento.Producto.Precio * elemento.Cantidad;
+                    }
+                    lblTotal.Text = $"Total a pagar: {Math.Round(total)}$";
                 }
-                
-                txtCalle.Value = usuario.Domicilios[0].Calle;
-                txtNumero.Value = usuario.Domicilios[0].Altura;
-                txtLocalidad.Value = usuario.Domicilios[0].Localidad;
-                txtCodPos.Value = usuario.Domicilios[0].CodigoPostal;
-                txtPiso.Value = usuario.Domicilios[0].Piso == null ? "" : usuario.Domicilios[indice].Piso;
-                txtReferencia.Value = usuario.Domicilios[0].Referencia == null ? "" : usuario.Domicilios[indice].Referencia;
-                elementoCarritos = carritoNegocio.GetElementos();
-                RPDetalle.DataSource = elementoCarritos;
-                RPDetalle.DataBind();
-
+                else
+                {
+                    Response.Redirect("404.aspx");
+                }
             }
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            domicilio.Calle = txtCalle.Value;
+            domicilio.Altura = txtNumero.Value;
+            domicilio.Referencia = txtReferencia.Value != "" ? txtReferencia.Value : null;
+            domicilio.CodigoPostal = txtCodPos.Value;
+            //TODO: REALIZAR DRP PROVINCIAS
+            //domicilio.Provincia = txtProvincia.Value;
+            domicilio.Localidad = txtLocalidad.Value;
+            domicilio.Piso = txtPiso.Value != "" ? txtPiso.Value : null;
+            Session["Domicilio"] = domicilio;
+            Response.Redirect("Pago.aspx");
+        }
 
+        protected void DRPDomicilios_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(DRPDomicilios.SelectedItem.ToString() == "Nuevo domicilio")
+            {
+                txtCalle.Value = "";
+                txtNumero.Value = "";
+                txtLocalidad.Value = "";
+                txtCodPos.Value = "";
+                txtPiso.Value = "";
+                txtReferencia.Value = "";
+            }
+            else
+            {
+                txtCalle.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Calle;
+                txtNumero.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Altura;
+                txtLocalidad.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Localidad;
+                txtCodPos.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].CodigoPostal;
+                txtPiso.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Piso == null ? "" : usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Piso;
+                txtReferencia.Value = usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Referencia == null ? "" : usuario.Domicilios[int.Parse(DRPDomicilios.SelectedIndex.ToString())].Referencia;
+            }
         }
     }
 }

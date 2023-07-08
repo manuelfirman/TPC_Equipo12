@@ -25,32 +25,35 @@ namespace Web
                 {
                     Response.Redirect("PerfilUsuario.aspx");
                 }
-            }
-            else
-            {
-                Response.Redirect("PerfilUsuario.aspx");
+                else
+                {
+                    Response.Redirect("Index.aspx");
+                }
             }
 
             if(!IsPostBack)
             {
-                ListItem itemEstado;
-                itemEstado = new ListItem("Activado", "1");
-                DRPEstado.Items.Add(itemEstado);
-                itemEstado = new ListItem("Desactivado", "0");
-                DRPEstado.Items.Add(itemEstado);
+                if(usuario != null && usuario.TipoUser.Nombre == "Admin")
+                {
+                    ListItem itemEstado;
+                    itemEstado = new ListItem("Activado", "1");
+                    DRPEstado.Items.Add(itemEstado);
+                    itemEstado = new ListItem("Desactivado", "0");
+                    DRPEstado.Items.Add(itemEstado);
 
-                List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
-                ListItem itemTipo;
-                foreach (TipoUsuario tipo in tipousuarios)
-                {
-                    itemTipo = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
-                    DRPTipoUsuario.Items.Add(itemTipo);
-                }
-                string nombreRol = usuario.TipoUser.Nombre;
-                ListItem rolUsuario = DRPTipoUsuario.Items.FindByText(nombreRol);
-                if (rolUsuario != null)
-                {
-                    rolUsuario.Selected = true;
+                    List<TipoUsuario> tipousuarios = tipoUsuarioNegocio.ListarTiposUsuario();
+                    ListItem itemTipo;
+                    foreach (TipoUsuario tipo in tipousuarios)
+                    {
+                        itemTipo = new ListItem(tipo.Nombre, tipo.IDTipo.ToString());
+                        DRPTipoUsuario.Items.Add(itemTipo);
+                    }
+                    string nombreRol = usuario.TipoUser.Nombre;
+                    ListItem rolUsuario = DRPTipoUsuario.Items.FindByText(nombreRol);
+                    if (rolUsuario != null)
+                    {
+                        rolUsuario.Selected = true;
+                    }
                 }
             }
         }
