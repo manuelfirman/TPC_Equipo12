@@ -14,8 +14,10 @@ namespace Web
     {
         private List<ElementoCarrito> elementoCarritos = new List<ElementoCarrito>();
         private CarritoNegocio carritoNegocio = new CarritoNegocio();
+        private VentaNegocio ventaNegocio = new VentaNegocio();
         private Domicilio domicilio = new Domicilio();
         private Usuario usuario = new Usuario();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
@@ -74,6 +76,12 @@ namespace Web
             domicilio.Localidad = txtLocalidad.Value;
             domicilio.Piso = txtPiso.Value != "" ? txtPiso.Value : null;
             Session["Domicilio"] = domicilio;
+
+            List<ElementoCarrito> productos = ((CarritoNegocio)Session["Carrito"]).GetElementos();
+            decimal total = ((CarritoNegocio)Session["Carrito"]).PrecioTotal();
+            long IDFactura = ventaNegocio.CrearFactura(productos);
+            long IDVenta = ventaNegocio.GenerarVenta(IDFactura, usuario.IDUsuario, total);
+            Session["IDVenta"] = IDVenta;
             Response.Redirect("Pago.aspx");
         }
 

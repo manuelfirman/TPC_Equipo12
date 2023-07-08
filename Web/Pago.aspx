@@ -44,8 +44,40 @@
 
             <asp:Label runat="server" CssClass="text-center fw-bold text-success" ID="lblTotal"></asp:Label>
             <div class="text-center mt-2 mb-2">
+                <%--<button class="btn btn-primary" onclick="pagar(<%= total %>, <%= IDVenta %>)">Realizar pago</button>--%>
                 <asp:Button ID="btnAceptar" runat="server" Text="Ir al pago" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
             </div>
         </div>
     </div>
+
+    <script src="Scripts/jquery-3.7.0.min.js"></script>
+    <script>
+        function pagar(total, IDVenta) {
+            var body = {
+                precio: total,
+                producto: "Compra E-Commerce12" 
+            }
+
+            jQuery.ajax({
+                url: 'WebService1.asmx/PaypalFunction',
+                type: "POST",
+                data: JSON.stringify(body),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.status) {
+                        var jsonresult = JSON.parse(data.respuesta);
+                        console.log(jsonresult);
+
+                        var links = jsonresult.links;
+                        var resultado = links.find(item => item.rel === "approved")
+                        window.location.href = resultado.href;
+                    }
+                    else {
+                        alert("Vuelva a intentarlo mas tarde");
+                    }
+                }
+            })
+        }
+    </script>
 </asp:Content>

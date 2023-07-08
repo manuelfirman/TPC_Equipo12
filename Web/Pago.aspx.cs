@@ -14,6 +14,12 @@ namespace Web
         private Usuario usuario = new Usuario();
         private Domicilio domicilio = new Domicilio();
         private CarritoNegocio carritoNegocio = new CarritoNegocio();
+        private VentaNegocio ventaNegocio = new VentaNegocio();
+        protected long IDVenta;
+
+        protected decimal total { get; set; }
+        protected string PaypalFunctionUrl { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -21,17 +27,28 @@ namespace Web
                 carritoNegocio = Session["Carrito"] as CarritoNegocio;
                 usuario = Session["Usuario"] as Usuario;
                 domicilio = Session["Domicilio"] as Domicilio;
-                decimal total = 0;
+                total = 0;
                 foreach (var elemento in carritoNegocio.GetElementos())
                 {
                     total += elemento.Producto.Precio * elemento.Cantidad;
                 }
-                lblTotal.Text = $"Total a pagar: {Math.Round(total)}$";
+                lblTotal.Text = $"Total a pagar: ${total}";
             }
+            IDVenta = (long)Session["IDVenta"];
+            
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+
+            if(ventaNegocio.PagoVenta(IDVenta))
+            {
+                Response.Redirect("CompraRealizada.aspx");
+            }
+            else
+            {
+                Response.Redirect("404.apsx");
+            }
 
         }
 

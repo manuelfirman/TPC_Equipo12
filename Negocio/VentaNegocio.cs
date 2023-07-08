@@ -12,21 +12,24 @@ namespace Negocio
         private NegocioDB Database { get; set; }
 
 
-        public long CrearFactura()
+        public long CrearFactura(List<ElementoCarrito> productos)
         {
             Database = new NegocioDB();
             long IDFactura = -1;
             
             try
             {
-                Database.SetQuery("INSERT INTO Facturas (Pago, Cancelada) VALUES(0, 0)" + "SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;");
+                Database.SetQuery("INSERT INTO Facturas (Pago, Cancelada) VALUES(0, 0)" + "SELECT CAST(SCOPE_IDENTITY() AS BIGINT) AS ID");
                 Database.Read();
                 if(Database.Reader.Read())
                 {
                     IDFactura = (long)Database.Reader["ID"];
+
+                    this.RegistrarProductosFactura(IDFactura, productos);
                 }
 
                 return IDFactura;
+
             }
             catch (Exception)
             {
@@ -61,22 +64,26 @@ namespace Negocio
             }
         }
 
-        public bool RegistrarProductosFactura(Factura factura)
+        public bool RegistrarProductosFactura(long IDFactura, List<ElementoCarrito> productos)
         {
-            Database = new NegocioDB();
-            int registros = factura.Productos.Count;
+            int registros = productos.Count;
             int rowsAffected = 0;
             try
             {
-                foreach (ElementoCarrito elemento in factura.Productos)
+                
+                foreach (ElementoCarrito elemento in productos)
                 {
+                    Database = new NegocioDB();
                     Database.SetQuery("INSERT INTO Productos_x_Factura(ID_Factura, ID_Producto, Cantidad) VALUES(@ID_Factura, @ID_Producto, @Cantidad)");
-                    Database.SetParam("@ID_Factura", factura.IDFactura);
-                    Database.SetParam("@ID_Producto", elemento.IDElementoCarrito);
+                    Database.SetParam("@ID_Factura", IDFactura);
+                    Database.SetParam("@ID_Producto", elemento.Producto.IDProducto);
                     Database.SetParam("@Cantidad", elemento.Cantidad);
                     
                     if (Database.RunQuery() == 1) rowsAffected++;
+
+                    Database.Close();
                 }
+
 
                 if (rowsAffected == registros) return true;
                 else return false;
@@ -98,7 +105,6 @@ namespace Negocio
             Database = new NegocioDB();
             ProductoNegocio productoNegocio = new ProductoNegocio();
             List<ElementoCarrito> listaProductos = new List<ElementoCarrito>();
-
 
             try
             {
@@ -142,7 +148,7 @@ namespace Negocio
             Factura factura = new Factura();
             try
             {
-                Database.SetQuery("SELECT ID_Factura, Pago, Cancelada WHERE ID_Factura = @ID_Factura");
+                Database.SetQuery("SELECT ID_Factura, Pago, Cancelada FROM Facturas WHERE ID_Factura = @ID_Factura");
                 Database.SetParam("@ID_Factura", IDFactura);
                 Database.Read();
                 if(Database.Reader.Read())
@@ -237,7 +243,7 @@ namespace Negocio
             EstadoVenta estadoVenta = new EstadoVenta();
             try
             {
-                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadosVenta WHERE Estado = @Estado");
+                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta WHERE Estado = @Estado");
                 Database.SetParam("@Estado", estado);
                 Database.Read();
                 if(Database.Reader.Read())
@@ -266,7 +272,7 @@ namespace Negocio
             EstadoVenta estadoVenta = new EstadoVenta();
             try
             {
-                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadosVenta WHERE ID_Estado = @ID_Estado");
+                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta WHERE ID_Estado = @ID_Estado");
                 Database.SetParam("@ID_Estado", IDEstado);
                 Database.Read();
                 if (Database.Reader.Read())
@@ -288,31 +294,62 @@ namespace Negocio
             }
         }
 
-        public bool GenerarVenta(long IDFactura, long IDUsuario)
+        public long GenerarVenta(long IDFactura, long IDUsuario, decimal monto)
+        {
+            Database = new NegocioDB();
+            long IDVenta = -1;
+            try
+            {
+                EstadoVenta estadoVenta = this.EstadoVenta("PAGO PENDIENTE");
+
+                Database.SetQuery("INSERT INTO Ventas(ID_Factura, ID_Usuario, ID_Estado, Monto) VALUES(@ID_Factura, @ID_Usuario, @ID_Estado, @Monto)" + "SELECT CAST(SCOPE_IDENTITY() AS BIGINT) AS ID");
+                Database.SetParam("@ID_Factura", IDFactura);
+                Database.SetParam("@ID_Usuario", IDUsuario);
+                Database.SetParam("@ID_Estado", estadoVenta.IDEstado);
+                Database.SetParam("@Monto", monto);
+                Database.Read();
+                if (Database.Reader.Read())
+                {
+                    IDVenta = (long)Database.Reader["ID"];
+                }
+
+                return IDVenta;
+            }
+            catch (Exception)
+            {
+
+                return -1;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public bool PagoVenta(long IDVenta)
         {
             Database = new NegocioDB();
 
             try
             {
-                Factura factura = this.FacturaPorID(IDFactura);
+                Venta venta = this.VentaPorID(IDVenta);
 
                 // Descontar cantidad de productos al stock
-                foreach(ElementoCarrito elemento in factura.Productos)
+                foreach(ElementoCarrito elemento in venta.Factura.Productos)
                 {
-                    this.DescontarStock(elemento);
+                    if(!this.DescontarStock(elemento)) return false;
                 }
 
                 // Pasar factura a pago = 1
-                factura.Pago = true;
-                factura.Cancelada = false;
-                this.ModificarFactura(factura);
+                venta.Factura.Pago = true;
+                venta.Factura.Cancelada = false;
+                this.ModificarFactura(venta.Factura);
 
                 // Guardar registro de venta
                 EstadoVenta estadoVenta = this.EstadoVenta("PAGADO");
 
-                Database.SetQuery("INSERT INTO Ventas(ID_Factura, ID_Usuario, ID_Estado) VALUES(@ID_Factura, @ID_Usuario, @ID_Estado)");
-                Database.SetParam("@ID_Factura", IDFactura);
-                Database.SetParam("@ID_Usuario", IDUsuario);
+                Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado WHERE ID_Venta = @ID_Venta");
+                Database.SetParam("@ID_Venta", IDVenta);
                 Database.SetParam("@ID_Estado", estadoVenta.IDEstado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
@@ -328,6 +365,51 @@ namespace Negocio
             }
         }
 
+        public Venta VentaPorID(long IDVenta)
+        {
+            Database = new NegocioDB();
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            Venta venta = new Venta();
+
+            try
+            {
+                Database.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha FROM Ventas WHERE ID_Venta = @ID_Venta");
+                Database.SetParam("@ID_Venta", IDVenta);
+                Database.Read();
+                if (Database.Reader.Read())
+                {
+                    venta = new Venta();
+                    long IDFactura = -1;
+                    long IDUsuario = -1;
+                    long IDEstado = -1;
+
+                    if (!(Database.Reader["ID_Factura"] is DBNull)) IDFactura = (long)Database.Reader["ID_Factura"];
+                    if (!(Database.Reader["ID_Usuario"] is DBNull)) IDUsuario = (long)Database.Reader["ID_Usuario"];
+                    if (!(Database.Reader["ID_Estado"] is DBNull)) IDEstado = (long)Database.Reader["ID_Estado"];
+
+                    if (!(Database.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)Database.Reader["ID_Venta"];
+                    if (!(Database.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)Database.Reader["Fecha"];
+
+                    if (IDFactura != -1 && IDUsuario != -1 && IDEstado != -1)
+                    {
+                        venta.Factura = this.FacturaPorID(IDFactura);
+                        venta.Usuario = usuarioNegocio.UsuarioPorID(IDUsuario);
+                        venta.Estado = this.EstadoVentaPorID(IDEstado);
+                    }
+                }
+
+                return venta;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
 
         public List<Venta> ListarVentas()
         {

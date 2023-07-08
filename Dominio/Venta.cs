@@ -12,6 +12,7 @@ namespace Dominio
         public Factura Factura { get; set; }
         public Usuario Usuario { get; set; }
         public EstadoVenta Estado { get; set; }
+        public decimal Monto { get; set; }
         public DateTime Fecha { get; set; }
 
         public Venta()
