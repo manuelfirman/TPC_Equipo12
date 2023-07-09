@@ -237,7 +237,7 @@ namespace Negocio
             }
         }
 
-        public EstadoVenta EstadoVenta(string estado)
+        public EstadoVenta ObtenerEstadoVenta(string estado)
         {
             Database = new NegocioDB();
             EstadoVenta estadoVenta = new EstadoVenta();
@@ -253,6 +253,37 @@ namespace Negocio
                 }
 
                 return estadoVenta;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public List<EstadoVenta> ListarEstadosVenta()
+        {
+            Database = new NegocioDB();
+            EstadoVenta estadoVenta;
+            List<EstadoVenta> listaEstados = new List<EstadoVenta>();
+            try
+            {
+                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta");
+                Database.Read();
+                while (Database.Reader.Read())
+                {
+                    estadoVenta = new EstadoVenta();
+                    if (!(Database.Reader["ID_Estado"] is DBNull)) estadoVenta.IDEstado = (long)Database.Reader["ID_Estado"];
+                    if (!(Database.Reader["Estado"] is DBNull)) estadoVenta.Estado = (string)Database.Reader["Estado"];
+
+                    listaEstados.Add(estadoVenta);
+                }
+
+                return listaEstados;
             }
             catch (Exception ex)
             {
@@ -293,13 +324,36 @@ namespace Negocio
             }
         }
 
+        public bool ModificarEstadoVenta(long IDVenta, long IDEstado)
+        {
+            Database = new NegocioDB();
+
+            try
+            {
+                Database.SetQuery("UPDATE Ventas SET ID_Estado = @Estado WHERE ID_Venta = @ID_Venta");
+                Database.SetParam("@ID_Venta", IDVenta);
+                Database.SetParam("@Estado", IDEstado);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
         public long GenerarVenta(long IDFactura, long IDUsuario, decimal monto)
         {
             Database = new NegocioDB();
             long IDVenta = -1;
             try
             {
-                EstadoVenta estadoVenta = this.EstadoVenta("PAGO PENDIENTE");
+                EstadoVenta estadoVenta = this.ObtenerEstadoVenta("PAGO PENDIENTE");
 
                 Database.SetQuery("INSERT INTO Ventas(ID_Factura, ID_Usuario, ID_Estado, Monto) VALUES(@ID_Factura, @ID_Usuario, @ID_Estado, @Monto)" + "SELECT CAST(SCOPE_IDENTITY() AS BIGINT) AS ID");
                 Database.SetParam("@ID_Factura", IDFactura);
@@ -345,7 +399,7 @@ namespace Negocio
                 this.ModificarFactura(venta.Factura);
 
                 // Guardar registro de venta
-                EstadoVenta estadoVenta = this.EstadoVenta("PAGADO");
+                EstadoVenta estadoVenta = this.ObtenerEstadoVenta("PAGADO");
 
                 Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado WHERE ID_Venta = @ID_Venta");
                 Database.SetParam("@ID_Venta", IDVenta);

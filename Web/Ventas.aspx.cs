@@ -23,12 +23,10 @@ namespace Web
                 Response.Redirect("404.aspx");
             }
 
-            //if (!IsPostBack)
-            //{
-                ventas = ventaNegocio.ListarVentas();
-                rptVentas.DataSource = ventas;
-                rptVentas.DataBind();
-            //}
+            ventas = ventaNegocio.ListarVentas();
+            rptVentas.DataSource = ventas;
+            rptVentas.DataBind();
+
         }
     }
 }

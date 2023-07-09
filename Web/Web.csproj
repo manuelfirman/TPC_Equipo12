@@ -93,6 +93,7 @@
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Domicilios.aspx" />
     <Content Include="Filtro.aspx" />
+    <Content Include="GestionVenta.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Imagenes.aspx" />
     <Content Include="Index.aspx" />
@@ -196,6 +197,13 @@
     </Compile>
     <Compile Include="Filtro.aspx.designer.cs">
       <DependentUpon>Filtro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionVenta.aspx.cs">
+      <DependentUpon>GestionVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionVenta.aspx.designer.cs">
+      <DependentUpon>GestionVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
