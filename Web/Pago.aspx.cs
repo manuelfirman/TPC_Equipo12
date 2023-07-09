@@ -22,32 +22,39 @@ namespace Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            carritoNegocio = Session["Carrito"] as CarritoNegocio;
+            usuario = Session["Usuario"] as Usuario;
+            if(usuario != null && carritoNegocio != null)
             {
-                carritoNegocio = Session["Carrito"] as CarritoNegocio;
-                usuario = Session["Usuario"] as Usuario;
-                domicilio = Session["Domicilio"] as Domicilio;
-                total = 0;
-                foreach (var elemento in carritoNegocio.GetElementos())
+                if (!IsPostBack)
                 {
-                    total += elemento.Producto.Precio * elemento.Cantidad;
+                    domicilio = Session["Domicilio"] as Domicilio;
+                    total = 0;
+                    foreach (var elemento in carritoNegocio.GetElementos())
+                    {
+                        total += elemento.Producto.Precio * elemento.Cantidad;
+                    }
+                    lblTotal.Text = $"Total a pagar: ${total}";
                 }
-                lblTotal.Text = $"Total a pagar: ${total}";
+                IDVenta = (long)Session["IDVenta"];
             }
-            IDVenta = (long)Session["IDVenta"];
-            
+            else
+            {
+                Response.Redirect("404.aspx");
+            }
+
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
 
-            if(ventaNegocio.PagoVenta(IDVenta))
+            if (ventaNegocio.PagoVenta(IDVenta))
             {
                 Response.Redirect("CompraRealizada.aspx");
             }
             else
             {
-                Response.Redirect("404.apsx");
+                Response.Redirect("404.aspx");
             }
 
         }

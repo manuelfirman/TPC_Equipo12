@@ -19,19 +19,16 @@ namespace Web
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
-            if (usuario != null)
-            { 
+            if (usuario != null )
+            {
                 if (usuario.TipoUser.Nombre != "Admin")
-                {
-                    Response.Redirect("PerfilUsuario.aspx");
-                }
-                else
                 {
                     Response.Redirect("Index.aspx");
                 }
             }
 
-            if(!IsPostBack)
+
+            if (!IsPostBack)
             {
                 if(usuario != null && usuario.TipoUser.Nombre == "Admin")
                 {
