@@ -12,9 +12,5 @@ namespace Dominio
         public Producto Producto { get; set; }
         public int Cantidad { get; set; }
 
-        public ElementoCarrito()
-        {
-            Producto = new Producto();
-        }
     }
 }

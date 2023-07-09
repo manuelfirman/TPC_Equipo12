@@ -39,7 +39,7 @@
                 <input type="password" class="form-control" id="txtConfirmarPassword" runat="server" />
             </div>
 
-            <% if (usuario.TipoUser.Nombre == "Admin") { %>
+            <% if (usuario != null && usuario.TipoUser.Nombre == "Admin") { %>
             <div class="row mb-3">
                 <div class="col-md-6">
 

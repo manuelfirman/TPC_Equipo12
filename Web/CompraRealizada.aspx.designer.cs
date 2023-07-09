@@ -11,7 +11,7 @@ namespace Web
 {
 
 
-    public partial class ImaganesProducto
+    public partial class CompraRealizada
     {
     }
 }

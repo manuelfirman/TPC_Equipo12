@@ -59,7 +59,7 @@ VALUES  ('Usuario'),
 -- ESTADOS VENTA
 INSERT INTO EstadoVenta (Estado)
 VALUES ('PAGO PENDIENTE'),
-       ('EN ESPERA'),
+       ('PAGADO'),
        ('EN PROCESO'),
        ('ENVIADO'),
        ('ENTREGADO'),
@@ -67,32 +67,32 @@ VALUES ('PAGO PENDIENTE'),
        
 -- PRODUCTOS
 INSERT INTO Productos (ID_Categoria, ID_Marca, Codigo, Nombre, Descripcion, Precio, Stock, Estado)
-VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo running pero agregando un estilo deportivo muy moderno, las Zapatillas Nike Air Max Pre-Day llegan a tus días para sacar la audacia que hay dentro tuyo. Con estampados de animales potentes y colores animados este calzado construye un patchwork ideal para tu look salvaje y atrevido.', 75000, 10, 1),
-       (1, 1, 'Z002', 'Air Jordan 5 Retro GTX', 'Conquistá la noche con las Zapatillas Air Jordan 5 Retro GTX Mujer. Un par que te alista para todas las temporadas y te mantiene fiel a tu estilo noventoso. Construidas con material súper resistente, cuero de primera calidad y características impermeables.', 150000, 10, 1),
-       (1, 5, 'Z003', 'Rs-X Triple', 'Las Zapatillas Puma Rs-X Triple Unisex son ideales para que te acompañen a donde quieras. Poseen una capellada de sintético y una suela de goma que brindan una resistencia inigualable. Su diseño moderno permite que siempre estés a la moda y, a la vez, que te sientas cómoda para enfrentar tu jornada.', 47699, 10, 1),
-       (1, 1, 'Z004', 'Jordan Air 4 Retro', 'Las Zapatillas Jordan Air 4 Retro Hombre actualizan la moda otoñal trayendo un calzado totalmente blanco con toques en azul marino medianoche para resaltar tu outfit y mantenerte fiel al AF. Con las famosas alas o ribetes para pasar los cordones que agregan el toque moderno que esperás.', 126499, 10, 1),
+VALUES (1, 1, 'Z001', 'Air Max Pre-Day Se', 'Manteniéndose fiel al estilo running pero agregando un estilo deportivo muy moderno, las Zapatillas Nike Air Max Pre-Day llegan a tus días para sacar la audacia que hay dentro tuyo. Con estampados de animales potentes y colores animados este calzado construye un patchwork ideal para tu look salvaje y atrevido.', 75, 10, 1),
+       (1, 1, 'Z002', 'Air Jordan 5 Retro GTX', 'Conquistá la noche con las Zapatillas Air Jordan 5 Retro GTX Mujer. Un par que te alista para todas las temporadas y te mantiene fiel a tu estilo noventoso. Construidas con material súper resistente, cuero de primera calidad y características impermeables.', 150, 10, 1),
+       (1, 5, 'Z003', 'Rs-X Triple', 'Las Zapatillas Puma Rs-X Triple Unisex son ideales para que te acompañen a donde quieras. Poseen una capellada de sintético y una suela de goma que brindan una resistencia inigualable. Su diseño moderno permite que siempre estés a la moda y, a la vez, que te sientas cómoda para enfrentar tu jornada.', 47.69, 10, 1),
+       (1, 1, 'Z004', 'Jordan Air 4 Retro', 'Las Zapatillas Jordan Air 4 Retro Hombre actualizan la moda otoñal trayendo un calzado totalmente blanco con toques en azul marino medianoche para resaltar tu outfit y mantenerte fiel al AF. Con las famosas alas o ribetes para pasar los cordones que agregan el toque moderno que esperás.', 126.49, 10, 1),
 
-       (4, 6, 'R001', 'Vans Classic', 'Vos que tenés claro que la moda pasa pero el estilo permanece, seguí tu instinto con la Remera Vans Classic es un clásico que no puede faltar a la hora de renovar tu ropero. Su logo en el frente está diseñado para poder combinarlo con cualquier prenda sin perder el estilo, y su corte clásico es ideal para mantenerte cómoda durante todo el día.', 9599, 10, 1),
-       (4, 7, 'R002', 'Red Bull Racing', 'Para vos que tenés una personalidad autentica y audaz que sabe lo que quiere, la Remera Puma Red Bull Racing Hombre con su llamativo estampado con gráficos visuales de una de las marcas más grandes del mundo te da un look informal y urbano, ideal para combinar con tus pantalones o joggers favoritos', 16599, 10, 1),
-       (4, 1, 'R003', 'Sportswear Air', 'La Remera Nike Sportswear Air es de esas prendas que visten tu look deportivo o casual y lo hacen a la perfección. Con un algodón suave y de calidad para durar muchos años y el logo de la marca en el frente que además, te mantiene fiel a tu estilo. ¿cuál es el plan? Bueno, eso no importa, el outfit ya está listo.', 14899, 10, 1),
-       (4, 5, 'R004', 'Dare To Relaxed', 'Tus días se llenan de deporte, sin renunciar a tu moda con la Remera Puma Dare To Relaxed. Una prenda cómoda y liviana para salir del gimnasio y recorrer la ciudad. Con un diseño cropped que se mantiene fiel a tu estilo y un algodón tan suave que no podrás dejar de usar. El logo Puma en el frente es el sello de la calidad que buscás.', 15499, 10, 1),
+       (4, 6, 'R001', 'Vans Classic', 'Vos que tenés claro que la moda pasa pero el estilo permanece, seguí tu instinto con la Remera Vans Classic es un clásico que no puede faltar a la hora de renovar tu ropero. Su logo en el frente está diseñado para poder combinarlo con cualquier prenda sin perder el estilo, y su corte clásico es ideal para mantenerte cómoda durante todo el día.', 9.59, 10, 1),
+       (4, 7, 'R002', 'Red Bull Racing', 'Para vos que tenés una personalidad autentica y audaz que sabe lo que quiere, la Remera Puma Red Bull Racing Hombre con su llamativo estampado con gráficos visuales de una de las marcas más grandes del mundo te da un look informal y urbano, ideal para combinar con tus pantalones o joggers favoritos', 16.59, 10, 1),
+       (4, 1, 'R003', 'Sportswear Air', 'La Remera Nike Sportswear Air es de esas prendas que visten tu look deportivo o casual y lo hacen a la perfección. Con un algodón suave y de calidad para durar muchos años y el logo de la marca en el frente que además, te mantiene fiel a tu estilo. ¿cuál es el plan? Bueno, eso no importa, el outfit ya está listo.', 14.89, 10, 1),
+       (4, 5, 'R004', 'Dare To Relaxed', 'Tus días se llenan de deporte, sin renunciar a tu moda con la Remera Puma Dare To Relaxed. Una prenda cómoda y liviana para salir del gimnasio y recorrer la ciudad. Con un diseño cropped que se mantiene fiel a tu estilo y un algodón tan suave que no podrás dejar de usar. El logo Puma en el frente es el sello de la calidad que buscás.', 15.49, 10, 1),
 
-       (6, 5, 'C001', 'Dare To', 'La Campera Puma Dare To es una prenda que trae moda retro a la actualidad para llenarte de estilo y personalidad. Con un diseño cropped y cuello de pico para crear un diseño insuperable que se complementa con un acabado arrugado, un dobladillo elástico y bolsillos grandes en el frente de la prenda. Sumá deporte a tus días con esta campera hecha para mujeres arriesgadas.', 36199, 10, 1),
-       (6, 5, 'C002', 'Windrunner', 'Con la Campera Nike Windrunner Hombre vas a lucir un look icónico y elegante. Gracias a los logotipos de la marca bordados en el pecho, el puño de las mangas y la espalda, vas a poder elevar tu look a niveles muy altos. Su suave tejido de tafetán aporta un estilo relajado y canchero y, al mismo tiempo, te protege en condiciones de lluvia', 45199, 10, 1),
-       (7, 5, 'C003', 'Individual Rise Hombre', 'Salí a ejercitarte con la mejor compañía con el Conjunto Entrenamiento Puma Individual Rise Hombre. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 38199, 10, 1),
+       (6, 5, 'C001', 'Dare To', 'La Campera Puma Dare To es una prenda que trae moda retro a la actualidad para llenarte de estilo y personalidad. Con un diseño cropped y cuello de pico para crear un diseño insuperable que se complementa con un acabado arrugado, un dobladillo elástico y bolsillos grandes en el frente de la prenda. Sumá deporte a tus días con esta campera hecha para mujeres arriesgadas.', 36.19, 10, 1),
+       (6, 5, 'C002', 'Windrunner', 'Con la Campera Nike Windrunner Hombre vas a lucir un look icónico y elegante. Gracias a los logotipos de la marca bordados en el pecho, el puño de las mangas y la espalda, vas a poder elevar tu look a niveles muy altos. Su suave tejido de tafetán aporta un estilo relajado y canchero y, al mismo tiempo, te protege en condiciones de lluvia', 45.19, 10, 1),
+       (7, 5, 'C003', 'Individual Rise Hombre', 'Salí a ejercitarte con la mejor compañía con el Conjunto Entrenamiento Puma Individual Rise Hombre. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 38.19, 10, 1),
 
-       (5, 8, 'B001', 'Urbano Classics Trefoil Hombre', 'Salí a ejercitarte con la mejor compañía. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 45999, 10, 1),
-       (5, 3, 'B002', 'Urbo Diagonal', 'Salí a ejercitarte con la mejor compañía. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 45999, 10, 1),
-       (5, 8, 'B003', 'adidas Camo Series Infill', ' Su logo en el frente está diseñado para poder combinarlo con cualquier prenda sin perder el estilo, y su corte clásico es ideal para mantenerte cómoda durante todo el día.', 58999, 10, 1),
-       (5, 6, 'B004', 'Urbano Vans Core Basic Unisex', 'Con el Buzo Vans Core Basic Hombre sentite siempre en tendencia. Su amplio bolsillo tipo canguro en la parte delantera permite que tus objetos personales se mantengan seguros en todo momento. Mantenete cómodo a toda hora con su tela suave de algodón y su capucha con cordones para que lo ajustes como quieras. Abrigate con estilo.', 32899, 10, 1),
+       (5, 8, 'B001', 'Urbano Classics Trefoil Hombre', 'Salí a ejercitarte con la mejor compañía. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 45.99, 10, 1),
+       (5, 3, 'B002', 'Urbo Diagonal', 'Salí a ejercitarte con la mejor compañía. Su construcción en materiales ligeros te da la calidez que necesitás y la transpirabilidad en los momentos de mayor esfuerzo. Tiene un diseño discreto, cómodo y práctico gracias a los bolsillos en ambas prendas y el cierre que te permite usarlo en los días de frío y en los de mayor temperatura.', 45.99, 10, 1),
+       (5, 8, 'B003', 'adidas Camo Series Infill', ' Su logo en el frente está diseñado para poder combinarlo con cualquier prenda sin perder el estilo, y su corte clásico es ideal para mantenerte cómoda durante todo el día.', 58.99, 10, 1),
+       (5, 6, 'B004', 'Urbano Vans Core Basic Unisex', 'Con el Buzo Vans Core Basic Hombre sentite siempre en tendencia. Su amplio bolsillo tipo canguro en la parte delantera permite que tus objetos personales se mantengan seguros en todo momento. Mantenete cómodo a toda hora con su tela suave de algodón y su capucha con cordones para que lo ajustes como quieras. Abrigate con estilo.', 32.89, 10, 1),
 
-       (3, 8, 'M001', 'Medias adidas Clasicos', 'Adecuadas para todo el dia', 7999, 10, 1),
-       (3, 1, 'M002', 'Pack de medias Nike Everyday Plus', 'El Pack de medias Nike Everyday Plus trae 2 pares de medias livianas, cómodas y con un ajuste perfecto para acompañarte en toda tu rutina, evitando molestias en tus pies a la hora de entrenar y dar todo de vos en el gimnasio o en el club', 7399, 10, 1),
+       (3, 8, 'M001', 'Medias adidas Clasicos', 'Adecuadas para todo el dia', 7.99, 10, 1),
+       (3, 1, 'M002', 'Pack de medias Nike Everyday Plus', 'El Pack de medias Nike Everyday Plus trae 2 pares de medias livianas, cómodas y con un ajuste perfecto para acompañarte en toda tu rutina, evitando molestias en tus pies a la hora de entrenar y dar todo de vos en el gimnasio o en el club', 7.39, 10, 1),
 
-       (2, 5, 'P001', 'Pantalon Puma Classics', 'Ir a correr una mañana fresca o estar relajada en casa, siempre será mejor con el Pantalón Puma Classics Mujer. Una prenda suave, liviana y cómoda que costará sacar al momento de ir a la oficina. Con un diseño relajado y puños que liberan tus movimientos y evitan la entrada de frío. Una cintura elástica se mueve con vos alejando las incomodidades de tu cuerpo. Con el logo Puma en el frente que es el detalle de calidad que elegís vestir.', 27399, 10, 1),
-       (2, 8, 'P002', 'Pantalón adidas Adicolor', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda; lleva el Pantalón adidas Adicolor y no dejes que te falte una prenda que resalta cualquier look que elijas. Está elaborado en algodón y poliéster para brindarle suavidad y durabilidad. Sus bolsillos son prácticos, para llevar todo lo que necesites con vos, y el diseño liso te permite combinarlo con todos tus outfits favoritos a la hora de encarar tu rutina.', 39999, 10, 1),
-       (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15799, 10, 1),
-        (4, 2, 'R005', 'Remera Converse Laces', 'Adecuada para todo el día', 13499, 10, 1);
+       (2, 5, 'P001', 'Pantalon Puma Classics', 'Ir a correr una mañana fresca o estar relajada en casa, siempre será mejor con el Pantalón Puma Classics Mujer. Una prenda suave, liviana y cómoda que costará sacar al momento de ir a la oficina. Con un diseño relajado y puños que liberan tus movimientos y evitan la entrada de frío. Una cintura elástica se mueve con vos alejando las incomodidades de tu cuerpo. Con el logo Puma en el frente que es el detalle de calidad que elegís vestir.', 27.99, 10, 1),
+       (2, 8, 'P002', 'Pantalón adidas Adicolor', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda; lleva el Pantalón adidas Adicolor y no dejes que te falte una prenda que resalta cualquier look que elijas. Está elaborado en algodón y poliéster para brindarle suavidad y durabilidad. Sus bolsillos son prácticos, para llevar todo lo que necesites con vos, y el diseño liso te permite combinarlo con todos tus outfits favoritos a la hora de encarar tu rutina.', 39.99, 10, 1),
+       (2, 8, 'P003', 'Pantalon adidas Mat Pt', 'Lucite en cualquier ocasión mostrando tu estilo y dedicación por la moda', 15.79, 10, 1),
+        (4, 2, 'R005', 'Remera Converse Laces', 'Adecuada para todo el día', 13.49, 10, 1);
 
 -- IMAGENES
 INSERT INTO Imagenes (ID_Producto, ImagenURL, Descripcion)
@@ -233,3 +233,22 @@ VALUES (1, 14, 'Neuquen', 'Belgrano', '1500', '8300', 1);
 -- DOMICILIO USER
 INSERT INTO Domicilios(ID_Usuario, ID_Provincia, Localidad, Calle, Numero, CodigoPostal, Piso, Referencia, Alias, Estado)
 VALUES (2, 14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
+
+delete from Facturas
+select * from Facturas
+select * from Productos_x_Factura WHERE ID_Factura = 30
+select * from Ventas
+INSERT INTO Facturas(Pago, Cancelada) VALUES(0,0)
+SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;
+
+SELECT P.ID_Producto, P.Codigo, P.Descripcion, P.Estado, Cantidad 
+FROM Productos_x_Factura PF
+INNER JOIN Productos P ON PF.ID_Producto = P.ID_Producto
+WHERE ID_Factura = @ID_Factura
+
+SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock, PF.Cantidad, PF.ID_Factura
+FROM Productos P 
+INNER JOIN Productos_x_Factura PF ON P.ID_Producto = PF.ID_Factura
+INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca 
+INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
+WHERE PF.ID_Factura = @ID_Factura

@@ -187,20 +187,14 @@ namespace Negocio
         public bool Guardar(Imagen imagen)
         {
             Database = new NegocioDB();
-            long IDProducto;
-            string urlImagen;
-            string descripcion;
-            bool estado;
+
             string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion)";
             try
             {
-                IDProducto = imagen.IDProducto;
-                urlImagen = imagen.Url;
-                descripcion = imagen.Descripcion;
                 Database.SetQuery(query);
-                Database.SetParam("@IDProducto", IDProducto);
-                Database.SetParam("@ImagenURL", urlImagen);
-                Database.SetParam("@Descripcion", descripcion);
+                Database.SetParam("@IDProducto", imagen.IDProducto);
+                Database.SetParam("@ImagenURL", imagen.Url);
+                Database.SetParam("@Descripcion", imagen.Descripcion);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
@@ -230,7 +224,6 @@ namespace Negocio
             }
             catch (Exception)
             {
-
                 return false;
             }
             finally

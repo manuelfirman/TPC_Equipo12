@@ -9,6 +9,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>DNI</th>
@@ -23,6 +24,7 @@
                         <asp:Repeater ID="rptUsuarios" runat="server">
                             <ItemTemplate>
                                 <tr>
+                                    <td><%# Eval("IDUsuario") %></td>
                                     <td><%# Eval("Nombre") %> <%# Eval("Apellido") %></td>
                                     <td><%# Eval("Email") %></td>
                                     <td><%# Eval("Dni") %></td>

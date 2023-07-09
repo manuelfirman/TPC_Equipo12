@@ -18,7 +18,7 @@
                             <div class="card-body">
 
                                 <!--DATOS DOMICILIO-->
-                                <% if (UsuarioSession.Domicilios.Count > 0)
+                                <% if (UsuarioSession.Domicilios.Count > 0 && UsuarioSession.Domicilios != null)
                                     { %>
                                 <h5 class="card-title">Información de Envío</h5>
                                 <ul class="list-group list-group-flush">
