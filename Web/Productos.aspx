@@ -65,10 +65,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="ms-4 col-md-5">
-                        <asp:Button ID="BtnAgrearImagen" Visible="false" runat="server" CssClass="btn btn-primary" Text="Agregar Imagenes" OnClick="BtnAgrearImagen_Click" />
+                            <asp:Button ID="BtnAgrearImagen" Visible="false" runat="server" CssClass="btn btn-primary" Text="Agregar Imagenes" OnClick="BtnAgrearImagen_Click" />
                         </div>
                         <div class="col-md-5">
-                         <asp:Button ID="BtnModificarImagen" Visible="false" runat="server" CssClass="btn btn-primary" Text="Modificar Imagenes" OnClick="BtnModificarImagen_Click" />
+                            <asp:Button ID="BtnModificarImagen" Visible="false" runat="server" CssClass="btn btn-primary" Text="Modificar Imagenes" OnClick="BtnModificarImagen_Click" />
                         </div>
                     </div>
 
@@ -106,6 +106,15 @@
                         <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-success me-3" Text="" OnClick="btnAgregar_Click" />
                         <a href="Vendedor.aspx" class="btn btn-danger">Cancelar</a>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-2">
+                <div class="text-center mb-2" visible="false">
+
+
+                    <label for="txtUrl" id="lblUrl" visible="false" class="form-label" runat="server">Url Imagen:</label>
+                    <textarea id="txtUrl" visible="false" class="form-control" rows="5" style="resize: none" runat="server"></textarea>
+                    <span id="txtInfo" visible="false" class="text-info" runat="server">*Para agregar más de una imagen separar por coma</span>
                 </div>
             </div>
 
