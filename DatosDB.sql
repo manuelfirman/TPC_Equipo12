@@ -235,8 +235,8 @@ INSERT INTO Domicilios(ID_Usuario, ID_Provincia, Localidad, Calle, Numero, Codig
 VALUES (2, 14, 'Neuquen', 'Lainez', '2456', '8300', '1', 'Escalera blanca', 'Casa', 1);
 
 delete from Facturas
-select * from Facturas
-select * from Productos_x_Factura WHERE ID_Factura = 30
+select * from usuarios
+select * from Productos_x_Factura WHERE ID_Factura = 41
 select * from Ventas
 INSERT INTO Facturas(Pago, Cancelada) VALUES(0,0)
 SELECT CAST(SCOPE_IDENTITY() AS INT) AS ID;
@@ -246,9 +246,10 @@ FROM Productos_x_Factura PF
 INNER JOIN Productos P ON PF.ID_Producto = P.ID_Producto
 WHERE ID_Factura = @ID_Factura
 
-SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock, PF.Cantidad, PF.ID_Factura
-FROM Productos P 
-INNER JOIN Productos_x_Factura PF ON P.ID_Producto = PF.ID_Factura
-INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca 
-INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria
-WHERE PF.ID_Factura = @ID_Factura
+SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock, PF.Cantidad, PF.ID_Factura FROM Productos P INNER JOIN Productos_x_Factura PF ON P.ID_Producto = PF.ID_Factura INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE PF.ID_Factura = @ID_Factura
+SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Monto Fecha FROM Ventas
+SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Monto, Fecha FROM Ventas
+
+
+
+SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia

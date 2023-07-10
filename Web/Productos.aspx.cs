@@ -15,7 +15,7 @@ namespace Web
     {
         private string tipo;
         private string id;
-        private Producto producto = new Producto();
+        protected Producto producto = new Producto();
         private Usuario usuario = new Usuario();
         private ProductoNegocio productoNegocio = new ProductoNegocio();
         private MarcaNegocio marcaNegocio = new MarcaNegocio();

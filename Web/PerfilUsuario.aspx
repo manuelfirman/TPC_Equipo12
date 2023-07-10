@@ -3,13 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Repeater ID="rptUsuario" runat="server">
-        <ItemTemplate>
-            <div class="container">
-                <div class="row">
+    <div class="container">
+        <asp:Repeater ID="rptUsuario" runat="server">
+            <ItemTemplate>
+                <div class="row mt-3">
                     <div class="col-md-4">
                         <div class="card mb-4">
                             <div class="card-body text-center">
+                                <h5 class="">Perfil</h5>
                                 <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Imagen de perfil" class="rounded-circle img-thumbnail">
                                 <h4 class="mt-3"><%# ((Dominio.Usuario)Container.DataItem).Nombre.ToUpper() %></h4>
                             </div>
@@ -48,7 +49,7 @@
                                     </li>
                                 </ul>
                                 <a href="Domicilios.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
-                                    <button type="button" class="btn btn-primary">Modificar dirección</button>
+                                    <button type="button" class="btn btn-sm btn-dark">Modificar Información</button>
                                 </a>
 
                                 <%}
@@ -64,7 +65,17 @@
                                 <%} %>
                             </div>
                         </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="MisCompras.aspx">
+                                    <button type="button" class="btn btn-primary btn-lg">Mis compras</button>
+                                </a>
+                            </div>
+                        </div>
+
                     </div>
+
                     <div class="col-md-8">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -96,33 +107,89 @@
                                     </li>
                                 </ul>
                                 <a href="ModificarUsuario.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
-                                    <button type="button" class="btn btn-primary mt-3">Actualizar datos personales</button>
+                                    <button type="button" class="btn btn-sm btn-success mt-3 fw-bold">Actualizar datos personales</button>
                                 </a>
                                 <a href="CambiarContraseña.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
-                                    <button type="button" class="btn btn-primary mt-3">Cambiar contraseña</button>
+                                    <button type="button" class="btn btn-sm btn-primary mt-3 fw-bold">Cambiar contraseña</button>
                                 </a>
                             </div>
                         </div>
+
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Última Compra</h5>
                                 <div class="row">
                                     <div class="col-4">
-                                        <img src="ruta_imagen_producto.jpg" alt="Imagen del producto" class="img-thumbnail">
+                                        <%if (UltimaCompra.Factura.Productos != null)
+                                            { %>
+                                        <div id="carouselProducto" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <%for (int i = 0; i < UltimaCompra.Factura.Productos.Count; i++)
+                                                    { %>
+
+                                                <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalImagen" data-bs-img='<%=UltimaCompra.Factura.Productos[i].Producto.Imagenes.FirstOrDefault().Url %>'>
+                                                        <img src="<%= UltimaCompra.Factura.Productos[i].Producto.Imagenes.FirstOrDefault().Url %>" class="d-block w-100" alt="imagen producto">
+                                                    </a>
+                                                </div>
+                                                <% }%>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselProducto" role="button" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselProducto" role="button" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </a>
+                                        </div>
+
                                     </div>
-                                    <div class="col-8">
-                                        <h6>Nombre del Producto</h6>
-                                        <p>Precio: $50.00</p>
-                                        <p>Fecha: 01/05/2023</p>
-                                        <a href="#" class="btn btn-primary">Ver Detalles</a>
+
+                                    <div class="col-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <h6>Productos</h6>
+                                                <%foreach (Dominio.ElementoCarrito elemento in UltimaCompra.Factura.Productos)
+                                                    { %>
+                                                <p><%= elemento.Producto.Nombre %></p>
+                                                <%}  %>
+                                            </li>
+                                        </ul>
                                     </div>
+
+                                    <div class="col-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <p><span class="fw-medium">Fecha: </span><%= UltimaCompra.Fecha.ToShortDateString() %></p>
+                                                <p><span class="fw-medium">Estado: </span><%= UltimaCompra.Estado.Estado %></p>
+                                                <p><span class="fw-medium">Destino: </span><%=UltimaCompra.Usuario.Domicilios[0].Calle  %> <%=UltimaCompra.Usuario.Domicilios[0].Altura  %></p>
+                                                <p><span class="fw-medium">Precio Total: </span>$<%= Math.Round(UltimaCompra.Monto, 2) %></p>
+                                            </li>
+
+                                        </ul>
+                                        <div class="mt-2">
+                                            <a href="MisCompras.aspx" class="btn btn-primary">Ver Detalle</a>
+                                        </div>
+                                    </div>
+
+                                    <% }
+                                        else
+                                        { %>
+                                    <p>No has realizado ninguna compra</p>
+                                    <a href="Index.aspx" class="btn btn-primary">Ir a comprar</a>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
+
+            </ItemTemplate>
+        </asp:Repeater>
+        <div class="row my-5"></div>
+    </div>
 
 </asp:Content>

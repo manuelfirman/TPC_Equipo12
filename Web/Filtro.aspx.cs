@@ -131,5 +131,23 @@ namespace Web
             }
         }
 
+        protected string EstiloProducto(Dominio.Producto producto)
+        {
+            if (!producto.Estado)
+            {
+                if (Session["Usuario"] != null)
+                {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    if (usuario.TipoUser.Nombre == "Admin" || usuario.TipoUser.Nombre == "Vendedor")
+                    {
+                        return "opacity-25";
+                    }
+                }
+                return "hide-product";
+            }
+
+            return string.Empty;
+        }
+
     }
 }

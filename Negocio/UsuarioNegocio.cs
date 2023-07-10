@@ -361,5 +361,80 @@ namespace Negocio
             }
         }
 
+        public Venta UltimaCompra(long IDUsuario)
+        {
+            Database = new NegocioDB();
+            VentaNegocio ventaNegocio = new VentaNegocio();
+            Venta venta = new Venta();
+            try
+            {
+                Database.SetQuery("SELECT TOP 1 V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.ID_Usuario = @ID_Usuario ORDER BY V.Fecha DESC");
+                Database.SetParam("@ID_Usuario", IDUsuario);
+                Database.Read();
+                if(Database.Reader.Read())
+                {
+                    // Venta
+                    if (!(Database.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)Database.Reader["ID_Venta"];
+                    if (!(Database.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)Database.Reader["Fecha"];
+                    if (!(Database.Reader["Monto"] is DBNull)) venta.Monto = (decimal)Database.Reader["Monto"];
+
+                    if (!(Database.Reader["EstadoVenta"] is DBNull)) venta.Estado.Estado = (string)Database.Reader["EstadoVenta"];
+                    if (!(Database.Reader["ID_Estado"] is DBNull)) venta.Estado.IDEstado = (long)Database.Reader["ID_Estado"];
+
+                    // Factura
+                    if (!(Database.Reader["ID_Factura"] is DBNull)) venta.Factura.IDFactura = (long)Database.Reader["ID_Factura"];
+                    if (!(Database.Reader["Pago"] is DBNull)) venta.Factura.Pago = (bool)Database.Reader["Pago"];
+                    if (!(Database.Reader["Cancelada"] is DBNull)) venta.Factura.Cancelada = (bool)Database.Reader["Cancelada"];
+
+                    // Productos Factura
+                    venta.Factura.Productos = ventaNegocio.ProductosFactura(venta.Factura.IDFactura);
+
+                    // Usuario
+                    if (!(Database.Reader["ID_Usuario"] is DBNull)) venta.Usuario.IDUsuario = (long)Database.Reader["ID_Usuario"];
+                    if (!(Database.Reader["Dni"] is DBNull)) venta.Usuario.DNI = (string)Database.Reader["Dni"];
+                    if (!(Database.Reader["Nombre"] is DBNull)) venta.Usuario.Nombre = (string)Database.Reader["Nombre"];
+                    if (!(Database.Reader["Apellido"] is DBNull)) venta.Usuario.Apellido = (string)Database.Reader["Apellido"];
+                    if (!(Database.Reader["Telefono"] is DBNull)) venta.Usuario.Telefono = (string)Database.Reader["Telefono"];
+                    if (!(Database.Reader["Email"] is DBNull)) venta.Usuario.Email = (string)Database.Reader["Email"];
+                    if (!(Database.Reader["FechaNacimiento"] is DBNull)) venta.Usuario.FechaNacimiento = (DateTime)Database.Reader["FechaNacimiento"];
+                    if (!(Database.Reader["EstadoUsuario"] is DBNull)) venta.Usuario.Estado = (bool)Database.Reader["EstadoUsuario"];
+
+                    // Tipo usuario Usuario
+                    if (!(Database.Reader["ID_TipoUsuario"] is DBNull)) venta.Usuario.TipoUser.IDTipo = (long)Database.Reader["ID_TipoUsuario"];
+                    if (!(Database.Reader["TipoUsuario"] is DBNull)) venta.Usuario.TipoUser.Nombre = (string)Database.Reader["TipoUsuario"];
+
+                    // Domicilio Usuario
+                    venta.Usuario.Domicilios = new List<Domicilio>
+                    {
+                        new Domicilio()
+                    };
+
+                    if (!(Database.Reader["ID_Usuario"] is DBNull)) venta.Usuario.Domicilios[0].IDUsuario = (long)Database.Reader["ID_Usuario"];
+                    if (!(Database.Reader["ID_Domicilio"] is DBNull)) venta.Usuario.Domicilios[0].IDDomicilio = (long)Database.Reader["ID_Domicilio"];
+                    if (!(Database.Reader["ID_Provincia"] is DBNull)) venta.Usuario.Domicilios[0].Provincia.IDProvincia = (long)Database.Reader["ID_Provincia"];
+                    if (!(Database.Reader["Provincia"] is DBNull)) venta.Usuario.Domicilios[0].Provincia.Nombre = (string)Database.Reader["Provincia"];
+                    if (!(Database.Reader["Localidad"] is DBNull)) venta.Usuario.Domicilios[0].Localidad = (string)Database.Reader["Localidad"];
+                    if (!(Database.Reader["Calle"] is DBNull)) venta.Usuario.Domicilios[0].Calle = (string)Database.Reader["Calle"];
+                    if (!(Database.Reader["Numero"] is DBNull)) venta.Usuario.Domicilios[0].Altura = (string)Database.Reader["Numero"];
+                    if (!(Database.Reader["CodigoPostal"] is DBNull)) venta.Usuario.Domicilios[0].CodigoPostal = (string)Database.Reader["CodigoPostal"];
+                    if (!(Database.Reader["Piso"] is DBNull)) venta.Usuario.Domicilios[0].Piso = (string)Database.Reader["Piso"];
+                    if (!(Database.Reader["Referencia"] is DBNull)) venta.Usuario.Domicilios[0].Referencia = (string)Database.Reader["Referencia"];
+                    if (!(Database.Reader["Alias"] is DBNull)) venta.Usuario.Domicilios[0].Alias = (string)Database.Reader["Alias"];
+                    if (!(Database.Reader["EstadoDomicilio"] is DBNull)) venta.Usuario.Domicilios[0].Estado = (bool)Database.Reader["EstadoDomicilio"];
+                }
+
+                return venta;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
     }
 }

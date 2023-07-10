@@ -99,6 +99,7 @@
     <Content Include="Index.aspx" />
     <Content Include="Ingresar.aspx" />
     <Content Include="Marcas.aspx" />
+    <Content Include="MisCompras.aspx" />
     <Content Include="ModificarUsuario.aspx" />
     <Content Include="Pago.aspx" />
     <Content Include="PerfilUsuario.aspx" />
@@ -242,6 +243,13 @@
     </Compile>
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MisCompras.aspx.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisCompras.aspx.designer.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
     </Compile>
     <Compile Include="ModificarUsuario.aspx.cs">
       <DependentUpon>ModificarUsuario.aspx</DependentUpon>

@@ -468,33 +468,66 @@ namespace Negocio
         public List<Venta> ListarVentas()
         {
             NegocioDB db = new NegocioDB();
-            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
             List<Venta> listaVentas = new List<Venta>();
             Venta venta;
 
             try
             {
-                db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Monto, Fecha FROM Ventas");
+                db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia");
                 db.Read();
 
                 while(db.Reader.Read())
                 {
                     venta = new Venta();
-                    long IDFactura = -1;
-                    long IDUsuario = -1;
-                    long IDEstado = -1;
-
-                    if (!(db.Reader["ID_Factura"] is DBNull)) IDFactura = (long)db.Reader["ID_Factura"];
-                    if (!(db.Reader["ID_Usuario"] is DBNull)) IDUsuario = (long)db.Reader["ID_Usuario"];
-                    if (!(db.Reader["ID_Estado"] is DBNull)) IDEstado = (long)db.Reader["ID_Estado"];
-
+                    // Venta
                     if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
                     if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
                     if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
 
-                    if(IDFactura != -1) venta.Factura = this.FacturaPorID(IDFactura);
-                    if(IDUsuario != -1) venta.Usuario = usuarioNegocio.UsuarioPorID(IDUsuario);
-                    if(IDEstado != -1) venta.Estado = this.EstadoVentaPorID(IDEstado);
+                    if (!(db.Reader["EstadoVenta"] is DBNull)) venta.Estado.Estado = (string)db.Reader["EstadoVenta"];
+                    if (!(db.Reader["ID_Estado"] is DBNull)) venta.Estado.IDEstado = (long)db.Reader["ID_Estado"];
+
+                    // Factura
+                    if (!(db.Reader["ID_Factura"] is DBNull)) venta.Factura.IDFactura = (long)db.Reader["ID_Factura"];
+                    if (!(db.Reader["Pago"] is DBNull)) venta.Factura.Pago = (bool)db.Reader["Pago"];
+                    if (!(db.Reader["Cancelada"] is DBNull)) venta.Factura.Cancelada = (bool)db.Reader["Cancelada"];
+
+                    // Productos Factura
+                    venta.Factura.Productos = this.ProductosFactura(venta.Factura.IDFactura);   
+
+                    // Usuario
+                    if (!(db.Reader["ID_Usuario"] is DBNull)) venta.Usuario.IDUsuario = (long)db.Reader["ID_Usuario"];
+                    if (!(db.Reader["Dni"] is DBNull)) venta.Usuario.DNI = (string)db.Reader["Dni"];
+                    if (!(db.Reader["Nombre"] is DBNull)) venta.Usuario.Nombre = (string)db.Reader["Nombre"];
+                    if (!(db.Reader["Apellido"] is DBNull)) venta.Usuario.Apellido = (string)db.Reader["Apellido"];
+                    if (!(db.Reader["Telefono"] is DBNull)) venta.Usuario.Telefono = (string)db.Reader["Telefono"];
+                    if (!(db.Reader["Email"] is DBNull)) venta.Usuario.Email = (string)db.Reader["Email"];
+                    if (!(db.Reader["FechaNacimiento"] is DBNull)) venta.Usuario.FechaNacimiento = (DateTime)db.Reader["FechaNacimiento"];
+                    if (!(db.Reader["EstadoUsuario"] is DBNull)) venta.Usuario.Estado = (bool)db.Reader["EstadoUsuario"];
+
+                    // Tipo usuario Usuario
+                    if (!(db.Reader["ID_TipoUsuario"] is DBNull)) venta.Usuario.TipoUser.IDTipo = (long)db.Reader["ID_TipoUsuario"];
+                    if (!(db.Reader["TipoUsuario"] is DBNull)) venta.Usuario.TipoUser.Nombre = (string)db.Reader["TipoUsuario"];
+
+                    // Domicilio Usuario
+                    venta.Usuario.Domicilios = new List<Domicilio>
+                    {
+                        new Domicilio()
+                    };
+
+                    if (!(db.Reader["ID_Usuario"] is DBNull)) venta.Usuario.Domicilios[0].IDUsuario = (long)db.Reader["ID_Usuario"];
+                    if (!(db.Reader["ID_Domicilio"] is DBNull)) venta.Usuario.Domicilios[0].IDDomicilio = (long)db.Reader["ID_Domicilio"];
+                    if (!(db.Reader["ID_Provincia"] is DBNull)) venta.Usuario.Domicilios[0].Provincia.IDProvincia = (long)db.Reader["ID_Provincia"];
+                    if (!(db.Reader["Provincia"] is DBNull)) venta.Usuario.Domicilios[0].Provincia.Nombre = (string)db.Reader["Provincia"];
+                    if (!(db.Reader["Localidad"] is DBNull)) venta.Usuario.Domicilios[0].Localidad = (string)db.Reader["Localidad"];
+                    if (!(db.Reader["Calle"] is DBNull)) venta.Usuario.Domicilios[0].Calle = (string)db.Reader["Calle"];
+                    if (!(db.Reader["Numero"] is DBNull)) venta.Usuario.Domicilios[0].Altura = (string)db.Reader["Numero"];
+                    if (!(db.Reader["CodigoPostal"] is DBNull)) venta.Usuario.Domicilios[0].CodigoPostal = (string)db.Reader["CodigoPostal"];
+                    if (!(db.Reader["Piso"] is DBNull)) venta.Usuario.Domicilios[0].Piso = (string)db.Reader["Piso"];
+                    if (!(db.Reader["Referencia"] is DBNull)) venta.Usuario.Domicilios[0].Referencia = (string)db.Reader["Referencia"];
+                    if (!(db.Reader["Alias"] is DBNull)) venta.Usuario.Domicilios[0].Alias = (string)db.Reader["Alias"];
+                    if (!(db.Reader["EstadoDomicilio"] is DBNull)) venta.Usuario.Domicilios[0].Estado = (bool)db.Reader["EstadoDomicilio"];
 
                     listaVentas.Add(venta);
                 }
@@ -513,50 +546,50 @@ namespace Negocio
             }
         }
 
-        public List<Venta> VentasPorUsuario(long IDUsuario)
-        {
-            NegocioDB db = new NegocioDB();
-            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
-            List<Venta> listaVentas = new List<Venta>();
-            Venta venta;
+        //public List<Venta> VentasPorUsuario(long IDUsuario)
+        //{
+        //    NegocioDB db = new NegocioDB();
+        //    UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+        //    List<Venta> listaVentas = new List<Venta>();
+        //    Venta venta;
 
-            try
-            {
-                db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha FROM Ventas WHERE ID_Usuario = @ID_Usuario");
-                db.SetParam("@ID_Usuario", IDUsuario);
-                db.Read();
-                while (db.Reader.Read())
-                {
-                    venta = new Venta();
-                    long IDFactura = -1;
-                    long IDUser = -1;
-                    long IDEstado = -1;
+        //    try
+        //    {
+        //        db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha FROM Ventas WHERE ID_Usuario = @ID_Usuario");
+        //        db.SetParam("@ID_Usuario", IDUsuario);
+        //        db.Read();
+        //        while (db.Reader.Read())
+        //        {
+        //            venta = new Venta();
+        //            long IDFactura = -1;
+        //            long IDUser = -1;
+        //            long IDEstado = -1;
 
-                    if (!(db.Reader["ID_Factura"] is DBNull)) IDFactura = (long)db.Reader["ID_Factura"];
-                    if (!(db.Reader["ID_Usuario"] is DBNull)) IDUser = (long)db.Reader["ID_Usuario"];
-                    if (!(db.Reader["ID_Estado"] is DBNull)) IDEstado = (long)db.Reader["ID_Estado"];
+        //            if (!(db.Reader["ID_Factura"] is DBNull)) IDFactura = (long)db.Reader["ID_Factura"];
+        //            if (!(db.Reader["ID_Usuario"] is DBNull)) IDUser = (long)db.Reader["ID_Usuario"];
+        //            if (!(db.Reader["ID_Estado"] is DBNull)) IDEstado = (long)db.Reader["ID_Estado"];
 
-                    if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
-                    if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+        //            if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
+        //            if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
 
-                    if (IDFactura != -1) venta.Factura = this.FacturaPorID(IDFactura);
-                    if (IDUser != -1) venta.Usuario = usuarioNegocio.UsuarioPorID(IDUser);
-                    if (IDEstado != -1) venta.Estado = this.EstadoVentaPorID(IDEstado);
+        //            if (IDFactura != -1) venta.Factura = this.FacturaPorID(IDFactura);
+        //            if (IDUser != -1) venta.Usuario = usuarioNegocio.UsuarioPorID(IDUser);
+        //            if (IDEstado != -1) venta.Estado = this.EstadoVentaPorID(IDEstado);
 
-                    listaVentas.Add(venta);
-                }
-                return listaVentas;
-            }
-            catch (Exception ex)
-            {
+        //            listaVentas.Add(venta);
+        //        }
+        //        return listaVentas;
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
-            finally
-            {
-                db.Close();
-            }
-        }
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        db.Close();
+        //    }
+        //}
 
     }
 }
