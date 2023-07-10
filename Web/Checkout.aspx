@@ -67,7 +67,7 @@
                                     <asp:Label ID="lblNombre" runat="server" CssClass="text-uppercase fw-bolder" Text="<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Nombre.ToUpper()%>"></asp:Label>
                                     <asp:Label runat="server"> X<%#((Dominio.ElementoCarrito)Container.DataItem).Cantidad%> unidades</asp:Label>
                                 </div>
-                                <asp:Label ID="lblPrecio" runat="server" CssClass="fw-bold me-3  text-success"><%#Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio * ((Dominio.ElementoCarrito)Container.DataItem).Cantidad)%>$</asp:Label>
+                                <asp:Label ID="lblPrecio" runat="server" CssClass="fw-bold me-3  text-success"><%#Math.Round(((Dominio.ElementoCarrito)Container.DataItem).Producto.Precio * ((Dominio.ElementoCarrito)Container.DataItem).Cantidad, 2)%>$</asp:Label>
                             </div>
                             <hr />
                         </ItemTemplate>

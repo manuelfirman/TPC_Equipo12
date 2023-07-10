@@ -68,3 +68,7 @@
     line-height: 1.5;
     border-radius: 0.2rem;
 }
+
+hide-product {
+    display: none;
+}

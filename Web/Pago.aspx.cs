@@ -34,7 +34,7 @@ namespace Web
                     {
                         total += elemento.Producto.Precio * elemento.Cantidad;
                     }
-                    lblTotal.Text = $"Total a pagar: ${total}";
+                    lblTotal.Text = $"Total a pagar: ${Math.Round(total, 2)}";
                 }
                 IDVenta = (long)Session["IDVenta"];
             }

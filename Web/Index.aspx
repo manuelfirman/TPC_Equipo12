@@ -4,7 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <link href="Styles/home.css" rel="stylesheet" />
-
     <!--INICIO MAIN-->
     <main class="bg-light">
 
@@ -48,7 +47,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                 <asp:Repeater ID="rptProductos" runat="server">
                     <ItemTemplate>
-                        <div class="col card-custom">
+                        <div class="col card-custom <%# EstiloProducto((Dominio.Producto)Container.DataItem) %>">
                             <div class="card mw-100 card-custom-img">
                                 <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
                                     <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#CargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
@@ -106,7 +105,7 @@
             <div class="row row-cols-4">
                 <asp:Repeater ID="rptMarcas" runat="server">
                     <ItemTemplate>
-                        <div class="col card-custom">
+                        <div class="col card-custom ">
                             <div class="card mw-100 card-custom-img">
                                 <div class="card-custom-img">
                                     <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Marca">

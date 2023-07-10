@@ -93,15 +93,28 @@ namespace Web
             return imagenes.FirstOrDefault().Url;
         }
 
-        protected void BtnAgregar_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected string GetButtonCommandArgument(object dataItem)
         {
             var item = (Producto)dataItem;
             return item.IDProducto.ToString();
+        }
+
+        protected string EstiloProducto(Dominio.Producto producto)
+        {
+            if (!producto.Estado)
+            {
+                if (Session["Usuario"] != null)
+                {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    if (usuario.TipoUser.Nombre == "Admin" || usuario.TipoUser.Nombre == "Vendedor")
+                    {
+                        return "opacity-25";
+                    }
+                }
+                return "hide-product";
+            }
+
+            return string.Empty;
         }
     }
 }

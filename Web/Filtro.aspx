@@ -18,44 +18,20 @@
                                 { %>
                             <div>
                                 <asp:Button ID="BtnEditar" runat="server" CssClass="btn btn-sm btn-primary" Text='Editar' CommandName="Editar" CommandArgument='<%# Eval("IDProducto") %>' OnCommand="BotonEditarProducto" />
-                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarModal">Eliminar</button>
-
-
-                                <!-- Modal de confirmación -->
-                                <div class="modal fade" id="confirmarModal" tabindex="-1" role="dialog" aria-labelledby="confirmarModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmarModalLabel">Confirmar eliminación</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ¿Estás seguro de que deseas eliminar este producto?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                                                <asp:Button ID="btnConfirmarEliminar" runat="server" CssClass="btn btn-danger"
-                                                    Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# ((Dominio.Producto)Container.DataItem).IDProducto %>'
-                                                    OnCommand="BotonEditarProducto" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+
                             <%} %>
-
-                            <div class="card mw-100 card-custom-img">
-                                <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
-                                    <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#CargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
-                                </a>
-                            </div>
-                            <div class="card-description text-center text-dark">
-                                <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
-                                <p class="card-text text-muted">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
-                                <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>
+                            <div class="<%# EstiloProducto(((Dominio.Producto)Container.DataItem)) %>">
+                                <div class="card mw-100 card-custom-img">
+                                    <a href="DetalleProducto.aspx?id=<%# ((Dominio.Producto)Container.DataItem).IDProducto %>">
+                                        <asp:Image CssClass="card-img-top" ID="imgProducto" runat="server" ImageUrl="<%#CargarImagen(((Dominio.Producto)Container.DataItem)) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                    </a>
+                                </div>
+                                <div class="card-description text-center text-dark">
+                                    <h5 class="card-text text-muted"><%# ((Dominio.Producto)Container.DataItem).Nombre %></h5>
+                                    <p class="card-text text-muted">$<%# Math.Round(((Dominio.Producto)Container.DataItem).Precio, 2) %></p>
+                                    <p class="text-muted small">3 cuotas de $<%# Math.Round((((Dominio.Producto)Container.DataItem).Precio / 3), 2)  %></p>
+                                </div>
                             </div>
                         </div>
                     </ItemTemplate>
