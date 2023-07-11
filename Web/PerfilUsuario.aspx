@@ -163,7 +163,7 @@
                                             <li class="list-group-item">
                                                 <p><span class="fw-medium">Fecha: </span><%= UltimaCompra.Fecha.ToShortDateString() %></p>
                                                 <p><span class="fw-medium">Estado: </span><%= UltimaCompra.Estado.Estado %></p>
-                                                <p><span class="fw-medium">Destino: </span><%=UltimaCompra.Usuario.Domicilios[0].Calle  %> <%=UltimaCompra.Usuario.Domicilios[0].Altura  %></p>
+                                                <p><span class="fw-medium">Destino: </span><%= UltimaCompra.Usuario.Domicilios[0].Calle  %> <%= UltimaCompra.Usuario.Domicilios[0].Altura  %></p>
                                                 <p><span class="fw-medium">Precio Total: </span>$<%= Math.Round(UltimaCompra.Monto, 2) %></p>
                                             </li>
 

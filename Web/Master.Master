@@ -200,7 +200,7 @@
                                 </div>
                             </div>
                             <div class="border-bottom mt-3"></div>
-                            <asp:Button ID="btnComprar"  runat="server" CssClass="btn btn-primary w-100 mt-3" Text="Comprar" OnClick="btnComprar_Click"/>
+                            <asp:Button ID="BtnComprar"  runat="server" CssClass="btn btn-primary w-100 mt-3" Text="Comprar" OnClick="BtnComprar_Click"/>
                         </div>
                     <% }
                         else

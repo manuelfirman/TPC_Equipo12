@@ -15,7 +15,6 @@ namespace Web
         private List<Marca> Marcas{ get; set; }
         private CategoriaNegocio CategoriaNegocioMaster { get; set; }
         private MarcaNegocio MarcaNegocioMaster { get; set; }
-        private UsuarioNegocio UsuarioNegocio { get; set; }
         protected CarritoNegocio Carrito { get; set; }
         protected Usuario Usuario { get; set; }
         public bool HayUser { get; set; }
@@ -127,7 +126,7 @@ namespace Web
             }
         }
 
-        protected void btnComprar_Click(object sender, EventArgs e)
+        protected void BtnComprar_Click(object sender, EventArgs e)
         {
 
             if(Usuario != null)
