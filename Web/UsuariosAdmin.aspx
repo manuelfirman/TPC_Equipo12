@@ -4,8 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container">
+    <div class="container-fluid">
         <h1>USUARIOS</h1>
+        <div class="row">
+            <div class="col-md-9">
                 <table class="table">
                     <thead>
                         <tr>
@@ -41,7 +43,34 @@
                         </asp:Repeater>
                     </tbody>
                 </table>
+            </div>
+            <div class="col-md-3">
 
+                <div class="mb-3  d-flex justify-content-between align-items-center">
+                    <asp:Label ID="lblEstado" CssClass="form-label" runat="server" Text="Estado"></asp:Label>
+                    <div class="form-check">
+                        <asp:CheckBox  AutoPostBack="true" ID="CHKActivado" runat="server"  Checked="false" Text="Activado" OnCheckedChanged="CHKActivado_CheckedChanged" />
+                    </div>
+                    <div class="form-check">
+                        <asp:CheckBox AutoPostBack="true" ID="CHKDesactivado" runat="server"  Checked="false" Text="Desactivado" OnCheckedChanged="CHKDesactivado_CheckedChanged" />
+                    </div>
+                </div>
+
+                <div class="m-3 d-flex justify-content-between align-items-center">
+                    <asp:Label ID="lblRol" CssClass="form-label" runat="server" Text="Rol"></asp:Label>
+                    <div class="form-check">
+                        <asp:CheckBox AutoPostBack="true" ID="CHKAdmin" runat="server"  Checked="false" Text="Admin" OnCheckedChanged="CHKAdmin_CheckedChanged" />
+                    </div>
+                    <div class="form-check">
+                        <asp:CheckBox AutoPostBack="true" ID="CHKVendedor" runat="server"  Checked="false" Text="Vendedor" OnCheckedChanged="CHKVendedor_CheckedChanged" />
+                    </div>
+                    <div class="form-check">
+                        <asp:CheckBox AutoPostBack="true" ID="CHKUsuario" runat="server"  Checked="false" Text="Usuario" OnCheckedChanged="CHKUsuario_CheckedChanged" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
 </asp:Content>
+
