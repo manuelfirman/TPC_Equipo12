@@ -14,12 +14,6 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <div class="mb-3">
-                        <label class="form-label" runat="server" id="lblUrls" visible="false"></label>
-                        <asp:DropDownList CssClass="form-select" ID="DRPUrls" visible="false" AutoPostBack="true" runat="server" OnSelectedIndexChanged="DRPUrls_SelectedIndexChanged">
-                        </asp:DropDownList>
-                    </div>
-
                     <div class="mb-3" runat="server" id="contUrl" visible="false">
                         <label for="txtUrl" class="form-label ">URL:</label>
                         <input type="text" id="txtUrl" runat="server" class="form-control" />
@@ -31,10 +25,21 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" runat="server" id="lblEstado"></label>
-                        <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
-                        </asp:DropDownList>
+                        <label for="txtDesc" class="form-label ">Descripción:</label>
+                        <input type="text" id="txtTitulo" runat="server" class="form-control" />
                     </div>
+
+                    <div class="mb-3">
+                        <label for="txtDesc" class="form-label ">Descripción:</label>
+                        <input type="text" id="txtTexto" runat="server" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtDesc" class="form-label ">Descripción:</label>
+                        <input type="text" id="txtReferencia" runat="server" class="form-control" />
+                    </div>
+
+
                 </div>
                 <div class="col-md-6">
                     <asp:Image CssClass="img-fluid" runat="server" Visible="false" ID="ImgUrl"/>

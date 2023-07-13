@@ -13,8 +13,8 @@ namespace Web
     {
         private Usuario usuario = new Usuario();
         private string tipo;
-        private ImagenNegocio imagenNegocio = new ImagenNegocio();
-        private List<Imagen> imagenes = new List<Imagen>();
+        private BannerNegocio BannerNegocio = new BannerNegocio();
+        private List<Banner> Banners = new List<Banner>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,35 +24,26 @@ namespace Web
             {
                 if (!IsPostBack)
                 {
-                    if (tipo == null || (tipo != "Agregar" && tipo != "Modificar") || Request.QueryString["Id"] == null || Request.QueryString["Id"] == "")
+                    if (tipo == null || (tipo != "Agregar" && tipo != "Modificar") || (tipo == "Modificar" && Request.QueryString["Id"] == null || Request.QueryString["Id"] == ""))
                     {
                         Response.Redirect("404.aspx");
                     }
 
-                    ListItem item;
-                    lblEstado.InnerText = "Estado";
-                    item = new ListItem("Activada", "1");
-                    DRPEstado.Items.Add(item);
-                    item = new ListItem("Desactivada", "2");
-                    DRPEstado.Items.Add(item);
+                    //ListItem item;
+                    //lblEstado.InnerText = "Estado";
+                    //item = new ListItem("Activada", "1");
+                    //DRPEstado.Items.Add(item);
+                    //item = new ListItem("Desactivada", "2");
+                    //DRPEstado.Items.Add(item);
 
                     if (tipo == "Modificar")
                     {
-                        DRPUrls.Visible = true;
-                        lblUrls.Visible = true;
                         ImgUrl.Visible = true;
-                        imagenes = imagenNegocio.ImagenesProducto(long.Parse(Request.Params["Id"]));
-                        ImgUrl.ImageUrl = imagenes[0].Url;
-                        txtDesc.Value = imagenes[0].Descripcion;
+                        long IDBanner = long.Parse(Request.QueryString["Id"]);
+                        
+                        
                         int indice = 1;
-                        foreach (var imagen in imagenes)
-                        {
-                            //item = new ListItem(imagen.Url, $"{indice}");
-                            item = new ListItem($"Imagen {indice}", $"{indice}");
-                            item.Value = $"{imagen.Url},{imagen.IDImagen}";
-                            DRPUrls.Items.Add(item);
-                            indice++;
-                        }
+
                         btnAceptar.Text = "Modificar Banner Promocion";
                     }
                     else

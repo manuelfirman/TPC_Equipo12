@@ -33,24 +33,6 @@ namespace Web
         protected global::System.Web.UI.WebControls.Label lblMessageOk;
 
         /// <summary>
-        /// Control lblUrls.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUrls;
-
-        /// <summary>
-        /// Control DRPUrls.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPUrls;
-
-        /// <summary>
         /// Control contUrl.
         /// </summary>
         /// <remarks>
@@ -78,22 +60,31 @@ namespace Web
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtDesc;
 
         /// <summary>
-        /// Control lblEstado.
+        /// Control txtTitulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblEstado;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtTitulo;
 
         /// <summary>
-        /// Control DRPEstado.
+        /// Control txtTexto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPEstado;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtTexto;
+
+        /// <summary>
+        /// Control txtReferencia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtReferencia;
 
         /// <summary>
         /// Control ImgUrl.
