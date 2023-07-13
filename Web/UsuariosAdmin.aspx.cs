@@ -13,278 +13,55 @@ namespace Web
     {
         private UsuarioNegocio UsuarioNegocio { get; set; } = new UsuarioNegocio();
         protected List<Usuario> Usuarios { get; set; }
+        private Usuario usuario = new Usuario();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            Usuarios = Session["ListaUsuarios"] as List<Usuario>;
+            usuario = Session["Usuario"] as Usuario;
+            if (usuario.TipoUser.Nombre == "Admin")
             {
-                Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                rptUsuarios.DataSource = Usuarios;
-                rptUsuarios.DataBind();
+                if (!IsPostBack)
+                {
+                    Usuarios = UsuarioNegocio.ListarUsuarios();
+                    rptUsuarios.DataSource = Usuarios;
+                    rptUsuarios.DataBind();
+                    Session["ListaUsuarios"] = Usuarios;
+                }
             }
-            /*else
+            else
             {
-                if (CHKActivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "1");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKDesactivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "0");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if(CHKAdmin.Checked && !CHKVendedor.Checked && !CHKUsuario.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKVendedor.Checked && !CHKUsuario.Checked && !CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKUsuario.Checked && !CHKVendedor.Checked && !CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }*/
+                Response.Redirect("404.aspx");
+                return;
+
+            }
+
         }
         //CHEKED ESTADO ACTIVADO
         protected void CHKActivado_CheckedChanged(object sender, EventArgs e)
         {
             CHKDesactivado.Checked = false;
-            if (CHKActivado.Checked)
-            {
-                if (CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKVendedor.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKUsuario.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "1");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
 
-                }
-            }
-
-            else
-            {
-                if (CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKVendedor.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKUsuario.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
         }
         //CHEKED ESTADO DESACTIVADO
         protected void CHKDesactivado_CheckedChanged(object sender, EventArgs e)
         {
             CHKActivado.Checked = false;
-            if (CHKDesactivado.Checked)
-            {
-                if (CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKVendedor.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKUsuario.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "0");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
 
-                }
-            }
-
-            else
-            {
-                if (CHKAdmin.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKVendedor.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKUsuario.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
         }
         //CHEKED ADMIN
         protected void CHKAdmin_CheckedChanged(object sender, EventArgs e)
         {
             CHKUsuario.Checked = false;
             CHKVendedor.Checked = false;
-            if (CHKAdmin.Checked)
-            {
-                if (CHKActivado.Checked)
-                {
 
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-
-                }
-                else if (CHKDesactivado.Checked)
-                {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-
-                }
-                else
-                {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Admin");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
-            else
-            {
-                if (CHKActivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "1");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKDesactivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "0");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
         }
         //CHEKED VENDEDOR
         protected void CHKVendedor_CheckedChanged(object sender, EventArgs e)
         {
             CHKAdmin.Checked = false;
             CHKUsuario.Checked = false;
-            if (CHKVendedor.Checked)
-            {
 
-                if (CHKActivado.Checked)
-                {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-
-                }
-                else if (CHKDesactivado.Checked)
-                {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-
-                }
-                else
-                {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Vendedor");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
-
-            else
-            {
-                if (CHKActivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "1");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else if (CHKDesactivado.Checked)
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "0");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-                else
-                {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
-                }
-            }
 
         }
         //CHEKED USUARIO
@@ -292,53 +69,505 @@ namespace Web
         {
             CHKAdmin.Checked = false;
             CHKVendedor.Checked = false;
-            if (CHKUsuario.Checked)
-            {
-                if (CHKActivado.Checked)
-                {
 
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "1", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
-                    rptUsuarios.DataBind();
+        }
+
+        protected void btnFiltrar_Click(object sender, EventArgs e)
+        {
+            List<Usuario> auxUsuarios = new List<Usuario>();
+
+            if (CHKActivado.Checked)
+            {
+                if (CHKAdmin.Checked)
+                {
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+
+
 
                 }
-                else if (CHKDesactivado.Checked)
+                else if (CHKVendedor.Checked)
                 {
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
 
-                    Usuarios = UsuarioNegocio.ListarUsuarios("EstadoYRol", "0", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
+                }
+                else if (CHKUsuario.Checked)
+                {
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+
+                }
+                else if (DRPTipo.SelectedValue == "Nombre")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.Estado && item.Nombre.Contains(filtro))
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
                     rptUsuarios.DataBind();
-
+                }
+                else if (DRPTipo.SelectedValue == "DNI")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.Estado && item.DNI == filtro)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
                 }
                 else
                 {
-
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Rol", "Usuario");
-                    rptUsuarios.DataSource = Usuarios;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.Estado)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
                     rptUsuarios.DataBind();
                 }
             }
 
-            else
+            else if (CHKDesactivado.Checked)
             {
-                if (CHKActivado.Checked)
+                if (CHKAdmin.Checked)
                 {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "1");
-                    rptUsuarios.DataSource = Usuarios;
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && !item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && !item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Admin" && !item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+
+
+
+                }
+                else if (CHKVendedor.Checked)
+                {
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && !item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && !item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Vendedor" && !item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+
+                }
+                else if (CHKUsuario.Checked)
+                {
+                    if (DRPTipo.SelectedValue == "Nombre")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && !item.Estado && item.Nombre.Contains(filtro))
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else if (DRPTipo.SelectedValue == "DNI")
+                    {
+                        string filtro = txtTipo.Text;
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && !item.Estado && item.DNI == filtro)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+                    else
+                    {
+                        foreach (var item in Usuarios)
+                        {
+                            if (item.TipoUser.Nombre == "Usuario" && !item.Estado)
+                            {
+                                auxUsuarios.Add(item);
+                            }
+                        }
+                        rptUsuarios.DataSource = auxUsuarios;
+                        rptUsuarios.DataBind();
+                    }
+
+                }
+                else if (DRPTipo.SelectedValue == "Nombre")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (!item.Estado && item.Nombre.Contains(filtro))
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
                     rptUsuarios.DataBind();
                 }
-                else if (CHKDesactivado.Checked)
+                else if (DRPTipo.SelectedValue == "DNI")
                 {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("Estado", "0");
-                    rptUsuarios.DataSource = Usuarios;
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (!item.Estado && item.DNI == filtro)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
                     rptUsuarios.DataBind();
                 }
                 else
                 {
-                    Usuarios = UsuarioNegocio.ListarUsuarios("sinFiltro");
-                    rptUsuarios.DataSource = Usuarios;
+                    foreach (var item in Usuarios)
+                    {
+                        if (!item.Estado)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
                     rptUsuarios.DataBind();
                 }
+            }
+            else if (CHKAdmin.Checked)
+            {
+                if (DRPTipo.SelectedValue == "Nombre")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Admin" && item.Nombre.Contains(filtro))
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else if (DRPTipo.SelectedValue == "DNI")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Admin" && item.DNI == filtro)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else
+                {
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Admin")
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+            }
+            else if (CHKVendedor.Checked)
+            {
+                if (DRPTipo.SelectedValue == "Nombre")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Vendedor" && item.Nombre.Contains(filtro))
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else if (DRPTipo.SelectedValue == "DNI")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Vendedor" && item.DNI == filtro)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else
+                {
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Vendedor")
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+            }
+            else if (CHKUsuario.Checked)
+            {
+                if (DRPTipo.SelectedValue == "Nombre")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Usuario" && item.Nombre.Contains(filtro))
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else if (DRPTipo.SelectedValue == "DNI")
+                {
+                    string filtro = txtTipo.Text;
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Usuario" && item.DNI == filtro)
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+                else
+                {
+                    foreach (var item in Usuarios)
+                    {
+                        if (item.TipoUser.Nombre == "Usuario")
+                        {
+                            auxUsuarios.Add(item);
+                        }
+                    }
+                    rptUsuarios.DataSource = auxUsuarios;
+                    rptUsuarios.DataBind();
+                }
+            }
+            else if (DRPTipo.SelectedValue == "Nombre")
+            {
+                string filtro = txtTipo.Text;
+                foreach (var item in Usuarios)
+                {
+                    if (item.Nombre.Contains(filtro))
+                    {
+                        auxUsuarios.Add(item);
+                    }
+                }
+                rptUsuarios.DataSource = auxUsuarios;
+                rptUsuarios.DataBind();
+            }
+            else if (DRPTipo.SelectedValue == "DNI")
+            {
+                string filtro = txtTipo.Text;
+                foreach (var item in Usuarios)
+                {
+                    if (item.DNI == filtro)
+                    {
+                        auxUsuarios.Add(item);
+                    }
+                }
+                rptUsuarios.DataSource = auxUsuarios;
+                rptUsuarios.DataBind();
+            }
+            else
+            {
+                rptUsuarios.DataSource = Usuarios;
+                rptUsuarios.DataBind();
             }
         }
     }

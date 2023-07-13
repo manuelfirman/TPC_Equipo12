@@ -46,29 +46,39 @@
             </div>
             <div class="col-md-3">
 
-                <div class="mb-3  d-flex justify-content-between align-items-center">
+                <div class="m-4  d-flex justify-content-between align-items-center">
                     <asp:Label ID="lblEstado" CssClass="form-label" runat="server" Text="Estado"></asp:Label>
                     <div class="form-check">
-                        <asp:CheckBox  AutoPostBack="true" ID="CHKActivado" runat="server"  Checked="false" Text="Activado" OnCheckedChanged="CHKActivado_CheckedChanged" />
+                        <asp:CheckBox AutoPostBack="true" ID="CHKActivado" runat="server" Checked="false" Text="Activado" OnCheckedChanged="CHKActivado_CheckedChanged" />
                     </div>
                     <div class="form-check">
-                        <asp:CheckBox AutoPostBack="true" ID="CHKDesactivado" runat="server"  Checked="false" Text="Desactivado" OnCheckedChanged="CHKDesactivado_CheckedChanged" />
+                        <asp:CheckBox AutoPostBack="true" ID="CHKDesactivado" runat="server" Checked="false" Text="Desactivado" OnCheckedChanged="CHKDesactivado_CheckedChanged" />
                     </div>
                 </div>
 
-                <div class="m-3 d-flex justify-content-between align-items-center">
+                <div class="m-4 d-flex justify-content-between align-items-center">
                     <asp:Label ID="lblRol" CssClass="form-label" runat="server" Text="Rol"></asp:Label>
                     <div class="form-check">
-                        <asp:CheckBox AutoPostBack="true" ID="CHKAdmin" runat="server"  Checked="false" Text="Admin" OnCheckedChanged="CHKAdmin_CheckedChanged" />
+                        <asp:CheckBox AutoPostBack="true" ID="CHKAdmin" runat="server" Checked="false" Text="Admin" OnCheckedChanged="CHKAdmin_CheckedChanged" />
                     </div>
                     <div class="form-check">
-                        <asp:CheckBox AutoPostBack="true" ID="CHKVendedor" runat="server"  Checked="false" Text="Vendedor" OnCheckedChanged="CHKVendedor_CheckedChanged" />
+                        <asp:CheckBox AutoPostBack="true" ID="CHKVendedor" runat="server" Checked="false" Text="Vendedor" OnCheckedChanged="CHKVendedor_CheckedChanged" />
                     </div>
                     <div class="form-check">
-                        <asp:CheckBox AutoPostBack="true" ID="CHKUsuario" runat="server"  Checked="false" Text="Usuario" OnCheckedChanged="CHKUsuario_CheckedChanged" />
+                        <asp:CheckBox AutoPostBack="true" ID="CHKUsuario" runat="server" Checked="false" Text="Usuario" OnCheckedChanged="CHKUsuario_CheckedChanged" />
                     </div>
                 </div>
 
+                <div class="m-4">
+                    <asp:DropDownList CssClass="form-select" ID="DRPTipo" runat="server">
+                        <asp:ListItem Value="Sinfiltro">Elija una opción</asp:ListItem>
+                        <asp:ListItem Value="Nombre">Nombre</asp:ListItem>
+                        <asp:ListItem Value="DNI">DNI</asp:ListItem>
+                    </asp:DropDownList>
+                    <asp:TextBox ID="txtTipo" runat="server" CssClass="form-control mt-4"></asp:TextBox>
+                </div>
+
+                <asp:Button ID="btnFiltrar" runat="server" CssClass="btn btn-primary" Text="Aplicar Filtros" OnClick="btnFiltrar_Click" />
             </div>
         </div>
     </div>
