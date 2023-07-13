@@ -50,7 +50,7 @@
                                     <li><a class="dropdown-item" href="Categorias.aspx?Tipo=Agregar">Agregar Categoria</a></li>
                                     <li><a class="dropdown-item" href="Productos.aspx?Tipo=Agregar">Agregar Producto</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
+                                    <li><a class="dropdown-item" href="GestionBanner.aspx">Gestionar Promociones</a></li>
                                 </ul>
                             </div>
                         </div>

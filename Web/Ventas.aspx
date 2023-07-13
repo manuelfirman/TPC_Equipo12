@@ -19,7 +19,7 @@
                                     <th class="text-white" style="background-color: black">Usuario</th>
                                     <th class="text-white" style="background-color: black">Monto</th>
                                     <th class="text-white" style="background-color: black">Destino</th>
-                                    <th class="text-white" style="background-color: black">Fecha</th>
+                                    <th class="text-white" style="background-color: black">Fecha - Hora</th>
                                     <th class="text-white" style="background-color: black"></th>
                                 </tr>
                             </thead>
@@ -84,7 +84,7 @@
                                             <asp:ListItem></asp:ListItem>
                                         </asp:DropDownList>
                                         <div class="form-check mt-1">
-                                            <asp:CheckBox ID="ChkEstado" runat="server" Checked="false" Text="Filtrar por monto" />
+                                            <asp:CheckBox ID="ChkEstado" runat="server" Checked="false" Text="Filtrar por Estado" />
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                             <asp:TextBox ID="txtMontoMax" runat="server" CssClass="form-control"></asp:TextBox>
                                         </div>
                                         <div class="form-check mt-1">
-                                            <asp:CheckBox ID="ChkMonto" runat="server" Checked="false" Text="Filtrar por monto" />
+                                            <asp:CheckBox ID="ChkMonto" runat="server" Checked="false" Text="Filtrar por Monto" />
                                         </div>
                                     </div>
                                 </div>

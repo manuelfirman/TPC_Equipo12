@@ -96,7 +96,7 @@ namespace Negocio
             }
         }
 
-        public List<Usuario> ListarUsuarios(string tipo, string valor1 = "", string valor2 = "")
+        public List<Usuario> ListarUsuarios()
         {
             Database = new NegocioDB();
             List<Usuario> listaUsuarios = new List<Usuario>();
@@ -104,26 +104,7 @@ namespace Negocio
             DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
             try
             {
-               if(tipo == "sinFiltro")
-                {
-                    Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo");
-                }
-                else if(tipo == "Estado")
-                {
-                    Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo WHERE U.Estado = @Estado");
-                    Database.SetParam("@Estado", int.Parse(valor1));
-                }
-                else if (tipo == "Rol")
-                {
-                    Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo WHERE TU.Nombre= @RolNombre");
-                    Database.SetParam("@RolNombre", valor1);
-                }
-                else if (tipo == "EstadoYRol")
-                {
-                    Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo WHERE TU.Nombre= @RolNombre AND U.Estado = @Estado");
-                    Database.SetParam("@Estado", int.Parse(valor1));
-                    Database.SetParam("@RolNombre", valor2);
-                }
+                Database.SetQuery($"SELECT U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre as TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado FROM Usuarios U INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo");
                 Database.Read();
                 while (Database.Reader.Read())
                 {

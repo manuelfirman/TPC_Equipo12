@@ -60,7 +60,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <p><span class="fw-medium">Fecha: </span><%= venta.Fecha.ToShortDateString() %></p>
-                                            <p><span class="fw-medium">Estado: </span><%= venta.Estado.Estado %></p>
+                                            <p class="fw-bolder <%= (venta.Estado.Estado == "ENVIADO" || venta.Estado.Estado == "ENTREGADO") ? "bg-success" : (venta.Estado.Estado == "PAGO PENDIENTE") ? "bg-danger bg-opacity-75" : (venta.Estado.Estado == "CANCELADO") ? "bg-danger" : (venta.Estado.Estado == "PAGADO") ? "bg-success-subtle" : "" %>"><span class="fw-medium">Estado: </span><%= venta.Estado.Estado %></p>
                                             <p><span class="fw-medium">Destino: </span><%= venta.Usuario.Domicilios[0].Calle  %> <%= venta.Usuario.Domicilios[0].Altura  %></p>
                                             <p><span class="fw-medium">Precio Total: </span>$<%= Math.Round(venta.Monto, 2) %></p>
                                         </li>

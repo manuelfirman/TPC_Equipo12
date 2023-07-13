@@ -13,7 +13,7 @@
         { %>
 
     <!-- CONTENIDO PAGE -->
-    <main class="bg-dark">
+    <main class="bg-dark min-vh-100">
         <div class="container-fluid">
             <h1 class="text-light">ADMINISTRAR TIENDA</h1>
         </div>

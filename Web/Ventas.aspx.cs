@@ -48,6 +48,10 @@ namespace Web
             ChkEstado.Checked = false;
             ChkMonto.Checked = false;
             ChkFecha.Checked = false;
+            txtFechaInicio.Text = string.Empty;
+            txtFechaFin.Text = string.Empty;
+            txtMontoMin.Text = string.Empty;
+            txtMontoMax.Text = string.Empty;
             ventas = ventaNegocio.ListarVentas();
             rptVentas.DataSource = ventas;
             rptVentas.DataBind();
@@ -61,22 +65,22 @@ namespace Web
             string fechaInicio = txtFechaInicio.Text;
             string fechaFin = txtFechaFin.Text;
 
-            if (!string.IsNullOrEmpty(montoMin))
+            if (string.IsNullOrEmpty(montoMin))
             {
                 montoMin = "0";
             }
 
-            if (!string.IsNullOrEmpty(montoMax))
+            if (string.IsNullOrEmpty(montoMax))
             {
                 montoMax = "100000000000";
             }
 
-            if (!string.IsNullOrEmpty(fechaInicio))
+            if (string.IsNullOrEmpty(fechaInicio))
             {
                 fechaInicio = "01/01/1900";
             }
 
-            if (!string.IsNullOrEmpty(fechaFin))
+            if (string.IsNullOrEmpty(fechaFin))
             {
                 fechaFin = "01/01/2060";
             }
@@ -116,7 +120,7 @@ namespace Web
                 else
                 {
                     rptVentas.DataSource = ventaNegocio.FiltroVentas("Fecha", fechaInicio, fechaFin);
-                }
+                }   
                 rptVentas.DataBind();
             }
             else if(ChkMonto.Checked && ChkFecha.Checked)
