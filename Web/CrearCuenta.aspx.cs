@@ -76,7 +76,14 @@ namespace Web
                 return;
             }
 
-            if(contrasena != confirmarContrasena)
+            if (contrasena.Length < 8)
+            {
+                lblMessage.Text = "Minimo 8 caracteres en la contraseña";
+                lblMessage.Visible = true;
+                return;
+            }
+
+            if (contrasena != confirmarContrasena)
             {
                 lblMessage.Text = "Las contraseñas son distintas";
                 lblMessage.Visible = true;

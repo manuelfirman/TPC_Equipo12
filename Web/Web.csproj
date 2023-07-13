@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="404.aspx" />
     <Content Include="Admin.aspx" />
+    <Content Include="Banner.aspx" />
     <Content Include="CambiarContraseña.aspx" />
     <Content Include="Categorias.aspx" />
     <Content Include="Checkout.aspx" />
@@ -93,6 +94,7 @@
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Domicilios.aspx" />
     <Content Include="Filtro.aspx" />
+    <Content Include="GestionBanner.aspx" />
     <Content Include="GestionVenta.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Imagenes.aspx" />
@@ -142,6 +144,13 @@
     </Compile>
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Banner.aspx.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Banner.aspx.designer.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
     </Compile>
     <Compile Include="CambiarContraseña.aspx.cs">
       <DependentUpon>CambiarContraseña.aspx</DependentUpon>
@@ -198,6 +207,13 @@
     </Compile>
     <Compile Include="Filtro.aspx.designer.cs">
       <DependentUpon>Filtro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionBanner.aspx.cs">
+      <DependentUpon>GestionBanner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionBanner.aspx.designer.cs">
+      <DependentUpon>GestionBanner.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionVenta.aspx.cs">
       <DependentUpon>GestionVenta.aspx</DependentUpon>
