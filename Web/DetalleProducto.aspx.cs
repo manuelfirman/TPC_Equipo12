@@ -14,11 +14,10 @@ namespace Web
     {
     
         private int Indice { get; set; }
-        protected bool HayComentarios { get; set; }
         public Producto Producto { get; set; }
         private ProductoNegocio ProductoNegocioDetalle { get; set; }
         private ComentarioNegocio ComentarioNegocio { get; set; } = new ComentarioNegocio();
-        private List<Comentario> Comentarios { get; set; }
+        protected List<Comentario> Comentarios { get; set; }
 
         public DetalleProducto()
         {
@@ -56,9 +55,6 @@ namespace Web
             {
                 Response.Redirect("404.aspx");
             }
-
-            if (Comentarios.Count == 0) HayComentarios = false;
-            else HayComentarios = true;
         }
 
         public void ActualizarComentarios(long IDProducto)

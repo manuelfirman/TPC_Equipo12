@@ -243,13 +243,14 @@ namespace Negocio
             EstadoVenta estadoVenta = new EstadoVenta();
             try
             {
-                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta WHERE Estado = @Estado");
-                Database.SetParam("@Estado", estado);
+                Database.SetQuery("SELECT ID_Estado, Estado, Terminal FROM EstadoVenta WHERE Estado = @EstadoVenta");
+                Database.SetParam("@EstadoVenta", estado);
                 Database.Read();
                 if(Database.Reader.Read())
                 {
                     if (!(Database.Reader["ID_Estado"] is DBNull)) estadoVenta.IDEstado = (long)Database.Reader["ID_Estado"];
                     if (!(Database.Reader["Estado"] is DBNull)) estadoVenta.Estado = (string)Database.Reader["Estado"];
+                    if (!(Database.Reader["Terminal"] is DBNull)) estadoVenta.Terminal = (bool)Database.Reader["Terminal"];
                 }
 
                 return estadoVenta;
@@ -272,13 +273,14 @@ namespace Negocio
             List<EstadoVenta> listaEstados = new List<EstadoVenta>();
             try
             {
-                Database.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta");
+                Database.SetQuery("SELECT ID_Estado, Estado, Terminal FROM EstadoVenta");
                 Database.Read();
                 while (Database.Reader.Read())
                 {
                     estadoVenta = new EstadoVenta();
                     if (!(Database.Reader["ID_Estado"] is DBNull)) estadoVenta.IDEstado = (long)Database.Reader["ID_Estado"];
                     if (!(Database.Reader["Estado"] is DBNull)) estadoVenta.Estado = (string)Database.Reader["Estado"];
+                    if (!(Database.Reader["Terminal"] is DBNull)) estadoVenta.Terminal = (bool)Database.Reader["Terminal"];
 
                     listaEstados.Add(estadoVenta);
                 }
@@ -302,13 +304,14 @@ namespace Negocio
             EstadoVenta estadoVenta = new EstadoVenta();
             try
             {
-                db.SetQuery("SELECT ID_Estado, Estado FROM EstadoVenta WHERE ID_Estado = @ID_Estado");
+                db.SetQuery("SELECT ID_Estado, Estado, Terminal FROM EstadoVenta WHERE ID_Estado = @ID_Estado");
                 db.SetParam("@ID_Estado", IDEstado);
                 db.Read();
                 if (db.Reader.Read())
                 {
                     if (!(db.Reader["ID_Estado"] is DBNull)) estadoVenta.IDEstado = (long)db.Reader["ID_Estado"];
                     if (!(db.Reader["Estado"] is DBNull)) estadoVenta.Estado = (string)db.Reader["Estado"];
+                    if (!(db.Reader["Terminal"] is DBNull)) estadoVenta.Terminal = (bool)db.Reader["Terminal"];
                 }
 
                 return estadoVenta;
@@ -327,12 +330,25 @@ namespace Negocio
         public bool ModificarEstadoVenta(long IDVenta, long IDEstado)
         {
             Database = new NegocioDB();
-
+            
             try
             {
-                Database.SetQuery("UPDATE Ventas SET ID_Estado = @Estado WHERE ID_Venta = @ID_Venta");
-                Database.SetParam("@ID_Venta", IDVenta);
-                Database.SetParam("@Estado", IDEstado);
+                EstadoVenta estadoEnviado = this.ObtenerEstadoVenta("ENVIADO");
+                if (IDEstado == estadoEnviado.IDEstado)
+                {
+                    string codigoSeguimiento = this.GenerarCodigoSeguimiento(12);
+                    Database.SetQuery("UPDATE Ventas SET ID_Estado = @Estado, FechaEnvio = GETDATE(), CodigoSeguimiento = @CodigoSeguimiento WHERE ID_Venta = @ID_Venta");
+                    Database.SetParam("@ID_Venta", IDVenta);
+                    Database.SetParam("@CodigoSeguimiento", codigoSeguimiento);
+                    Database.SetParam("@Estado", IDEstado);
+                }
+                else
+                {
+                    Database.SetQuery("UPDATE Ventas SET ID_Estado = @Estado WHERE ID_Venta = @ID_Venta");
+                    Database.SetParam("@ID_Venta", IDVenta);
+                    Database.SetParam("@Estado", IDEstado);
+                }
+
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
@@ -379,7 +395,7 @@ namespace Negocio
             }
         }
 
-        public bool PagoVenta(long IDVenta)
+        public bool PagoVenta(long IDVenta, string TipoPago)
         {
             Database = new NegocioDB();
 
@@ -400,9 +416,12 @@ namespace Negocio
 
                 // Guardar registro de venta
                 EstadoVenta estadoVenta = this.ObtenerEstadoVenta("PAGADO");
+                string codigoPago = this.GenerarCodigoPago(15);
 
-                Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado WHERE ID_Venta = @ID_Venta");
+                Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado, TipoPago = @TipoPago, CodigoPago = @CodigoPago WHERE ID_Venta = @ID_Venta");
                 Database.SetParam("@ID_Venta", IDVenta);
+                Database.SetParam("@TipoPago", TipoPago);
+                Database.SetParam("@CodigoPago", codigoPago);
                 Database.SetParam("@ID_Estado", estadoVenta.IDEstado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
@@ -426,7 +445,7 @@ namespace Negocio
 
             try
             {
-                db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha, Monto FROM Ventas WHERE ID_Venta = @ID_Venta");
+                db.SetQuery("SELECT ID_Venta, ID_Factura, ID_Usuario, ID_Estado, Fecha, FechaEnvio, Monto, TipoPago, CodigoPago, CodigoSeguimiento FROM Ventas WHERE ID_Venta = @ID_Venta");
                 db.SetParam("@ID_Venta", IDVenta);
                 db.Read();
                 if (db.Reader.Read())
@@ -442,7 +461,11 @@ namespace Negocio
 
                     if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
                     if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+                    if (!(db.Reader["FechaEnvio"] is DBNull)) venta.FechaEnvio = (DateTime)db.Reader["FechaEnvio"];
                     if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
+                    if (!(db.Reader["TipoPago"] is DBNull)) venta.TipoPago = (string)db.Reader["TipoPago"];
+                    if (!(db.Reader["CodigoPago"] is DBNull)) venta.CodigoPago = (string)db.Reader["CodigoPago"];
+                    if (!(db.Reader["CodigoSeguimiento"] is DBNull)) venta.CodigoSeguimiento = (string)db.Reader["CodigoSeguimiento"];
 
                     if (IDFactura != -1 && IDUsuario != -1 && IDEstado != -1)
                     {
@@ -468,13 +491,12 @@ namespace Negocio
         public List<Venta> ListarVentas()
         {
             NegocioDB db = new NegocioDB();
-            DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
             List<Venta> listaVentas = new List<Venta>();
             Venta venta;
 
             try
             {
-                db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia");
+                db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia ORDER BY V.Fecha DESC");
                 db.Read();
 
                 while(db.Reader.Read())
@@ -483,7 +505,11 @@ namespace Negocio
                     // Venta
                     if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
                     if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+                    if (!(db.Reader["FechaEnvio"] is DBNull)) venta.FechaEnvio = (DateTime)db.Reader["FechaEnvio"];
                     if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
+                    if (!(db.Reader["TipoPago"] is DBNull)) venta.TipoPago = (string)db.Reader["TipoPago"];
+                    if (!(db.Reader["CodigoPago"] is DBNull)) venta.CodigoPago = (string)db.Reader["CodigoPago"];
+                    if (!(db.Reader["CodigoSeguimiento"] is DBNull)) venta.CodigoSeguimiento = (string)db.Reader["CodigoSeguimiento"];
 
                     if (!(db.Reader["EstadoVenta"] is DBNull)) venta.Estado.Estado = (string)db.Reader["EstadoVenta"];
                     if (!(db.Reader["ID_Estado"] is DBNull)) venta.Estado.IDEstado = (long)db.Reader["ID_Estado"];
@@ -492,6 +518,7 @@ namespace Negocio
                     if (!(db.Reader["ID_Factura"] is DBNull)) venta.Factura.IDFactura = (long)db.Reader["ID_Factura"];
                     if (!(db.Reader["Pago"] is DBNull)) venta.Factura.Pago = (bool)db.Reader["Pago"];
                     if (!(db.Reader["Cancelada"] is DBNull)) venta.Factura.Cancelada = (bool)db.Reader["Cancelada"];
+
 
                     // Productos Factura
                     venta.Factura.Productos = this.ProductosFactura(venta.Factura.IDFactura);   
@@ -556,43 +583,43 @@ namespace Negocio
                 switch (tipo)
                 {
                     case "Sin Filtro":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia";
                         break;
                     case "Estado":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado";
                         db.SetParam("@Estado", valor1);
                         break;
                     case "Monto":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Monto BETWEEN @MontoMin AND @MontoMax";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Monto BETWEEN @MontoMin AND @MontoMax";
                         db.SetParam("@MontoMin", valor1);
                         db.SetParam("@MontoMax", valor2);
                         break;
                     case "Fecha":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Fecha BETWEEN @FechaInicio AND @FechaFin";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Fecha BETWEEN @FechaInicio AND @FechaFin";
                         db.SetParam("@FechaInicio", valor1);
                         db.SetParam("@FechaFin", valor2);
                         break;
                     case "Estado Monto":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Monto BETWEEN @MontoMin AND @MontoMax";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Monto BETWEEN @MontoMin AND @MontoMax";
                         db.SetParam("@Estado", valor1);
                         db.SetParam("@MontoMin", valor2);
                         db.SetParam("@MontoMax", valor3);
                         break;
                     case "Estado Fecha":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
                         db.SetParam("@Estado", valor1);
                         db.SetParam("@FechaInicio", valor2);
                         db.SetParam("@FechaFin", valor3);
                         break;
                     case "Monto Fecha":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Monto BETWEEN @MontoMin AND @MontoMax AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.Monto BETWEEN @MontoMin AND @MontoMax AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
                         db.SetParam("@MontoMin", valor1);
                         db.SetParam("@MontoMax", valor1);
                         db.SetParam("@FechaInicio", valor3);
                         db.SetParam("@FechaFin", valor4);
                         break;
                     case "Estado Monto Fecha":
-                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Monto BETWEEN @MontoMin AND @MontoMax AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
+                        query = "SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE EV.Estado = @Estado AND V.Monto BETWEEN @MontoMin AND @MontoMax AND V.Fecha BETWEEN @FechaInicio AND @FechaFin";
                         db.SetParam("@Estado", valor1);
                         db.SetParam("@MontoMin", valor2);
                         db.SetParam("@MontoMax", valor3);
@@ -612,7 +639,11 @@ namespace Negocio
                     // Venta
                     if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
                     if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+                    if (!(db.Reader["FechaEnvio"] is DBNull)) venta.FechaEnvio = (DateTime)db.Reader["FechaEnvio"];
                     if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
+                    if (!(db.Reader["TipoPago"] is DBNull)) venta.TipoPago = (string)db.Reader["TipoPago"];
+                    if (!(db.Reader["CodigoPago"] is DBNull)) venta.CodigoPago = (string)db.Reader["CodigoPago"];
+                    if (!(db.Reader["CodigoSeguimiento"] is DBNull)) venta.CodigoSeguimiento = (string)db.Reader["CodigoSeguimiento"];
 
                     if (!(db.Reader["EstadoVenta"] is DBNull)) venta.Estado.Estado = (string)db.Reader["EstadoVenta"];
                     if (!(db.Reader["ID_Estado"] is DBNull)) venta.Estado.IDEstado = (long)db.Reader["ID_Estado"];
@@ -681,7 +712,7 @@ namespace Negocio
 
             try
             {
-                db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.ID_Usuario = @ID_Usuario ORDER BY V.Fecha DESC");
+                db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia WHERE V.ID_Usuario = @ID_Usuario ORDER BY V.Fecha DESC");
                 db.SetParam("@ID_Usuario", IDUsuario);
                 db.Read();
 
@@ -691,7 +722,11 @@ namespace Negocio
                     // Venta
                     if (!(db.Reader["ID_Venta"] is DBNull)) venta.IDVenta = (long)db.Reader["ID_Venta"];
                     if (!(db.Reader["Fecha"] is DBNull)) venta.Fecha = (DateTime)db.Reader["Fecha"];
+                    if (!(db.Reader["FechaEnvio"] is DBNull)) venta.FechaEnvio = (DateTime)db.Reader["FechaEnvio"];
                     if (!(db.Reader["Monto"] is DBNull)) venta.Monto = (decimal)db.Reader["Monto"];
+                    if (!(db.Reader["TipoPago"] is DBNull)) venta.TipoPago = (string)db.Reader["TipoPago"];
+                    if (!(db.Reader["CodigoPago"] is DBNull)) venta.CodigoPago = (string)db.Reader["CodigoPago"];
+                    if (!(db.Reader["CodigoSeguimiento"] is DBNull)) venta.CodigoSeguimiento = (string)db.Reader["CodigoSeguimiento"];
 
                     if (!(db.Reader["EstadoVenta"] is DBNull)) venta.Estado.Estado = (string)db.Reader["EstadoVenta"];
                     if (!(db.Reader["ID_Estado"] is DBNull)) venta.Estado.IDEstado = (long)db.Reader["ID_Estado"];
@@ -752,5 +787,104 @@ namespace Negocio
             }
         }
 
+        public bool CodigoRepetido(string tipo, string valor)
+        {
+            NegocioDB db = new NegocioDB();
+            int cont = 0;
+            try
+            {
+                db.SetQuery($"SELECT ID_Venta FROM Ventas WHERE {tipo} = @{tipo}");
+                db.SetParam($"@{tipo}", valor);
+                db.Read();
+                while(db.Reader.Read())
+                {
+                    cont++;
+                }
+
+                if (cont != 0) return true;
+                else return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                db.Close();
+            }
+        }
+
+        public string GenerarCodigoPago(int longitud)
+        {
+            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            StringBuilder constructorCadena = new StringBuilder(longitud);
+
+            bool repetido = false;
+            string codigoGenerado = string.Empty;
+
+            do
+            {
+                constructorCadena.Clear();
+
+                for (int i = 0; i < longitud; i++)
+                {
+                    int indice = random.Next(caracteres.Length);
+                    constructorCadena.Append(caracteres[indice]);
+                }
+
+                codigoGenerado = constructorCadena.ToString();
+
+                if (!this.CodigoRepetido("CodigoPago", codigoGenerado))
+                {
+                    repetido = false;
+                }
+                else
+                {
+                    repetido = true;
+                }
+
+            }
+            while (repetido);
+
+            return codigoGenerado;
+        }
+
+        public string GenerarCodigoSeguimiento(int longitud)
+        {
+            const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            StringBuilder constructorCadena = new StringBuilder(longitud);
+            
+
+            bool repetido = false;
+            string codigoGenerado = string.Empty;
+
+            do
+            {
+                constructorCadena.Clear();
+
+                for (int i = 0; i < longitud; i++)
+                {
+                    int indice = random.Next(caracteres.Length);
+                    constructorCadena.Append(caracteres[indice]);
+                }
+
+                codigoGenerado = constructorCadena.ToString();
+
+                if (!this.CodigoRepetido("CodigoSeguimiento", codigoGenerado))
+                {
+                    repetido = false;
+                }
+                else
+                {
+                    repetido = true;
+                }
+
+            }
+            while (repetido);
+
+            return codigoGenerado;
+        }
     }
 }

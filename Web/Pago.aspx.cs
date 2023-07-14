@@ -47,9 +47,14 @@ namespace Web
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
+            string tipoPago;
+            if (CHKEfectivo.Checked) tipoPago = "EFECTIVO";
+            else if (CHKTarjeta.Checked) tipoPago = "TARJETA";
+            else tipoPago = "TRANSFERENCIA";
 
-            if (ventaNegocio.PagoVenta(IDVenta))
+            if (ventaNegocio.PagoVenta(IDVenta, tipoPago))
             {
+                Session["Carrito"] = new CarritoNegocio();
                 Response.Redirect("CompraRealizada.aspx");
             }
             else

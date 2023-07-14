@@ -12,7 +12,6 @@
         <section>
             <div class="container">
                 <div class="row my-5"></div>
-                <div class="row my-5"></div>
                 <div class="row my-5">
                     <%if ((Session["Usuario"] != null && (((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Admin") || ((((Dominio.Usuario)Session["Usuario"])).TipoUser.Nombre == "Vendedor"))))
                         { %>
@@ -125,11 +124,7 @@
                                         <p>Categoria: <%=Producto.Categoria.Nombre %></p>
                                         <p>Codigo: <%=Producto.Codigo %></p>
                                     </li>
-                                    <li class="list-group-item">
-                                        <h5>Característica 3</h5>
-                                        <p>Descripción de la característica 3</p>
-                                    </li>
-                                    <!-- agregar -->
+
                                 </ul>
                             </div>
                         </div>
@@ -137,10 +132,10 @@
                 </div>
             </div>
 
-            <div class="row my-5"></div>
+            <div class="row my-2"></div>
 
             <!-- COMENTARIOS -->
-            <div class="container-fluid my-4">
+            <div class="container my-4 bg-success-subtle p-4">
                 <div class="row mx-3">
                     <div class="col-md-12">
                         <h3>Comentarios</h3>
@@ -149,17 +144,17 @@
                                 <ItemTemplate>
                                     <div class="card mb-3">
                                         <div class="card-body">
-                                            <% if (!HayComentarios)
-                                            { %>
-                                            <h5 class="card-title">Esta publicación no tiene comentarios, ¡sé el primero!</h5>
-                                            <% }
-                                            else
-                                            {
-%>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div>
+
+                                            <%--<div class="d-flex justify-content-between align-items-center">--%>
+                                                <div class="row">
+                                                <div class="col-md-2">
                                                     <h5 class="card-title"><%# Eval("NombreUsuario") %></h5>
+                                                </div>
+                                                <div class="col-md-2">
                                                     <p class="card-text"><small class="text-muted"><%# Eval("Fecha") %></small></p>
+                                                </div>
+                                                </div>
+                                                <div class="row">
                                                     <p class="card-text"><%# Eval("TextoComentario") %></p>
                                                 </div>
                                                 <%if (((Dominio.Usuario)Session["Usuario"]) != null && ((Dominio.Usuario)Session["Usuario"]).TipoUser.IDTipo != 1 ) { %>
@@ -167,8 +162,7 @@
                                                     <asp:Button ID="BtnBorrarComentario" runat="server" Text="x" OnClick="BtnBorrarComentario_Click" CssClass="btn btn-danger btn-sm"  CommandArgument='<%# ((Dominio.Comentario)Container.DataItem).IDComentario %>'/>
                                                 </div>
                                                 <%} %>
-                                            </div>
-                                            <% } %>
+                                            <%--</div>--%>
                                         </div>
                                     </div>
                                 </ItemTemplate>
@@ -176,15 +170,16 @@
                         </div>
 
                         <%if (Session["Usuario"] != null) { %>
+                        <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Hacer un comentario:</h3>
                                 <div class="form-group">
-                                    <asp:TextBox ID="txtComment" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="4"></asp:TextBox>
+                                    <asp:TextBox ID="txtComment" runat="server" CssClass="form-control" TextMode="MultiLine" Rows="2"></asp:TextBox>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <asp:Button ID="BtnComentar" runat="server" Text="Enviar Comentario" OnClienClick="guardarPosicionVentana()" OnClick="BtnComentar_Click" CssClass="btn btn-primary" />
+                                        <asp:Button ID="BtnComentar" runat="server" Text="Enviar Comentario" OnClienClick="guardarPosicionVentana()" OnClick="BtnComentar_Click" CssClass="btn btn-primary mt-2" />
                                     </div>
                                     <div>
                                         
@@ -192,10 +187,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card-body">
-                            <h3>Hacer un comentario:</h3>
-
                         </div>
                         <%} %>
                     </div>

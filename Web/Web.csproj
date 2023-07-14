@@ -90,6 +90,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="ControlVenta.aspx" />
     <Content Include="CrearCuenta.aspx" />
     <Content Include="DetalleProducto.aspx" />
     <Content Include="Domicilios.aspx" />
@@ -179,6 +180,13 @@
     </Compile>
     <Compile Include="CompraRealizada.aspx.designer.cs">
       <DependentUpon>CompraRealizada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ControlVenta.aspx.cs">
+      <DependentUpon>ControlVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlVenta.aspx.designer.cs">
+      <DependentUpon>ControlVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="CrearCuenta.aspx.cs">
       <DependentUpon>CrearCuenta.aspx</DependentUpon>

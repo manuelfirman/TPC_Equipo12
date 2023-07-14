@@ -163,13 +163,22 @@
                                             <li class="list-group-item">
                                                 <p><span class="fw-medium">Fecha: </span><%= UltimaCompra.Fecha.ToShortDateString() %></p>
                                                 <p><span class="fw-medium">Estado: </span><%= UltimaCompra.Estado.Estado %></p>
+                                                <% if (UltimaCompra.Estado.Estado == "PAGADO")
+                                                    {  %>
+                                                <p><span class="fw-medium">Codigo Pago: </span><%= UltimaCompra.CodigoPago  %></p>
+                                                <% }
+                                                    else if (UltimaCompra.Estado.Estado == "ENVIADO")
+                                                    { %>
+                                                <p><span class="fw-medium">Codigo Pago: </span><%= UltimaCompra.CodigoPago  %></p>
+                                                <p><span class="fw-medium">Codigo Seguimiento: </span><%= UltimaCompra.CodigoSeguimiento %></p>
+                                                <% } %>
                                                 <p><span class="fw-medium">Destino: </span><%= UltimaCompra.Usuario.Domicilios[0].Calle  %> <%= UltimaCompra.Usuario.Domicilios[0].Altura  %></p>
                                                 <p><span class="fw-medium">Precio Total: </span>$<%= Math.Round(UltimaCompra.Monto, 2) %></p>
                                             </li>
 
                                         </ul>
                                         <div class="mt-2">
-                                            <a href="MisCompras.aspx" class="btn btn-primary">Ver Detalle</a>
+                                            <a href="ControlVenta.aspx?Id=<%= UltimaCompra.IDVenta %>" class="btn btn-primary">Ver Detalle</a>
                                         </div>
                                     </div>
 
