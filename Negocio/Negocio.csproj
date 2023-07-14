@@ -52,6 +52,7 @@
     <Compile Include="BannerNegocio.cs" />
     <Compile Include="CarritoNegocio.cs" />
     <Compile Include="CategoriaNegocio.cs" />
+    <Compile Include="ChatNegocio.cs" />
     <Compile Include="ComentarioNegocio.cs" />
     <Compile Include="Crypt.cs" />
     <Compile Include="DomicilioNegocio.cs" />

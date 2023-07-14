@@ -18,7 +18,7 @@ namespace Web
         public Producto Producto { get; set; }
         private ProductoNegocio ProductoNegocioDetalle { get; set; }
         private ComentarioNegocio ComentarioNegocio { get; set; } = new ComentarioNegocio();
-        private List<Comentario> Comentarios { get; set; }
+        protected List<Comentario> Comentarios { get; set; }
 
         public DetalleProducto()
         {

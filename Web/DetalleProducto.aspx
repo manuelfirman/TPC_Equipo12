@@ -125,11 +125,7 @@
                                         <p>Categoria: <%=Producto.Categoria.Nombre %></p>
                                         <p>Codigo: <%=Producto.Codigo %></p>
                                     </li>
-                                    <li class="list-group-item">
-                                        <h5>Característica 3</h5>
-                                        <p>Descripción de la característica 3</p>
-                                    </li>
-                                    <!-- agregar -->
+
                                 </ul>
                             </div>
                         </div>
@@ -149,13 +145,7 @@
                                 <ItemTemplate>
                                     <div class="card mb-3">
                                         <div class="card-body">
-                                            <% if (!HayComentarios)
-                                            { %>
-                                            <h5 class="card-title">Esta publicación no tiene comentarios, ¡sé el primero!</h5>
-                                            <% }
-                                            else
-                                            {
-%>
+
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div>
                                                     <h5 class="card-title"><%# Eval("NombreUsuario") %></h5>
@@ -168,7 +158,6 @@
                                                 </div>
                                                 <%} %>
                                             </div>
-                                            <% } %>
                                         </div>
                                     </div>
                                 </ItemTemplate>
@@ -191,11 +180,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card-body">
-                            <h3>Hacer un comentario:</h3>
-
                         </div>
                         <%} %>
                     </div>
