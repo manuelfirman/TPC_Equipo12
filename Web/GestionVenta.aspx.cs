@@ -57,7 +57,7 @@ namespace Web
         {
             long estado = long.Parse(DDLEstadoVenta.SelectedItem.Value);
 
-            if(VentaNegocio.ModificarEstadoVenta(Venta.IDVenta, estado))
+            if (VentaNegocio.ModificarEstadoVenta(Venta.IDVenta, estado))
             {
                 lblMessageOk.Visible = true;
                 lblMessageOk.Text = "Estado modificado correctamente.";
@@ -68,7 +68,6 @@ namespace Web
                 lblMessageError.Visible = true;
                 lblMessageError.Text = "Error al modificar el estado de la venta.";
             }
-
         }
     }
 }

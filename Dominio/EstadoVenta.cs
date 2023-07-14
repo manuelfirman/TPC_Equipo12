@@ -10,5 +10,6 @@ namespace Dominio
     {
         public long IDEstado { get; set; }
         public string Estado { get; set; }
+        public bool Terminal { get; set; }
     }
 }
