@@ -74,7 +74,7 @@
                     </asp:Repeater>
                     <asp:Label ID="lblTotal" runat="server" Text=""></asp:Label>
                     <div class="text-center mt-2 mb-2">
-                        <asp:Button ID="btnAceptar" runat="server" Text="Ir al pago" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
+                        <asp:Button ID="btnAceptar" runat="server" Text="Ir a pagar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" />
                     </div>
                 </div>
 

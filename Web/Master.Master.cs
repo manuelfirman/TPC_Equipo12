@@ -140,5 +140,11 @@ namespace Web
                 return;
             }
         }
+
+        protected void BtnVaciar_Click(object sender, EventArgs e)
+        {
+            Session["Carrito"] = new CarritoNegocio();
+            Carrito = Session["Carrito"] as CarritoNegocio;
+        }
     }
 }

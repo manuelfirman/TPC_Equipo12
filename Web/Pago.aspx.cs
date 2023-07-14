@@ -54,6 +54,7 @@ namespace Web
 
             if (ventaNegocio.PagoVenta(IDVenta, tipoPago))
             {
+                Session["Carrito"] = new CarritoNegocio();
                 Response.Redirect("CompraRealizada.aspx");
             }
             else
