@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace Web
 {
-    public partial class ImaganesProducto : System.Web.UI.Page
+    public partial class GestionBanner : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -16,44 +16,8 @@
 
 </head>
 <body>
-    <style>
-    .square-button {
-        width: 20px;
-        height: 20px;
-        padding: 0;
-        line-height: 20px;
-        text-align: center;
-    }
-
-    .quantity-input {
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        padding: 0;
-        line-height: 30px;
-        text-align: center;
-        border: none;
-        background-color: transparent;
-        font-size: 12px; /* Ajusta el tamaño de la fuente según tus necesidades */
-    }
-
-    .heading-style {
-        font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 10px;
-        /* Agrega otros estilos personalizados aquí */
-    }
-
-    .btn-xs {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.75rem;
-        line-height: 1.5;
-        border-radius: 0.2rem;
-    }
-
-</style>
-    <form id="form1" runat="server">
+    <link href="Styles/home.css" rel="stylesheet" />
+    <form id="form1" runat="server"  class="position-relative">
 
 
         <!--NAVBAR-->
@@ -66,22 +30,27 @@
                 </button>
 
                 <!--LISTA DESPLEGABLE-->
-                <%if (HayUser) {  %>
-                    <%if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %> <!-- ADMIN || VENDEDOR-->
+                <%if (HayUser)
+                    {  %>
+                    <%if (Usuario.TipoUser != null && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3))
+                        { %> <!-- ADMIN || VENDEDOR-->
                         <div class="ml-auto ms-3">
                             <div class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administrar</a>
                                 <ul class="dropdown-menu">
-                                    <% if (Usuario.TipoUser.IDTipo == 3) { %>
+                                    <% if (Usuario.TipoUser.IDTipo == 3)
+                                        { %>
                                     <li><a class="dropdown-item" href="Admin.aspx">Panel de Administrador</a></li>
                                     <% } %>
                                     <li><a class="dropdown-item" href="Vendedor.aspx">Panel de Vendedor</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="Ventas.aspx">Gestionar Ventas</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="Marcas.aspx?Tipo=Agregar">Agregar Marcas</a></li>
                                     <li><a class="dropdown-item" href="Categorias.aspx?Tipo=Agregar">Agregar Categoria</a></li>
                                     <li><a class="dropdown-item" href="Productos.aspx?Tipo=Agregar">Agregar Producto</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#">Gestionar Promociones</a></li>
+                                    <li><a class="dropdown-item" href="GestionBanner.aspx">Gestionar Promociones</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -98,12 +67,14 @@
                 <a class="navbar-brand d-flex align-items-center mx-auto" href="Index.aspx">
                     <h1 class="logo m-0">E-12 STORE</h1>
                 </a>
-                <!-- BOTON PERFIL -->
+                <!-- BOTON PERFIL/INGRESAR -->
+                <% if (HayUser)
+                    { %>
                 <div class="ml-auto ms-3">
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user fa-xl" style="color: #1083d5;"></i>
-                            <span class="badge rounded-pill bg-danger text-white ms-1">Perfil</span>
+                            <span class="badge rounded-pill bg-danger text-white ms-1">PERFIL</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="PerfilUsuario.aspx">Ver Perfil</a></li>
@@ -111,20 +82,43 @@
                         </ul>
                     </div>
                 </div>
+                <% }
+                    else
+                    { %>
+                <div class="ml-auto ms-3">
+                    <a class="text-white" href="Ingresar.aspx" role="button">
+                        <span class="badge rounded-pill bg-danger text-white ms-1">Ingresar</span>
+                    </a>
+                </div>
+                <%} %>
 
-                <% if (HayUser && (Usuario.TipoUser.IDTipo == 2 || Usuario.TipoUser.IDTipo == 3)) { %>
-                        <button type="button" class="btn d-flex justify-content-center align-items-center"">
-                            <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
-                            <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
-                        </button>
-                    <% } %>
 
-                <% if(!HayUser || Usuario.TipoUser.IDTipo == 1) { %>
+                <!-- BOTON ADMIN/VENDEDOR -->
+                <% if (HayUser && (Usuario.TipoUser.Nombre == "Admin"))
+                    { %>
+                    <a href="Admin.aspx" class="btn d-flex justify-content-center align-items-center"" role="button">
+                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1">ADMIN</span>
+                    </a>
+
+                    <% }
+                        else if (HayUser && Usuario.TipoUser.Nombre == "Vendedor")
+                        { %>
+                    <a href="Vendedor.aspx" class="btn d-flex justify-content-center align-items-center"" role="button">
+                        <i class="fas fa-user-shield fa-xl" style="color: #1083d5;"></i>
+                        <span class="badge rounded-pill bg-danger text-white ms-1">VENDEDOR</span>
+                    </a>
+                    
+                <%} %>
+
+                <% if (!HayUser || Usuario.TipoUser.IDTipo == 1)
+                    { %>
                 <!--BOTON CARRITO-->
                     <button type="button" class="btn d-flex justify-content-center align-items-center" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCarrito" aria-controls="offcanvasCarrito" aria-label="Toggle navigation">
                         <i class="fa-solid fa-cart-shopping fa-xl" style="color: #1083d5;"></i>
                         <span class="badge rounded-pill bg-danger text-white ms-1"><%= CantidadCarrito() %></span>
                     </button>
+                
                 <%} %>
 
 
@@ -152,7 +146,10 @@
                                                         <p class=" text-muted" style="margin-bottom:0"><%# Container.ItemIndex + 1 %></p>
                                                     </div>
                                                     <div class="mr-3">
+                                                        <a href="DetalleProducto.aspx?Id=<%# ((Dominio.ElementoCarrito)Container.DataItem).Producto.IDProducto %>">
+
                                                         <img src='<%#((Dominio.ElementoCarrito)Container.DataItem).Producto.Imagenes[0].Url %>' class="img-thumbnail img-fluid" alt="Miniatura">
+                                                        </a>
                                                     </div>
                                             
                                                     <div class="flex-grow-1 text-start ms-lg-3">
@@ -183,7 +180,6 @@
                                 </asp:Repeater>
                             </div>
                         </div>
-
                         <% }
                             else
                             { %>
@@ -193,9 +189,12 @@
                         <% } %>
                     </div>
                     <div class="offcanvas-footer mb-2">
-                    <% if (Carrito.GetCantidad() > 0) { %>
+                    <% if (Carrito.GetCantidad() > 0)
+                        { %>
                         <div class="container">
-
+                            <div class="col-md-6 mb-2">
+                                <asp:Button ID="BtnVaciar"  runat="server" CssClass="btn btn-primary w-100 mt-3" Text="VaciarCarrito" OnClick="BtnVaciar_Click"/>
+                            </div>
                             <div class="border-top mb-3"></div>
                             <div class="row align-items-center">
                                 <div class="col">
@@ -206,12 +205,11 @@
                                 </div>
                             </div>
                             <div class="border-bottom mt-3"></div>
-
-
-
-                            <a href="Checkout.aspx" class="btn btn-primary w-100 mt-3">Comprar</a>
+                            <asp:Button ID="BtnComprar"  runat="server" CssClass="btn btn-primary w-100 mt-3" Text="Comprar" OnClick="BtnComprar_Click"/>
                         </div>
-                    <% } else { %>
+                    <% }
+                        else
+                        { %>
 
 
                     <%} %>
@@ -255,7 +253,8 @@
                         </ul>
                     </div>
                     <div class="offcanvas-footer">
-                        <% if (HayUser) { %>
+                        <% if (HayUser)
+                            { %>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="PerfilUsuario.aspx">MI PERFIL</a>
@@ -264,7 +263,9 @@
                                 <a class="nav-link" href="Index.aspx?salir=true">CERRAR SESIÓN</a>
                             </li>
                         </ul>
-                    <%} else { %>
+                    <%}
+                        else
+                        { %>
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
                                 <a class="nav-link" href="Ingresar.aspx">INGRESAR</a>
@@ -283,7 +284,9 @@
         </nav>
 
         <!--CONTENT-->
-
+        <div class="alert alert-primary position-absolute top-10 start-50" runat="server" visible="false" role="alert" id="alerta">
+                                Debe <a href="Ingresar.aspx" class="alert-link">Iniciar Sesión</a> o <a href="CrearCuenta.aspx" class="alert-link">Crear una cuenta</a>
+                            </div>
         <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
         </asp:ContentPlaceHolder>
 

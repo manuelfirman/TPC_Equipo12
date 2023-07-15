@@ -38,7 +38,7 @@ namespace Negocio
             List<Marca> lista = new List<Marca>();
             try
             {
-                Database.StoreProcedure("SP_MarcasRandom");
+                Database.SetQuery("SELECT TOP (@Cantidad) M.ID_Marca, M.Nombre, M.Estado FROM Marcas M ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -105,10 +105,10 @@ namespace Negocio
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                return false;
             }
             finally
             {
@@ -128,10 +128,10 @@ namespace Negocio
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                return false;
             }
             finally
             {
@@ -151,10 +151,10 @@ namespace Negocio
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                return false;
             }
             finally
             {
@@ -172,10 +172,10 @@ namespace Negocio
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                return false;
             }
             finally
             {

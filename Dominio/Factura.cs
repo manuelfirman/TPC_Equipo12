@@ -12,10 +12,5 @@ namespace Dominio
         public bool Pago { get; set; }
         public bool Cancelada { get; set; }
         public List<ElementoCarrito> Productos { get; set; }
-
-        public Factura()
-        {
-            Productos = new List<ElementoCarrito>();
-        }
     }
 }

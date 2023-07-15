@@ -87,7 +87,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesAlAzar");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -122,7 +122,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesRandomPorCategoria");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE C.Nombre = @Categoria ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.SetParam("@Categoria", categoria);
                 Database.Read();
@@ -157,7 +157,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ImagenesRandomPorMarca");
+                Database.SetQuery("SELECT TOP (@Cantidad) I.ID_Producto, I.ID_Imagen, I.ImagenURL, I.Descripcion, I.Estado FROM Imagenes I INNER JOIN Productos P ON I.ID_Producto = P.ID_Producto INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca WHERE M.Nombre = @Marca ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.SetParam("@Marca", marca);
                 Database.Read();
@@ -187,28 +187,20 @@ namespace Negocio
         public bool Guardar(Imagen imagen)
         {
             Database = new NegocioDB();
-            long IDProducto;
-            string urlImagen;
-            string descripcion;
-            bool estado;
-            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion, Estado) VALUES(@IDProducto, @ImagenURL, @Descripcion, @Estado)";
+
+            string query = $"INSERT INTO IMAGENES(ID_Producto, ImagenURL, Descripcion) VALUES(@IDProducto, @ImagenURL, @Descripcion)";
             try
             {
-                IDProducto = imagen.IDProducto;
-                urlImagen = imagen.Url;
-                descripcion = imagen.Descripcion;
-                estado = imagen.Estado;
                 Database.SetQuery(query);
-                Database.SetParam("@IDProducto", IDProducto);
-                Database.SetParam("@ImagenURL", urlImagen);
-                Database.SetParam("@Descripcion", descripcion);
-                Database.SetParam("@Estado", estado);
+                Database.SetParam("@IDProducto", imagen.IDProducto);
+                Database.SetParam("@ImagenURL", imagen.Url);
+                Database.SetParam("@Descripcion", imagen.Descripcion);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -232,8 +224,7 @@ namespace Negocio
             }
             catch (Exception)
             {
-
-                throw;
+                return false;
             }
             finally
             {
@@ -253,9 +244,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {

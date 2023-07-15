@@ -16,7 +16,7 @@ namespace Negocio
         {
             Database = new NegocioDB();
             List<Categoria> categorias = new List<Categoria>();
-            Database.StoreProcedure("SP_ListarCategorias");
+            Database.SetQuery("SELECT C.ID_Categoria, C.Nombre, C.Estado FROM Categorias AS C");
             Database.Read();
             while (Database.Reader.Read())
             {
@@ -38,7 +38,7 @@ namespace Negocio
             Categoria auxCategoria;
             try
             {
-                Database.StoreProcedure("SP_CategoriasRandom");
+                Database.SetQuery("SELECT TOP (@Cantidad) C.ID_Categoria, C.Nombre, C.Estado FROM Categorias C ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -104,9 +104,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -127,9 +127,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -148,9 +148,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {
@@ -168,9 +168,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                return false;
             }
             finally
             {

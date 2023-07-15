@@ -46,6 +46,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -66,8 +69,11 @@
   <ItemGroup>
     <Content Include="404.aspx" />
     <Content Include="Admin.aspx" />
+    <Content Include="Banner.aspx" />
+    <Content Include="CambiarContraseña.aspx" />
     <Content Include="Categorias.aspx" />
     <Content Include="Checkout.aspx" />
+    <Content Include="CompraRealizada.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -84,16 +90,21 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="ControlVenta.aspx" />
     <Content Include="CrearCuenta.aspx" />
     <Content Include="DetalleProducto.aspx" />
+    <Content Include="Domicilios.aspx" />
     <Content Include="Filtro.aspx" />
+    <Content Include="GestionBanner.aspx" />
+    <Content Include="GestionVenta.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="ImaganesProducto.aspx" />
     <Content Include="Imagenes.aspx" />
     <Content Include="Index.aspx" />
     <Content Include="Ingresar.aspx" />
     <Content Include="Marcas.aspx" />
+    <Content Include="MisCompras.aspx" />
     <Content Include="ModificarUsuario.aspx" />
+    <Content Include="Pago.aspx" />
     <Content Include="PerfilUsuario.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="RecuperarContraseña.aspx" />
@@ -103,12 +114,21 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="WebService1.asmx" />
+    <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.7.0.js" />
+    <Content Include="Scripts\jquery-3.7.0.min.js" />
+    <Content Include="Scripts\jquery-3.7.0.slim.js" />
+    <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
     <Content Include="Scripts\modalDetalle.js" />
     <Content Include="Scripts\scrollPosition.js" />
     <Content Include="Styles\canvas.css" />
     <Content Include="Styles\carrito.css" />
+    <Content Include="Styles\formulario.css" />
     <Content Include="Styles\home.css" />
+    <Content Include="UsuariosAdmin.aspx" />
     <Content Include="Vendedor.aspx" />
+    <Content Include="Ventas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +146,20 @@
     <Compile Include="Admin.aspx.designer.cs">
       <DependentUpon>Admin.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Banner.aspx.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Banner.aspx.designer.cs">
+      <DependentUpon>Banner.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CambiarContraseña.aspx.cs">
+      <DependentUpon>CambiarContraseña.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CambiarContraseña.aspx.designer.cs">
+      <DependentUpon>CambiarContraseña.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Categorias.aspx.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -139,6 +173,20 @@
     </Compile>
     <Compile Include="Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CompraRealizada.aspx.cs">
+      <DependentUpon>CompraRealizada.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompraRealizada.aspx.designer.cs">
+      <DependentUpon>CompraRealizada.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ControlVenta.aspx.cs">
+      <DependentUpon>ControlVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ControlVenta.aspx.designer.cs">
+      <DependentUpon>ControlVenta.aspx</DependentUpon>
     </Compile>
     <Compile Include="CrearCuenta.aspx.cs">
       <DependentUpon>CrearCuenta.aspx</DependentUpon>
@@ -154,6 +202,13 @@
     <Compile Include="DetalleProducto.aspx.designer.cs">
       <DependentUpon>DetalleProducto.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Domicilios.aspx.cs">
+      <DependentUpon>Domicilios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Domicilios.aspx.designer.cs">
+      <DependentUpon>Domicilios.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Filtro.aspx.cs">
       <DependentUpon>Filtro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -161,15 +216,22 @@
     <Compile Include="Filtro.aspx.designer.cs">
       <DependentUpon>Filtro.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="ImaganesProducto.aspx.cs">
-      <DependentUpon>ImaganesProducto.aspx</DependentUpon>
+    <Compile Include="GestionBanner.aspx.cs">
+      <DependentUpon>GestionBanner.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ImaganesProducto.aspx.designer.cs">
-      <DependentUpon>ImaganesProducto.aspx</DependentUpon>
+    <Compile Include="GestionBanner.aspx.designer.cs">
+      <DependentUpon>GestionBanner.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestionVenta.aspx.cs">
+      <DependentUpon>GestionVenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestionVenta.aspx.designer.cs">
+      <DependentUpon>GestionVenta.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Imagenes.aspx.cs">
       <DependentUpon>Imagenes.aspx</DependentUpon>
@@ -206,12 +268,26 @@
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
     </Compile>
+    <Compile Include="MisCompras.aspx.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MisCompras.aspx.designer.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ModificarUsuario.aspx.cs">
       <DependentUpon>ModificarUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="ModificarUsuario.aspx.designer.cs">
       <DependentUpon>ModificarUsuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pago.aspx.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pago.aspx.designer.cs">
+      <DependentUpon>Pago.aspx</DependentUpon>
     </Compile>
     <Compile Include="PerfilUsuario.aspx.cs">
       <DependentUpon>PerfilUsuario.aspx</DependentUpon>
@@ -235,12 +311,30 @@
     <Compile Include="RecuperarContraseña.aspx.designer.cs">
       <DependentUpon>RecuperarContraseña.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UsuariosAdmin.aspx.cs">
+      <DependentUpon>UsuariosAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UsuariosAdmin.aspx.designer.cs">
+      <DependentUpon>UsuariosAdmin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vendedor.aspx.cs">
       <DependentUpon>Vendedor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vendedor.aspx.designer.cs">
       <DependentUpon>Vendedor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ventas.aspx.cs">
+      <DependentUpon>Ventas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ventas.aspx.designer.cs">
+      <DependentUpon>Ventas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebService1.asmx.cs">
+      <DependentUpon>WebService1.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +362,8 @@
     <Content Include="Scripts\bootstrap.esm.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.7.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

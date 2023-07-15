@@ -79,10 +79,6 @@ namespace Web
             rptModal.DataBind();
         }
 
-        public void MostrarCarrito()
-        {
-
-        }
 
         protected void BtnEliminar_Click(object sender, EventArgs e)
         {
@@ -128,6 +124,27 @@ namespace Web
             {
                 Response.Redirect($"Filtro.aspx?Filtro=Busqueda&Busqueda={busqueda}");
             }
+        }
+
+        protected void BtnComprar_Click(object sender, EventArgs e)
+        {
+
+            if(Usuario != null)
+            {
+                Response.Redirect("Checkout.aspx");
+                return;
+            }
+            else
+            {
+                alerta.Visible = true;
+                return;
+            }
+        }
+
+        protected void BtnVaciar_Click(object sender, EventArgs e)
+        {
+            Session["Carrito"] = new CarritoNegocio();
+            Carrito = Session["Carrito"] as CarritoNegocio;
         }
     }
 }

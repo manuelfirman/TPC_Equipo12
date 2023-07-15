@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,32 +11,51 @@ namespace Web
 {
     public partial class PerfilUsuario : System.Web.UI.Page
     {
-        protected Usuario Usuario { get; set; }
-        private bool HayDomicilio { get; set; }
+        protected Usuario UsuarioSession { get; set; }
+        protected Venta UltimaCompra { get; set; }
+        private UsuarioNegocio UsuarioNegocio { get; set; } = new UsuarioNegocio();
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Usuario = Session["Usuario"] as Usuario;
-            if (Usuario == null) Response.Redirect("Ingresar.aspx");
-            if (Usuario.Domicilio != null) HayDomicilio = true;
+            UsuarioSession = Session["Usuario"] as Usuario;
+            if (UsuarioSession == null) Response.Redirect("Ingresar.aspx");
 
             if (!IsPostBack)
             {
-                rptUsuario.DataSource = new List<Usuario> { Usuario };
-                rptUsuario.DataBind();
+                if (UsuarioSession.TipoUser.Nombre == "Vendedor" || UsuarioSession.TipoUser.Nombre == "Admin")
+                {
+                    string parametro = Request.QueryString["Id"];
+                    if (!string.IsNullOrEmpty(parametro))
+                    {
+                        Usuario user = UsuarioNegocio.UsuarioPorID(long.Parse(parametro));
+                        rptUsuario.DataSource = new List<Usuario> { user };
+                        rptUsuario.DataBind();
+                        CargarUltimaCompra(user.IDUsuario);
+                    }
+                    else
+                    {
+                        rptUsuario.DataSource = new List<Usuario> { UsuarioSession };
+                        rptUsuario.DataBind();
+                        CargarUltimaCompra(UsuarioSession.IDUsuario);
+                    }
+                }
+                else if (UsuarioSession != null)
+                {
+                    rptUsuario.DataSource = new List<Usuario> { UsuarioSession };
+                    rptUsuario.DataBind();
+                    CargarUltimaCompra(UsuarioSession.IDUsuario);
+                }
+                else
+                {
+                    Response.Redirect("Ingresar.aspx");
+                }
+
             }
-
         }
 
-
-        protected void BtnGuardarDatosPersonales_Click(object sender, EventArgs e)
+        public void CargarUltimaCompra(long IDUsuario)
         {
-
-        }
-
-        protected void BtnGuardarDomicilio_Click(object sender, EventArgs e)
-        {
-
+            UltimaCompra = UsuarioNegocio.UltimaCompra(IDUsuario);
         }
     }
 }

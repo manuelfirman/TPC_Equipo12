@@ -2,17 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-        <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-    </style>
+    <link href="Styles/formulario.css" rel="stylesheet" />
+
     <div class="container min-vh-100">
         <div class="container login-container">
             <h2 class="text-center mb-4">Iniciar Sesión</h2>
@@ -38,7 +29,7 @@
 
             <div class="text-center">
                 <asp:Button ID="btnOlvidePass" runat="server" Text="Olvide mi contraseña" CssClass="nav-link text-primary" OnClick="btnOlvidePass_Click" />
-                <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="nav-link text-primary" OnClick="btnRegistrarse_Click" />
+                <asp:Button ID="btnRegistrarse" runat="server" Text="Registrarse" CssClass="nav-link text-primary mt-1" OnClick="btnRegistrarse_Click" />
             </div>
 
 

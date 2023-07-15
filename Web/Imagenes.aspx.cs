@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static System.Net.WebRequestMethods;
 
 namespace Web
 {
@@ -16,6 +17,7 @@ namespace Web
         private long id;
         private Imagen imagen = new Imagen();
         private ImagenNegocio imagenNegocio = new ImagenNegocio();
+        private List<Imagen> imagenes = new List<Imagen>();
         private Usuario usuario = new Usuario();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,11 +40,21 @@ namespace Web
                     DRPEstado.Items.Add(item);
                     if (tipo == "Modificar")
                     {
-                        id = long.Parse(Request.QueryString["Id"]);
-                        imagen = imagenNegocio.ImagenPorId(id);
-                        txtDesc.Value = imagen.Descripcion;
-                        string estadoActual = imagen.Estado == true ? "Activada" : "Desactivada";
-                        lblEstado.InnerText = $"Estado Actual: {estadoActual}";
+                        DRPUrls.Visible = true;
+                        lblUrls.Visible = true;
+                        ImgUrl.Visible = true;
+                        imagenes = imagenNegocio.ImagenesProducto(long.Parse(Request.Params["Id"]));
+                        ImgUrl.ImageUrl = imagenes[0].Url;
+                        txtDesc.Value = imagenes[0].Descripcion;
+                        int indice = 1;
+                        foreach(var imagen in imagenes)
+                        {
+                            //item = new ListItem(imagen.Url, $"{indice}");
+                            item = new ListItem($"Imagen {indice}", $"{indice}");
+                            item.Value = $"{imagen.Url},{imagen.IDImagen}";
+                            DRPUrls.Items.Add(item);
+                            indice++;
+                        }
                         btnAceptar.Text = "Modificar Imagen";
                     }
                     else
@@ -87,7 +99,7 @@ namespace Web
                 imagen = imagenNegocio.ImagenPorId(id);
                 string desc = txtDesc.Value;
                 bool estado = DRPEstado.SelectedItem.ToString() == "Activado" ? true : false;
-                long idImg = imagen.IDImagen;
+                long idImg = long.Parse(DRPUrls.SelectedValue.Split(',')[1]);
                 if (imagenNegocio.Modificar(idImg, desc, estado))
                 {
                     lblMessageOk.Visible = true;
@@ -101,6 +113,25 @@ namespace Web
             }
 
 
+        }
+
+        protected void DRPUrls_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            long id = long.Parse(DRPUrls.SelectedValue.Split(',')[1]);
+            imagen = imagenNegocio.ImagenPorId(id) ;
+            txtDesc.Value = imagen.Descripcion;
+            txtUrl.Value = imagen.Url;
+            string estadoActual = imagen.Estado == true ? "Activada" : "Desactivada";
+            lblEstado.InnerText = $"Estado Actual: {estadoActual}";
+            string url = txtUrl.Value;
+            if (imagenNegocio.VerificarUrlImagen(url))
+            {
+                ImgUrl.ImageUrl = url;
+            }
+            else
+            {
+                ImgUrl.ImageUrl = "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg";
+            }
         }
     }
 }

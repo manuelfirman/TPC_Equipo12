@@ -2,17 +2,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-    </style>
+    <link href="Styles/formulario.css" rel="stylesheet" />
+
     <div class="container min-vh-100">
         <div class="container login-container">
             <h2 class="text-center mb-4">Crear Cuenta</h2>
@@ -38,7 +29,6 @@
                 <input type="text" class="form-control" id="txtEmail" runat="server" />
             </div>
 
-
             <div class="mb-3">
                 <label for="txtPassword" class="form-label">Contraseña:</label>
                 <input type="password" class="form-control" id="txtPassword" runat="server" />
@@ -49,10 +39,25 @@
                 <input type="password" class="form-control" id="txtConfirmarPassword" runat="server" />
             </div>
 
+            <% if (usuario != null && usuario.TipoUser.Nombre == "Admin") { %>
+            <div class="row mb-3">
+                <div class="col-md-6">
 
+                    <label class="form-label" runat="server" id="lblEstado">Estado:</label>
+                    <asp:DropDownList CssClass="form-select" ID="DRPEstado" runat="server">
+                    </asp:DropDownList>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label" runat="server" id="lblTipoUsuario">Rol de usuario</label>
+                    <asp:DropDownList CssClass="form-select" ID="DRPTipoUsuario" runat="server">
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <% } %>
 
             <div class="text-center mt-2 mb-2">
-                <asp:Button ID="btnCrear" runat="server" Text="Iniciar Sesión" CssClass="btn btn-primary" OnClick="btnCrear_Click" />
+                <asp:Button ID="btnCrear" runat="server" Text="Registrar" CssClass="btn btn-primary" OnClick="btnCrear_Click" />
             </div>
 
             <div class="text-center">

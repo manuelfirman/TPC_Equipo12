@@ -4,210 +4,201 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
-
         <asp:Repeater ID="rptUsuario" runat="server">
             <ItemTemplate>
-                <h2 class="text-bg-primary text-center">PERFIL DE <%# ((Dominio.Usuario)Container.DataItem).Nombre.ToUpper() %></h2>
-                <div class="row">
-                    <div class="col-md-6 mt-5">
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
-                            <h4 class="text-primary">Datos Personales</h4>
-                            <div class="form-group">
-                                <label>Nombre:</label>
-                                <span id="spnNombre" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Nombre %> <%# ((Dominio.Usuario)Container.DataItem).Apellido %></span>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <h5 class="">Perfil</h5>
+                                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg" alt="Imagen de perfil" class="rounded-circle img-thumbnail">
+                                <h4 class="mt-3"><%# ((Dominio.Usuario)Container.DataItem).Nombre.ToUpper() %></h4>
                             </div>
-                            <div class="form-group">
-                                <label>Email:</label>
-                                <span id="spnEmail" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Email %></span>
-                            </div>
-                            <div class="form-group">
-                                <label>DNI:</label>
-                                <span id="spnDni" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).DNI %></span>
-                            </div>
-                             <div class="form-group">
-                                <label>Telefono:</label>
-                                <span id="spnTelefono" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
-                            </div> 
-                             <div class="form-group">
-                                <label>Fecha de Nacimiento:</label>
-                                <span id="spnNacimiento" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToString() %></span>
-                            </div>
-                            <div class="form-group">
-                                <a href="ModificarUsuario.aspx?Id=<%# ((Dominio.Usuario)Container.DataItem).IDUsuario %>">
-                                    <button type="button" class="btn btn-primary">Actualizar datos personales</button>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+
+                                <!--DATOS DOMICILIO-->
+                                <% if (UsuarioSession.Domicilios.Count > 0 && UsuarioSession.Domicilios != null)
+                                    { %>
+                                <h5 class="card-title">Información de Envío</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Alias:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Alias : "Casa" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Dirección:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? $"{((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Calle} {((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Altura}, {((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Localidad}": "Sin cargar" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Ubicacion:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? $"{((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Provincia}, Argentina." : "Sin cargar" %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Codigo Postal:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().CodigoPostal : "Sin cargar"%></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Piso:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Piso : "Sin cargar"%></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Referencia:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Domicilios.Any() ? ((Dominio.Usuario)Container.DataItem).Domicilios.FirstOrDefault().Referencia : "Sin cargar"%></span>
+                                    </li>
+                                </ul>
+                                <a href="Domicilios.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
+                                    <button type="button" class="btn btn-sm btn-dark">Modificar Información</button>
                                 </a>
-                                <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario">Actualizar datos personales</button>--%>
+
+                                <%}
+                                    else
+                                    { %>
+                                <h5 class="card-title">Información de Envío</h5>
+                                <ul class="list-group list-group-flush mt-4">
+                                    <span class="float-end mb-3">Aún no has cargado datos de tu direccion</span>
+                                    <a href="Domicilios.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
+                                        <button type="button" class="btn btn-primary">Agregar dirección</button>
+                                    </a>
+                                </ul>
+                                <%} %>
                             </div>
                         </div>
 
-                        <!--DATOS DOMICILIO-->
-                        <% if (Usuario.Domicilio != null) { %>
-                        
-                        <div class="card card-body bg-dark text-light mb-1 mx-1">
-                            <h4 class="text-primary">Dirección - <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Alias %></h4>
-                            <div class="form-group">
-                                <label>Provincia:</label>
-                                <span id="spnProvincia" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Provincia.Nombre %></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Localidad:</label>
-                                <span id="spnLocalidad" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Localidad%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Código Postal:</label>
-                                <span id="spnCP" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.CodigoPostal%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Piso:</label>
-                                <span id="spnPiso" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Piso%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Referencia:</label>
-                                <span id="spnReferencia" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Referencia%></span>
-                            </div>
-                            <div class="form-group">
-                                <label>Domicilio:</label>
-                                <span id="spnCalle" class="form-control-static"><%# ((Dominio.Usuario)Container.DataItem).Domicilio.Calle %> <%# ((Dominio.Usuario)Container.DataItem).Domicilio.Altura %></span>
-                            </div>  
-                            <div class="form-group">
-                                <%--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarDomicilio">Actualizar Domicilio</button>--%>
+                        <div class="card">
+                            <div class="card-body">
+                                <a href="MisCompras.aspx">
+                                    <button type="button" class="btn btn-primary btn-lg">Mis compras</button>
+                                </a>
                             </div>
                         </div>
 
-                        <%} %>
                     </div>
+
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Datos Personales</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Nombre:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Nombre %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Apellido:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Apellido %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Email:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Email %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">DNI:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).DNI %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Teléfono:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).Telefono %></span>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="fw-bold">Fecha de Nacimiento:</span>
+                                        <span class="float-end"><%# ((Dominio.Usuario)Container.DataItem).FechaNacimiento.ToShortDateString() %></span>
+                                    </li>
+                                </ul>
+                                <a href="ModificarUsuario.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
+                                    <button type="button" class="btn btn-sm btn-success mt-3 fw-bold">Actualizar datos personales</button>
+                                </a>
+                                <a href="CambiarContraseña.aspx<%# UsuarioSession.TipoUser.Nombre == "Admin" ? $"?Id={((Dominio.Usuario)Container.DataItem).IDUsuario}" : "" %>">
+                                    <button type="button" class="btn btn-sm btn-primary mt-3 fw-bold">Cambiar contraseña</button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Última Compra</h5>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <%if (UltimaCompra.Factura.Productos != null)
+                                            { %>
+                                        <div id="carouselProducto" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <%for (int i = 0; i < UltimaCompra.Factura.Productos.Count; i++)
+                                                    { %>
+
+                                                <div class="carousel-item <%= (i == 0) ? "active" : "" %>">
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modalImagen" data-bs-img='<%=UltimaCompra.Factura.Productos[i].Producto.Imagenes.FirstOrDefault().Url %>'>
+                                                        <img src="<%= UltimaCompra.Factura.Productos[i].Producto.Imagenes.FirstOrDefault().Url %>" class="d-block w-100" alt="imagen producto">
+                                                    </a>
+                                                </div>
+                                                <% }%>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselProducto" role="button" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselProducto" role="button" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <h6>Productos</h6>
+                                                <%foreach (Dominio.ElementoCarrito elemento in UltimaCompra.Factura.Productos)
+                                                    { %>
+                                                <p><%= elemento.Producto.Nombre %></p>
+                                                <%}  %>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <p><span class="fw-medium">Fecha: </span><%= UltimaCompra.Fecha.ToShortDateString() %></p>
+                                                <p><span class="fw-medium">Estado: </span><%= UltimaCompra.Estado.Estado %></p>
+                                                <% if (UltimaCompra.Estado.Estado == "PAGADO")
+                                                    {  %>
+                                                <p><span class="fw-medium">Codigo Pago: </span><%= UltimaCompra.CodigoPago  %></p>
+                                                <% }
+                                                    else if (UltimaCompra.Estado.Estado == "ENVIADO")
+                                                    { %>
+                                                <p><span class="fw-medium">Codigo Pago: </span><%= UltimaCompra.CodigoPago  %></p>
+                                                <p><span class="fw-medium">Codigo Seguimiento: </span><%= UltimaCompra.CodigoSeguimiento %></p>
+                                                <% } %>
+                                                <p><span class="fw-medium">Destino: </span><%= UltimaCompra.Usuario.Domicilios[0].Calle  %> <%= UltimaCompra.Usuario.Domicilios[0].Altura  %></p>
+                                                <p><span class="fw-medium">Precio Total: </span>$<%= Math.Round(UltimaCompra.Monto, 2) %></p>
+                                            </li>
+
+                                        </ul>
+                                        <div class="mt-2">
+                                            <a href="ControlVenta.aspx?Id=<%= UltimaCompra.IDVenta %>" class="btn btn-primary">Ver Detalle</a>
+                                        </div>
+                                    </div>
+
+                                    <% }
+                                        else
+                                        { %>
+                                    <p>No has realizado ninguna compra</p>
+                                    <a href="Index.aspx" class="btn btn-primary">Ir a comprar</a>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </ItemTemplate>
         </asp:Repeater>
-
-
-
-       <%-- <!-- MODAL DATOS PERSONALES -->
-        <div class="modal fade" id="modalModificarUsuario" tabindex="-1" aria-labelledby="modalModificarUsuarioLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalModificarUsuarioLabel">Modificar Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkNombre" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblNombre" runat="server" Text="Nombre:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Ingrese el nombre" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkApellido" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblApellido" runat="server" Text="Apellido:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" placeholder="Ingrese el apellido" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkDNI" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblDNI" runat="server" Text="DNI:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtDNI" runat="server" CssClass="form-control" placeholder="Ingrese el DNI" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkTelefono" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblTelefono" runat="server" Text="Telefono:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" placeholder="Ingrese el Telefono" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkNacimiento" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblNacimiento" runat="server" Text="Fecha de nacimiento:" CssClass="form-label me-2"></asp:Label>
-                            <asp:Calendar ID="calFechaNacimiento" runat="server"></asp:Calendar>
-                        </div>
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="BtnGuardarDatosPersonales" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="BtnGuardarDatosPersonales_Click" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MODAL DOMICILIO -->
-        <div class="modal fade" id="modalModificarDomicilio" tabindex="-1" aria-labelledby="modalModificarUsuarioLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalModificarDomicilioLabel">Modificar Usuario</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkCalle" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblCalle" runat="server" Text="Calle:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtCalle" runat="server" CssClass="form-control" placeholder="Ingrese la Calle" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkAltura" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblAltura" runat="server" Text="Altura:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtAltura" runat="server" CssClass="form-control" placeholder="Ingrese la Altura" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkPiso" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblPiso" runat="server" Text="Piso:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtPiso" runat="server" CssClass="form-control" placeholder="Ingrese el Piso" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkReferencia" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblReferencia" runat="server" Text="Referencia:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtReferencia" runat="server" CssClass="form-control" placeholder="Ingrese la Referencia" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkProvincia" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblProvincia" runat="server" Text="Provincia:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtProvincia" runat="server" CssClass="form-control" placeholder="Ingrese la provincia" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkLocalidad" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblLocalidad" runat="server" Text="Localidad:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtLocalidad" runat="server" CssClass="form-control" placeholder="Ingrese la Localidad" />
-                        </div>
-                        <div class="form-check  flex-row align-items-center">
-                            <asp:CheckBox ID="chkCodigoPostal" runat="server" Text="" CssClass="" onchange="" />
-                            <asp:Label ID="lblCodigoPostal" runat="server" Text="Localidad:" CssClass="form-label me-2"></asp:Label>
-                            <asp:TextBox ID="txtCodigoPostal" runat="server" CssClass="form-control" placeholder="Ingrese el CodigoPostal" />
-                        </div>
-
-                       
-                    </div>
-                    <div class="modal-footer">
-                        <asp:Button ID="BtnGuardarDomicilio" runat="server" Text="Guardar" CssClass="btn btn-primary" OnClick="BtnGuardarDomicilio_Click" />
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>--%>
-
-
-
-
-
-        <div class="col-md-6 mt-lg-5">
-            <h3>Historial de Compras</h3>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Producto</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01/05/2023</td>
-                        <td>Producto 1</td>
-                        <td>$50.00</td>
-                    </tr>
-                    <tr>
-                        <td>02/05/2023</td>
-                        <td>Producto 2</td>
-                        <td>$35.00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="row my-5"></div>
     </div>
 
 </asp:Content>

@@ -13,7 +13,12 @@ namespace Negocio
 
         public int GetCantidad()
         {
-            return Carrito.Elementos.Count;
+            int cantidad = 0;
+            foreach(ElementoCarrito elemento in Carrito.Elementos)
+            {
+                cantidad += elemento.Cantidad;
+            }
+            return cantidad;
         }
 
         public List<Producto> GetProductos()

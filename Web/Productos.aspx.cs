@@ -15,11 +15,12 @@ namespace Web
     {
         private string tipo;
         private string id;
-        private Producto producto = new Producto();
+        protected Producto producto = new Producto();
         private Usuario usuario = new Usuario();
         private ProductoNegocio productoNegocio = new ProductoNegocio();
         private MarcaNegocio marcaNegocio = new MarcaNegocio();
         private CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+        private ImagenNegocio imagenNegocio = new ImagenNegocio();
         public List<Marca> marcas { get; set; }
         public List<Categoria> categorias { get; set; }
         public bool estado { get; set; }
@@ -28,7 +29,6 @@ namespace Web
         {
             marcas = new List<Marca>();
             categorias = new List<Categoria>();
-
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -87,6 +87,8 @@ namespace Web
                         string estadoActual = producto.Estado == true ? "Activado" : "Desactivado";
                         lblEstado.InnerText = $"Estado actual: {estadoActual}";
                         txtTitulo.InnerText = "Modificar Producto";
+                        BtnAgrearImagen.Visible = true;
+                        BtnModificarImagen.Visible = true;
                     }
                     else
                     {
@@ -95,6 +97,9 @@ namespace Web
                         lblMarca.InnerText = "Marca:";
                         lblEstado.InnerText = $"Estado:";
                         btnAgregar.Text = "Agregar Producto";
+                        lblUrl.Visible = true;
+                        txtUrl.Visible = true;
+                        txtInfo.Visible = true;
                     }
                 }
             }
@@ -126,11 +131,34 @@ namespace Web
             if (tipo == "Agregar")
             {
 
-                bool ok = productoNegocio.AgregarProducto(producto);
-                if (ok)
+                long id = productoNegocio.AgregarProducto(producto);
+                if (id != -1)
                 {
+                    if (txtUrl.Value != "")
+                    {
+                        int cantidadUrls = txtUrl.Value.Split(',').Length;
+                        int okimg = 0;
+                        for (int i = 0; i < cantidadUrls; i++)
+                        {
+                            Imagen imagenAux = new Imagen();
+                            imagenAux.IDProducto = id;
+                            imagenAux.Url = txtUrl.Value.Split(',')[i];
+                            imagenAux.Descripcion = imagenAux.Descripcion == null ? "" : imagenAux.Descripcion;
+                            okimg = imagenNegocio.Guardar(imagenAux) ? okimg + 1 : okimg;
+                        }
+                        
+                        if (okimg != cantidadUrls)
+                        {
+                            lblMessageError.Visible = true;
+                            lblMessageError.Text = "Hubo un error al guardar las imagenes, el producto se guardo correctamente, para agregar imagenes dirigase a 'Modificar Productos' ";
+                        }
+                    }
+                    lblMessageError.Visible = false;
                     lblMessageOk.Visible = true;
                     lblMessageOk.Text = "Producto agregado correctamente";
+                    lblMessageRedirect.Visible = true;
+                    lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                    Redireccion("Vendedor");
                     return;
                 }
                 lblMessageError.Visible = true;
@@ -144,6 +172,9 @@ namespace Web
                 {
                     lblMessageOk.Visible = true;
                     lblMessageOk.Text = "Producto Modificado correctamente";
+                    lblMessageRedirect.Visible = true;
+                    lblMessageRedirect.Text = "Redireccionando en 3 segundos...";
+                    Redireccion("Vendedor");
                     return;
                 }
                 lblMessageError.Visible = true;
@@ -151,14 +182,22 @@ namespace Web
             }
         }
 
-        protected void Unnamed_Click(object sender, EventArgs e)
+        protected void Redireccion(string pagina)
         {
-
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 3000);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
         }
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
+        protected void BtnAgrearImagen_Click(object sender, EventArgs e)
         {
+            string IDProducto = Request.Params["Id"];
+            Response.Redirect($"Imagenes.aspx?Tipo=Agregar&Id={IDProducto}");
+        }
 
+        protected void BtnModificarImagen_Click(object sender, EventArgs e)
+        {
+            string IDProducto = Request.Params["Id"];
+            Response.Redirect($"Imagenes.aspx?Tipo=Modificar&Id={IDProducto}");
         }
     }
 }

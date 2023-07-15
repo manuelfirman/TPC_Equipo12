@@ -3,17 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <style>
-        .login-container {
-            max-width: 400px;
-            margin: 0 auto;
-            margin-top: 100px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-    </style>
+    <link href="Styles/formulario.css" rel="stylesheet" />
+
     <div class="container min-vh-100 mb-5">
         <div class="container login-container">
             <h2 class="text-center mb-4" id="txtTitulo" runat="server"></h2>
@@ -21,6 +12,9 @@
             <div class="text-center m-4">
                 <asp:Label ID="lblMessageError" runat="server" CssClass="alert alert-danger" role="alert" Visible="false"></asp:Label>
                 <asp:Label ID="lblMessageOk" runat="server" CssClass="alert alert-success" role="alert" Visible="false"></asp:Label>
+            </div>
+            <div class="text-center m-4">
+                <asp:Label ID="lblMessageRedirect" runat="server" CssClass="alert- alert-info" role="alert" Visible="false"></asp:Label>
             </div>
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">Nombre Marca:</label>
@@ -35,6 +29,7 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAgregar_Click" />
+                <a href="Vendedor.aspx" class="btn btn-danger">Cancelar</a>
             </div>
 
 

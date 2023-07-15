@@ -21,7 +21,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ListarTodosLosProductos");
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria");
                 Database.Read();
                 while (Database.Reader.Read())
                 {
@@ -74,7 +74,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ProductosAlAzar");
+                Database.SetQuery("SELECT TOP (@Cantidad) P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P  INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria ORDER BY NEWID()");
                 Database.SetParam("@Cantidad", cantidad);
                 Database.Read();
                 while (Database.Reader.Read())
@@ -129,7 +129,7 @@ namespace Negocio
 
             try
             {
-                Database.StoreProcedure("SP_ProductoPorID");
+                Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE P.ID_Producto = @IDProducto");
                 Database.SetParam("@IDProducto", IDProductoIn);
                 Database.Read();
                 if (Database.Reader.Read())
@@ -183,12 +183,12 @@ namespace Negocio
             {
                 if (tipo == "Marca")
                 {
-                    Database.StoreProcedure("SP_ProductosPorMarca");
+                    Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE M.Nombre = @Marca");
                     Database.SetParam("@Marca", nombre);
                 }
                 else
                 {
-                    Database.StoreProcedure("SP_ProductosPorCategoria");
+                    Database.SetQuery("SELECT P.ID_Producto AS IDProducto, P.Nombre, P.Codigo, P.Descripcion, P.ID_Categoria AS IDCategoria, C.Nombre as Categoria, P.ID_Marca as IDMarca, M.Nombre as Marca, P.Precio, P.Estado, P.Stock FROM Productos P INNER JOIN Marcas M ON P.ID_Marca = M.ID_Marca INNER JOIN Categorias C ON P.ID_Categoria = C.ID_Categoria WHERE C.Nombre = @Categoria");
                     Database.SetParam("@Categoria", nombre);
                 }
                 Database.Read();
@@ -288,7 +288,7 @@ namespace Negocio
             }
         }
 
-        public bool AgregarProducto(Producto producto)
+        public long AgregarProducto(Producto producto)
         {
             NegocioDB db = new NegocioDB();
             try
@@ -302,13 +302,26 @@ namespace Negocio
                 db.SetParam("@Precio", producto.Precio);
                 db.SetParam("@Stock", producto.Stock);
                 db.SetParam("@Estado", 1);
-                if (db.RunQuery() == 1) return true;
-                else return false;
+                if (db.RunQuery() == 1)
+                {
+                    NegocioDB db2 = new NegocioDB();
+                    db2.SetQuery("Select ID_Producto FROM Productos Where Codigo = @Codigo");
+                    db2.SetParam("@Codigo", producto.Codigo);
+                    db2.Read();
+                    if (db2.Reader.Read()){
+                        long IDProducto = (long)db2.Reader["ID_Producto"];
+                        db2.Close();
+                        return IDProducto;
+                    }
+                    return -1;
+                }
+                else{
+                    return -1;
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return -1;
             }
             finally
             {
@@ -334,10 +347,9 @@ namespace Negocio
                 if (db.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -356,10 +368,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -377,10 +388,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -408,10 +418,9 @@ namespace Negocio
                 if (columnasAfectadas == cantidad) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -440,10 +449,9 @@ namespace Negocio
                 if (columnasAfectadas == cantidad) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -462,10 +470,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
@@ -483,10 +490,9 @@ namespace Negocio
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                return false;
             }
             finally
             {
