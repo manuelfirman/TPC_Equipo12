@@ -24,15 +24,6 @@ namespace Web
             Compras = VentaNegocio.ComprasUsuario(UsuarioSession.IDUsuario);
         }
 
-        protected void btnPagar_Click(object sender, EventArgs e)
-        {
-            Button btn = (Button)sender;
-            long IDVenta = long.Parse(btn.CommandArgument);
-            Session["Domicilio"] = UsuarioSession.Domicilios[0];
-            Session["IDVenta"] = IDVenta;
-            Response.Redirect("Pago.aspx");
-        }
-
 
     }
 }

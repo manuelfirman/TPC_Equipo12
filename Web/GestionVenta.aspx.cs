@@ -29,9 +29,6 @@ namespace Web
                 Venta = VentaNegocio.VentaPorID(IDVenta);
             }
 
-            lblMessageOk.Visible = false;
-            lblMessageError.Visible = false;
-
             if (!IsPostBack)
             {
 
@@ -50,7 +47,42 @@ namespace Web
                 }
             }
 
-            
+            lblMessageOk.Visible = false;
+            lblMessageError.Visible = false;
+        }
+
+        protected void ModificarVenta(string estado)
+        {
+            EstadoVenta estadoVenta = VentaNegocio.ObtenerEstadoVenta(estado);
+            long IDEstado = estadoVenta.IDEstado;
+
+            if (VentaNegocio.ModificarEstadoVenta(Venta.IDVenta, IDEstado))
+            {
+                lblMessageOk.Visible = true;
+                lblMessageOk.Text = "Estado modificado correctamente.";
+                Redireccion("Ventas");
+            }
+            else
+            {
+
+                lblMessageError.Visible = true;
+                lblMessageError.Text = "Error al modificar el estado de la venta.";
+            }
+        }
+
+        protected void BtnEntregado_Click(object sender, EventArgs e)
+        {
+            this.ModificarVenta("ENTREGADO");
+        }
+
+        protected void BtnEnviado_Click(object sender, EventArgs e)
+        {
+            this.ModificarVenta("ENVIADO");
+        }
+
+        protected void BtnCancelado_Click(object sender, EventArgs e)
+        {
+            this.ModificarVenta("CANCELADO");
         }
 
         protected void BtnGestionarVenta_Click(object sender, EventArgs e)
@@ -61,6 +93,8 @@ namespace Web
             {
                 lblMessageOk.Visible = true;
                 lblMessageOk.Text = "Estado modificado correctamente.";
+                Redireccion("Ventas");
+
             }
             else
             {
@@ -68,6 +102,12 @@ namespace Web
                 lblMessageError.Visible = true;
                 lblMessageError.Text = "Error al modificar el estado de la venta.";
             }
+        }
+
+        protected void Redireccion(string pagina)
+        {
+            string script = "<script type='text/javascript'>setTimeout(function(){ window.location.href = '" + pagina + ".aspx'; }, 1500);</script>";
+            ClientScript.RegisterStartupScript(this.GetType(), "Redireccionar", script);
         }
     }
 }

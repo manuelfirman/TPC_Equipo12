@@ -144,8 +144,6 @@
                                 <ItemTemplate>
                                     <div class="card mb-3">
                                         <div class="card-body">
-
-                                            <%--<div class="d-flex justify-content-between align-items-center">--%>
                                                 <div class="row">
                                                 <div class="col-md-2">
                                                     <h5 class="card-title"><%# Eval("NombreUsuario") %></h5>
@@ -162,7 +160,6 @@
                                                     <asp:Button ID="BtnBorrarComentario" runat="server" Text="x" OnClick="BtnBorrarComentario_Click" CssClass="btn btn-danger btn-sm"  CommandArgument='<%# ((Dominio.Comentario)Container.DataItem).IDComentario %>'/>
                                                 </div>
                                                 <%} %>
-                                            <%--</div>--%>
                                         </div>
                                     </div>
                                 </ItemTemplate>
