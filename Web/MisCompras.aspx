@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="container">
+    <div class="container min-vh-100">
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title mb-3">Mis compras</h1>
@@ -79,9 +79,7 @@
                                     </div>
 
                                     <div class="col-md-1">
-                                        <%if(venta.Estado.Estado != "CANCELADO") { %>
-                                   <a href="ControlVenta.aspx?Id=<%= venta.IDVenta %>" class="btn btn-primary">Seguimiento</a>
-                                        <% } %>
+                                        <a href="ControlVenta.aspx?Id=<%= venta.IDVenta %>" class="btn btn-primary"><%= venta.Estado.Estado == "CANCELADO" || venta.Estado.Estado == "ENTREGADO" ? "Detalle" : venta.Estado.Estado == "PAGO PENDIENTE" ? "Pagar" : "Seguimiento" %></a>
                                     </div>
 
                                 </div>

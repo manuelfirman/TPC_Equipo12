@@ -15,6 +15,33 @@ namespace Web
     {
 
         /// <summary>
+        /// Control BtnCancelado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCancelado;
+
+        /// <summary>
+        /// Control BtnEnviado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnEnviado;
+
+        /// <summary>
+        /// Control BtnEntregado2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnEntregado2;
+
+        /// <summary>
         /// Control DDLEstadoVenta.
         /// </summary>
         /// <remarks>
