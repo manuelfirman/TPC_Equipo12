@@ -23,6 +23,7 @@ namespace Web
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            lblMessage.Visible = false;
             string email = txtEmail.Value;
             string pass = txtPassword.Value;
             lblMessage.Visible = false;
@@ -35,8 +36,20 @@ namespace Web
 
             if (UsuarioNegocioLogin.LoginUsuario(email, pass))
             {
-                Session["Usuario"] = UsuarioNegocioLogin.BuscarUsuario("Email",email);
-                Response.Redirect("Index.aspx");
+
+                usuario = UsuarioNegocioLogin.BuscarUsuario("Email", email);
+
+                if (usuario.Estado)
+                {
+                    Session["Usuario"] = usuario;
+                    Response.Redirect("Index.aspx");
+                }
+                else
+                {
+                    lblMessage.Text = "Usuario inactivo, comunicarse con administracion";
+                    lblMessage.Visible = true;
+                    return;
+                }
             }
             else
             {

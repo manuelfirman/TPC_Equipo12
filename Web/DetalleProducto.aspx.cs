@@ -12,7 +12,7 @@ namespace Web
 {
     public partial class DetalleProducto : System.Web.UI.Page
     {
-    
+
         private int Indice { get; set; }
         public Producto Producto { get; set; }
         private ProductoNegocio ProductoNegocioDetalle { get; set; }
@@ -44,7 +44,15 @@ namespace Web
             if (!IsPostBack)
             {
                 ActualizarComentarios(IDProducto);
-                
+                if (Producto.Stock == 0)
+                {
+                    BtnAgregarCarrito.Text = "NO HAY STOCK";
+                }
+                else
+                {
+                    BtnAgregarCarrito.Text = "ME LO LLEVO!";
+                }
+
             }
             else if (Producto != null)
             {
@@ -67,12 +75,16 @@ namespace Web
 
         protected void BtnAgregarCarrito_Click(object sender, EventArgs e)
         {
-            var masterPage = this.Master as Master;            
+            if (Producto.Stock > 0)
+            {
+                var masterPage = this.Master as Master;
 
-            Producto producto = Session["Producto"] as Producto;
+                Producto producto = Session["Producto"] as Producto;
 
-            masterPage.AgregarCarrito(producto, 1);
-            masterPage.ActualizarCarrito();
+                masterPage.AgregarCarrito(producto, 1);
+                masterPage.ActualizarCarrito();
+
+            }
         }
 
         public string CargarImagen(object dataItem)
@@ -99,7 +111,7 @@ namespace Web
             comentario.IDUsuario = ((Usuario)Session["Usuario"]).IDUsuario;
             comentario.TextoComentario = txtComment.Text;
 
-            if(txtComment.Text != "")
+            if (txtComment.Text != "")
             {
                 if (ComentarioNegocio.CrearComentario(comentario))
                 {
@@ -116,7 +128,7 @@ namespace Web
             Button btnBorrar = (Button)sender;
             int IDComentario = int.Parse(btnBorrar.CommandArgument);
 
-            if(ComentarioNegocio.EliminarComentario(IDComentario))
+            if (ComentarioNegocio.EliminarComentario(IDComentario))
             {
                 // TODO: Cartelito de comentario eliminado
             }
@@ -128,7 +140,7 @@ namespace Web
         {
             if (e.CommandName == "Eliminar")
             {
-                
+
                 ProductoNegocioDetalle.EstadoProducto(Producto.IDProducto, false);
                 Response.Redirect($"Filtro.aspx?Filtro=Eliminar&Nombre={Producto.Nombre}");
             }

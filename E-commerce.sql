@@ -23,9 +23,10 @@ CREATE TABLE Productos (
     Nombre VARCHAR(50) NOT NULL,
     Descripcion VARCHAR(500) NOT NULL,
     Precio MONEY NOT NULL CHECK (Precio > 0),
-    Stock INT NOT NULL CHECK (Stock > 0),
+    Stock INT NOT NULL CHECK (Stock >= 0),
     Estado BIT NULL DEFAULT 1,
 )
+
 GO
 CREATE TABLE Facturas (
 	ID_Factura BIGINT identity(1,1) PRIMARY KEY,

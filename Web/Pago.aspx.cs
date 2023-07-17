@@ -24,7 +24,7 @@ namespace Web
         {
             carritoNegocio = Session["Carrito"] as CarritoNegocio;
             usuario = Session["Usuario"] as Usuario;
-            if(usuario != null && carritoNegocio != null)
+            if (usuario != null && carritoNegocio != null)
             {
                 if (!IsPostBack)
                 {
@@ -54,6 +54,7 @@ namespace Web
 
             if (ventaNegocio.PagoVenta(IDVenta, tipoPago))
             {
+                Session["IDVenta"] = IDVenta;
                 Session["Carrito"] = new CarritoNegocio();
                 Response.Redirect("CompraRealizada.aspx");
             }
@@ -67,6 +68,7 @@ namespace Web
         protected void CHKEfectivo_CheckedChanged(object sender, EventArgs e)
         {
             CHKTarjeta.Checked = false;
+            CHKTransferencia.Checked = false;
             txtNumero.Visible = false;
             lblNumero.Visible = false;
             txtFecha.Visible = false;
@@ -78,12 +80,37 @@ namespace Web
         protected void CHKTarjeta_CheckedChanged(object sender, EventArgs e)
         {
             CHKEfectivo.Checked = false;
-            txtNumero.Visible = true;
-            lblNumero.Visible = true;
-            txtFecha.Visible = true;
-            lblFecha.Visible = true;
-            txtClave.Visible = true;
-            lblClave.Visible = true;
+            CHKTransferencia.Checked = false;
+            if (!CHKTarjeta.Checked)
+            {
+                txtNumero.Visible = true;
+                lblNumero.Visible = true;
+                txtFecha.Visible = true;
+                lblFecha.Visible = true;
+                txtClave.Visible = true;
+                lblClave.Visible = true;
+            }
+            else
+            {
+                txtNumero.Visible = false;
+                lblNumero.Visible = false;
+                txtFecha.Visible = false;
+                lblFecha.Visible = false;
+                txtClave.Visible = false;
+                lblClave.Visible = false;
+            }
+        }
+
+        protected void CHKTransferencia_CheckedChanged(object sender, EventArgs e)
+        {
+            CHKTarjeta.Checked = false;
+            CHKEfectivo.Checked = false;
+            txtNumero.Visible = false;
+            lblNumero.Visible = false;
+            txtFecha.Visible = false;
+            lblFecha.Visible = false;
+            txtClave.Visible = false;
+            lblClave.Visible = false;
         }
     }
 }

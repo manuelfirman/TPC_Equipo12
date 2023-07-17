@@ -19,6 +19,13 @@
                 </div>
             </div>
 
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <asp:Label ID="lblTrans" CssClass="form-label" runat="server" Text="Transferencia"></asp:Label>
+                <div class="form-check">
+                    <asp:CheckBox AutoPostBack="true"  ID="CHKTransferencia" runat="server" CssClass="form-check-input" Checked="false" OnCheckedChanged="CHKTransferencia_CheckedChanged"/>
+                </div>
+            </div>
+
             <div class="mb-3  d-flex justify-content-between align-items-center">
                 <asp:Label ID="lblTarejta" CssClass="form-label" runat="server" Text="Tarjeta de Credito/Debito"></asp:Label>
                 <div class="form-check">

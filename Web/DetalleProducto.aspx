@@ -79,7 +79,7 @@
                                     <p class="text-muted ms-4">o 12 cuotas de $<%= Math.Round(((Producto.Precio / 12) * (decimal)1.15), 2) %></p>
                                 </div>
                                 <div class="card-body">
-                                    <asp:Button ID="BtnAgregarCarrito" CssClass="btn btn-outline-info" OnClick="BtnAgregarCarrito_Click"  runat="server" Text="Me lo llevo!" />
+                                    <asp:Button ID="BtnAgregarCarrito" CssClass="btn btn-outline-info" OnClick="BtnAgregarCarrito_Click"  runat="server" Text="" />
                                 </div>
 
                                 <div class="card-body product-info mb-3">
