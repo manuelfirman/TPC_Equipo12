@@ -84,12 +84,13 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("UPDATE Banners SET Texto = @Texto, Titulo = @Titulo, Referencia = @Referencia, ImagenURL = @ImagenURL WHERE = ID_Banner = @ID_Banner");
-                Database.SetParam("@ID_Banner", banner.IDBanner);
+                Database.SetQuery("UPDATE Banners SET Texto = @Texto, Titulo = @Titulo, Referencia = @Referencia, ImagenURL = @ImagenURL, Estado = @Estado WHERE ID_Banner = @ID_Banner");
                 Database.SetParam("@Texto", banner.Texto);
                 Database.SetParam("@Titulo", banner.Titulo);
                 Database.SetParam("@Referencia", banner.Referencia);
                 Database.SetParam("@ImagenURL", banner.ImagenUrl);
+                Database.SetParam("@Estado", banner.Estado);
+                Database.SetParam("@ID_Banner", IDBanner);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }

@@ -33,24 +33,6 @@ namespace Web
         protected global::System.Web.UI.WebControls.Label lblMessageOk;
 
         /// <summary>
-        /// Control lblUrls.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUrls;
-
-        /// <summary>
-        /// Control DRPUrls.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DRPUrls;
-
-        /// <summary>
         /// Control contUrl.
         /// </summary>
         /// <remarks>
@@ -69,13 +51,31 @@ namespace Web
         protected global::System.Web.UI.HtmlControls.HtmlInputText txtUrl;
 
         /// <summary>
-        /// Control txtDesc.
+        /// Control txtTitulo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtDesc;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtTitulo;
+
+        /// <summary>
+        /// Control txtTexto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtTexto;
+
+        /// <summary>
+        /// Control txtRef.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtRef;
 
         /// <summary>
         /// Control lblEstado.

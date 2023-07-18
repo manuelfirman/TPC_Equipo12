@@ -15,10 +15,10 @@
                         <asp:Repeater ID="rptSlider" runat="server">
                             <ItemTemplate>
                                 <div class="carousel-item <%# Container.ItemIndex == 0 ? "active" : "" %>" style="height: 100vh; margin-top: -7vh;">
-                                    <img src="<%# Eval("Url") %>" class="d-block w-100 img-fluid" alt="<%# Eval("Descripcion") %>">
+                                    <img src="<%# Eval("ImagenUrl") %>" class="d-block w-100 img-fluid" alt="<%# Eval("Texto") %>">
                                     <div class="carousel-caption d-none d-md-block">
-                                        <h2 class="titulo text-center letter-spacing display-1 text-light fw-bold"><%# Eval("Descripcion").ToString().ToUpper() %></h2>
-                                        <p><%# Eval("Descripcion") %></p>
+                                        <h2 class="titulo text-center letter-spacing display-1 text-light fw-bold"><%# Eval("Titulo").ToString().ToUpper() %></h2>
+                                        <p><%# Eval("Texto") %></p>
                                     </div>
                                 </div>
                             </ItemTemplate>

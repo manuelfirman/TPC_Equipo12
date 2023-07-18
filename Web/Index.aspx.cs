@@ -13,18 +13,20 @@ namespace Web
     {
         private ProductoNegocio ProductoNegocioHome { get; set; }
         private ImagenNegocio ImagenNegocioHome { get; set; }
+        private BannerNegocio bannerNegocio { get; set; }
         private CategoriaNegocio CategoriaNegocioHome { get; set; }
         private MarcaNegocio MarcaNegocioHome { get; set; }
 
         private List<Producto> ProductosCards { get; set; }
         private List<Imagen> ImagenesSlider { get; set; }
+        private List<Dominio.Banner> bannerSlider { get; set; }
         private List<Categoria> CategoriasRandom { get; set; }
         private List<Marca> MarcasRandom { get; set; }
 
         public Index()
         {
-            ProductoNegocioHome = new ProductoNegocio(); 
-            ImagenNegocioHome = new ImagenNegocio();
+            ProductoNegocioHome = new ProductoNegocio();
+            bannerNegocio = new BannerNegocio();
             CategoriaNegocioHome = new CategoriaNegocio();
             MarcaNegocioHome = new MarcaNegocio();
         }
@@ -34,8 +36,8 @@ namespace Web
             if (!IsPostBack)
             {
                 // Imagenes para Banner Principal
-                ImagenesSlider = ImagenNegocioHome.ImagenesAlAzar(8);
-                rptSlider.DataSource = ImagenesSlider;
+                bannerSlider = bannerNegocio.ListarBanners();
+                rptSlider.DataSource = bannerSlider;
                 rptSlider.DataBind();
 
                 // Productos para Cards

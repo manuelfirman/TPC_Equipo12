@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Banner.aspx.cs" Inherits="Web.Banner" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Banners.aspx.cs" Inherits="Web.Banner" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -14,20 +14,24 @@
             <div class="row">
                 <div class="col-md-6">
 
-                    <div class="mb-3">
-                        <label class="form-label" runat="server" id="lblUrls" visible="false"></label>
-                        <asp:DropDownList CssClass="form-select" ID="DRPUrls" visible="false" AutoPostBack="true" runat="server" OnSelectedIndexChanged="DRPUrls_SelectedIndexChanged">
-                        </asp:DropDownList>
-                    </div>
-
                     <div class="mb-3" runat="server" id="contUrl" visible="false">
                         <label for="txtUrl" class="form-label ">URL:</label>
                         <input type="text" id="txtUrl" runat="server" class="form-control" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="txtDesc" class="form-label ">Descripción:</label>
-                        <input type="text" id="txtDesc" runat="server" class="form-control" />
+                        <label for="txtTitulo" class="form-label ">Titulo:</label>
+                        <input type="text" id="txtTitulo" runat="server" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtTexto" class="form-label ">Texto secundario:</label>
+                        <input type="text" id="txtTexto" runat="server" class="form-control" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="txtRef" class="form-label ">Referencia:</label>
+                        <input type="text" id="txtRef" runat="server" class="form-control" />
                     </div>
 
                     <div class="mb-3">

@@ -13,5 +13,6 @@ namespace Dominio
         public string Texto { get; set; }
         public string Referencia { get; set; }
         public string ImagenUrl { get; set; }
+        public bool Estado { get; set; }
     }
 }
