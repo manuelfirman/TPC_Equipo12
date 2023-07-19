@@ -20,7 +20,7 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("SELECT ID_Banner, Titulo, Texto, Referencia, ImagenURL FROM Banners");
+                Database.SetQuery("SELECT ID_Banner, Titulo, Texto, Referencia, ImagenURL, Estado FROM Banners");
                 Database.Read();
                 while (Database.Reader.Read())
                 {
@@ -30,6 +30,7 @@ namespace Negocio
                     if (!(Database.Reader["Texto"] is DBNull)) banner.Texto = (string)Database.Reader["Texto"];
                     if (!(Database.Reader["Referencia"] is DBNull)) banner.Referencia= (string)Database.Reader["Referencia"];
                     if (!(Database.Reader["ImagenURL"] is DBNull)) banner.ImagenUrl = (string)Database.Reader["ImagenURL"];
+                    if (!(Database.Reader["Estado"] is DBNull)) banner.Estado = (bool)Database.Reader["Estado"];
                     lista.Add(banner);
                 }
 
@@ -111,11 +112,12 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("INSERT INTO Banners(Texto, Titulo, Referencia, ImagenURL) VALUES(@Texto, @Titulo, @Referencia, @ImagenURL)");
+                Database.SetQuery("INSERT INTO Banners(Texto, Titulo, Referencia, ImagenURL, Estado) VALUES(@Texto, @Titulo, @Referencia, @ImagenURL, @Estado)");
                 Database.SetParam("@Texto", banner.Texto);
                 Database.SetParam("@Titulo", banner.Titulo);
                 Database.SetParam("@Referencia", banner.Referencia);
                 Database.SetParam("@ImagenURL", banner.ImagenUrl);
+                Database.SetParam("@Estado", banner.Estado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
             }

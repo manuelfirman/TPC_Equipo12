@@ -109,7 +109,7 @@
                             <div class="card mw-100 card-custom-img">
                                 <div class="card-custom-img">
                                     <a href="Filtro.aspx?Nombre=<%#Eval("Nombre")%>&Tipo=Marca">
-                                         <asp:Image CssClass="card-img-top" ID="imgMarca" runat="server" ImageUrl="<%# CargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
+                                        <asp:Image CssClass="card-img-top" ID="imgMarca" runat="server" ImageUrl="<%# CargarImagenRandomMarca(((Dominio.Marca)Container.DataItem).ToString()) %>" onerror="this.src'https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'" />
                                     </a>
                                     <div class="card-text">
                                         <h4 class="card-title"><%# ((Dominio.Marca)Container.DataItem).Nombre.ToUpper() %></h4>

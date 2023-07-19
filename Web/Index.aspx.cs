@@ -12,23 +12,26 @@ namespace Web
     public partial class Index : System.Web.UI.Page
     {
         private ProductoNegocio ProductoNegocioHome { get; set; }
-        private ImagenNegocio ImagenNegocioHome { get; set; }
+        private ProductoDestacadoNegocio ProductoDestacadoNegocio { get; set; }
         private BannerNegocio bannerNegocio { get; set; }
         private CategoriaNegocio CategoriaNegocioHome { get; set; }
         private MarcaNegocio MarcaNegocioHome { get; set; }
 
         private List<Producto> ProductosCards { get; set; }
-        private List<Imagen> ImagenesSlider { get; set; }
+        private List<ProductoDestacado> destacados { get; set; }
+        private List<Dominio.Banner> banners { get; set; }
         private List<Dominio.Banner> bannerSlider { get; set; }
         private List<Categoria> CategoriasRandom { get; set; }
         private List<Marca> MarcasRandom { get; set; }
 
         public Index()
         {
+            ProductoDestacadoNegocio = new ProductoDestacadoNegocio();
             ProductoNegocioHome = new ProductoNegocio();
             bannerNegocio = new BannerNegocio();
             CategoriaNegocioHome = new CategoriaNegocio();
             MarcaNegocioHome = new MarcaNegocio();
+
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -36,12 +39,28 @@ namespace Web
             if (!IsPostBack)
             {
                 // Imagenes para Banner Principal
-                bannerSlider = bannerNegocio.ListarBanners();
+                bannerSlider = new List<Dominio.Banner>();
+                banners = bannerNegocio.ListarBanners();
+                foreach (var banner in banners)
+                {
+                    if (banner.Estado)
+                    {
+                        bannerSlider.Add(banner);
+                    }
+                }
                 rptSlider.DataSource = bannerSlider;
                 rptSlider.DataBind();
 
                 // Productos para Cards
-                ProductosCards = ProductoNegocioHome.ProductosAlAzar(8);
+                Producto aux;
+                ProductosCards = new List<Producto>();
+                destacados = ProductoDestacadoNegocio.ListarProductos();
+                foreach (var destacado in destacados)
+                {
+                    aux = new Producto();
+                    aux = ProductoNegocioHome.ProductoPorID(destacado.IDProducto);
+                    ProductosCards.Add(aux);
+                }
                 rptProductos.DataSource = ProductosCards;
                 rptProductos.DataBind();
 
@@ -65,7 +84,7 @@ namespace Web
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             Producto producto = (Producto)dataItem;
 
-            if(producto != null & producto.Imagenes != null & producto.Imagenes.Count > 0)
+            if (producto != null & producto.Imagenes != null & producto.Imagenes.Count > 0)
             {
                 string url = producto.Imagenes.FirstOrDefault().Url;
                 if (imagenNegocio.VerificarUrlImagen(url))
@@ -81,7 +100,7 @@ namespace Web
         {
             ImagenNegocio imagenNegocio = new ImagenNegocio();
             List<Imagen> imagenes = imagenNegocio.ImagenesRandomPorCategoria(1, categoria);
-            if(imagenes.Count  == 0) return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
+            if (imagenes.Count == 0) return "https://uning.es/wp-content/uploads/2016/08/ef3-placeholder-image.jpg'";
 
             return imagenes.FirstOrDefault().Url;
         }
@@ -101,8 +120,9 @@ namespace Web
             return item.IDProducto.ToString();
         }
 
-        protected string EstiloProducto(Dominio.Producto producto)
+        protected string EstiloProducto(Producto producto)
         {
+            
             if (!producto.Estado)
             {
                 if (Session["Usuario"] != null)

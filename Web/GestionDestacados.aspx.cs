@@ -13,6 +13,8 @@ namespace Web
     {
         private Usuario usuario = new Usuario();
         private BannerNegocio bannerNegocio = new BannerNegocio();
+        private ProductoDestacadoNegocio productoDestacadoNegocio = new ProductoDestacadoNegocio();
+        private ProductoNegocio productoNegocio = new ProductoNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
             usuario = Session["Usuario"] as Usuario;
@@ -25,6 +27,7 @@ namespace Web
                 if (!IsPostBack)
                 {
                     CargarImagenes();
+                    CargarProductos();
                 }
             }
         }
@@ -53,10 +56,12 @@ namespace Web
 
         protected void CargarProductos()
         {
-            List<Dominio.Banner> banners = bannerNegocio.ListarBanners();
-            foreach (Dominio.Banner banner in banners)
+            List<ProductoDestacado> destacados = productoDestacadoNegocio.ListarProductos();
+            foreach (ProductoDestacado destacado in destacados)
             {
-                dllImagenes.Items.Add(new ListItem(banner.Titulo, banner.IDBanner.ToString()));
+                Producto productoAux = new Producto();
+                productoAux = productoNegocio.ProductoPorID(destacado.IDProducto);
+                ddlProductos.Items.Add(new ListItem(productoAux.Nombre, productoAux.IDProducto.ToString()));
             }
 
         }

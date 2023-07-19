@@ -136,12 +136,3 @@ CREATE TABLE Productos_Desctacados(
     ID_Producto BIGINT NOT NULL FOREIGN KEY REFERENCES Productos (ID_Producto),
     Estado BIT NULL DEFAULT 1
 )
-
-insert into  Banners(Titulo, Texto, Referencia, ImagenURL) values('Air Max Pre-Day Se', 'Air Max Pre-Day Se', 'ZAPATILLAS NIKE', 'https://www.moov.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw67fd9607/products/NI_DH5111-100/NI_DH5111-100-1.JPG') 
-
-
-SELECT * from Banners
-
-select * from Productos
-
-select * from Imagenes where ID_Producto = 5

@@ -52,7 +52,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">AGREGAR PRODUCTO DESTACADOS</h5>
                                         <p class="card-text">Agrega un nuevo producto</p>
-                                        <a href="Marcas.aspx?Tipo=Agregar" class="btn btn-primary">Agregar</a>
+                                        <a href="ProductosDestacados.aspx?Tipo=Agregar" class="btn btn-primary">Agregar</a>
                                     </div>
                                 </div>
                             </div>

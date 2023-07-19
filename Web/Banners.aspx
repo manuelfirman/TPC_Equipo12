@@ -47,7 +47,7 @@
 
             <div class="text-center mt-2 mb-2">
                 <asp:Button ID="btnAceptar" runat="server" CssClass="btn btn-primary" Text="" OnClick="btnAceptar_Click" />
-                <a href="Vendedor.aspx" class="btn btn-primary">Volver al panel</a>
+                <a href="GestionDestacados.aspx" class="btn btn-primary">Volver al panel</a>
             </div>
         </div>
     </div>
