@@ -120,6 +120,9 @@ namespace Web
                         lblMessage.Text = "USUARIO CREADO CORRECTAMENTE";
                         lblMessage.Visible = true;
                         Session["Usuario"] = usuario;
+                        EmailService emailService = new EmailService();
+                        emailService.armarCorreo(usuario.Email, "REGISTRO DE CUENTA", $"<h1>HOLA {usuario.Nombre}</h1> <p>Tu cuenta se creo correctame, muchas gracias por confiar!</p>");
+                        emailService.enviarEmail();
                         Response.Redirect("Index.aspx");
                     }
                     else

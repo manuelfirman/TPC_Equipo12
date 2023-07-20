@@ -14,7 +14,7 @@ namespace Web
         protected Venta Venta { get; set; }
         protected Usuario Usuario { get; set; }
         private VentaNegocio VentaNegocio { get; set; } = new VentaNegocio();
-
+        private EmailService EmailService = new EmailService();
         protected void Page_Load(object sender, EventArgs e)
         {
             Usuario = Session["Usuario"] as Usuario;
@@ -60,6 +60,8 @@ namespace Web
             {
                 lblMessageOk.Visible = true;
                 lblMessageOk.Text = "Estado modificado correctamente.";
+                EmailService.armarCorreo(Usuario.Email, "Estado actualizado", $"<h1>SE ACTUALIZO EL ESTADO DE SU COMPRA</h1> <p>ESTADO: {estadoVenta.Estado} </p> </br> <p>Muchas gracias!</p>");
+                EmailService.enviarEmail();
                 Redireccion("Ventas");
             }
             else

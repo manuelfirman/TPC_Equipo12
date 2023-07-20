@@ -16,6 +16,8 @@ namespace Web
         protected List<Chat> Mensajes { get; set; }
         private VentaNegocio VentaNegocio { get; set; } = new VentaNegocio();
         private ChatNegocio ChatNegocio { get; set; } = new ChatNegocio();
+
+        private EmailService EmailService = new EmailService();
         protected long IDVenta { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -87,6 +89,8 @@ namespace Web
                             mensaje.Remitente.IDUsuario = mensaje.IDVendedor;
                             mensaje.Mensaje = "El comprobante se subio con exito";
                             ChatNegocio.CrearMensaje(mensaje);
+                            EmailService.armarCorreo(UsuarioSession.Email, "Estado actualizado", $"<h1>SE ACTUALIZO EL ESTADO DE SU COMPRA</h1> <p>ESTADO:PAGADO </p> </br> <p>Muchas gracias!</p>");
+                            EmailService.enviarEmail();
                             Redireccion();
                         }
                     }

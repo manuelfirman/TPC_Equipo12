@@ -19,6 +19,7 @@ namespace Web
         private ChatNegocio ChatNegocio = new ChatNegocio();
         private Chat chat = new Chat();
         private List<Usuario> vendedores = new List<Usuario>();
+        private EmailService emailService = new EmailService();
         protected long IDVenta;
 
         protected decimal total { get; set; }
@@ -65,6 +66,8 @@ namespace Web
                         Session["IDVenta"] = IDVenta;
                         Session["Carrito"] = new CarritoNegocio();
                         CrearChat();
+                        emailService.armarCorreo("vendedortpc12@gmail.com", "Compra realizada", $"<h1>SE REALIZO UNA NUEVA COMPRA</h1> <p>USUARIO: {usuario.Nombre}</p> </br> <p>Email: {usuario.Email}</p> <p>Estado: PAGADO</p> <p>Para más detalle entre en el sistema</p>");
+                        emailService.enviarEmail();
                         Response.Redirect("CompraRealizada.aspx");
                     }
                     else
@@ -78,6 +81,17 @@ namespace Web
                     Session["IDVenta"] = IDVenta;
                     Session["Carrito"] = new CarritoNegocio();
                     CrearChat();
+                    if(tipoPago == "EFECTIVO")
+                    {
+                        emailService.armarCorreo("vendedortpc12@gmail.com", "Compra realizada", $"<h1>SE REALIZO UNA NUEVA COMPRA</h1> <p>USUARIO: {usuario.Nombre}</p> </br> <p>Email: {usuario.Email}</p> <p>Estado: PAGADO</p <p>Para más detalle entre en el sistema</p>");
+
+                    }
+                    else
+                    {
+
+                        emailService.armarCorreo("vendedortpc12@gmail.com", "Compra realizada", $"<h1>SE REALIZO UNA NUEVA COMPRA</h1> <p>USUARIO: {usuario.Nombre}</p> </br> <p>Email: {usuario.Email}</p> <p>Estado: PAGO PENDIENTE</p <p>Para más detalle entre en el sistema</p>");
+                    }
+                    emailService.enviarEmail();
                     Response.Redirect("CompraRealizada.aspx");
                 }
             }

@@ -343,9 +343,10 @@ namespace Negocio
 
             try
             {
+                string hashPass = Crypt.GenerarHash(nuevaContraseña);
                 Database.SetQuery("UPDATE Usuarios SET Contrasena = @Contraseña WHERE ID_Usuario = @ID_Usuario");
                 Database.SetParam("@ID_Usuario", IDUsuario);
-                Database.SetParam("@Contraseña", nuevaContraseña);
+                Database.SetParam("@Contraseña", hashPass);
 
                 if (Database.RunQuery() == 1) return true;
                 else return false;
