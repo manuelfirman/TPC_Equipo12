@@ -19,7 +19,7 @@ namespace Negocio
             Chat chat;
             try
             {
-                Database.SetQuery("SELECT ID_Mensaje, ID_Venta, ID_Remitente, Mensaje, Fecha FROM Chat WHERE ID_Venta = @ID_Venta");
+                Database.SetQuery("SELECT ID_Mensaje, ID_Venta, ID_Remitente, Mensaje, Fecha, ID_Vendedor FROM Chat WHERE ID_Venta = @ID_Venta");
                 Database.SetParam("@ID_Venta", IDVenta);
                 Database.Read();
                 while(Database.Reader.Read())
@@ -28,6 +28,7 @@ namespace Negocio
                     long IDRemitente = 0;
                     if (!(Database.Reader["ID_Mensaje"] is DBNull)) chat.IDMensaje = (long)Database.Reader["ID_Mensaje"];
                     if (!(Database.Reader["ID_Venta"] is DBNull)) chat.IDVenta = (long)Database.Reader["ID_Venta"];
+                    if (!(Database.Reader["ID_Vendedor"] is DBNull)) chat.IDVendedor = (long)Database.Reader["ID_Vendedor"];
                     if (!(Database.Reader["Mensaje"] is DBNull)) chat.Mensaje = (string)Database.Reader["Mensaje"];
                     if (!(Database.Reader["Fecha"] is DBNull)) chat.Fecha = (DateTime)Database.Reader["Fecha"];
                     if (!(Database.Reader["ID_Remitente"] is DBNull)) IDRemitente = (long)Database.Reader["ID_Remitente"];
@@ -48,7 +49,8 @@ namespace Negocio
 
             try
             {
-                Database.SetQuery("INSERT INTO Chat(ID_Venta, ID_Remitente, Mensaje) VALUES(@ID_Venta, @ID_Remitente, @Mensaje)");
+                Database.SetQuery("INSERT INTO Chat(ID_Venta, ID_Remitente, Mensaje, ID_Vendedor) VALUES(@ID_Venta, @ID_Remitente, @Mensaje, @ID_Vendedor)");
+                Database.SetParam("@ID_Vendedor", mensaje.IDVendedor);
                 Database.SetParam("@ID_Venta", mensaje.IDVenta);
                 Database.SetParam("@ID_Remitente", mensaje.Remitente.IDUsuario);
                 Database.SetParam("@Mensaje", mensaje.Mensaje);

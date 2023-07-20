@@ -10,6 +10,7 @@ namespace Dominio
     {
         public long IDMensaje { get; set; }
         public long IDVenta { get; set; }
+        public long IDVendedor { get; set; }
         public Usuario Remitente { get; set; }
         public DateTime Fecha { get; set; }
         public string Mensaje { get; set; }

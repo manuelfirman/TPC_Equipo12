@@ -24,6 +24,15 @@ namespace Web
         protected global::System.Web.UI.WebControls.Button btnPagar;
 
         /// <summary>
+        /// Control contenedorChat.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contenedorChat;
+
+        /// <summary>
         /// Control txtMensaje.
         /// </summary>
         /// <remarks>
@@ -40,5 +49,14 @@ namespace Web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button BtnComentar;
+
+        /// <summary>
+        /// Control ddlTipoMensaje.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoMensaje;
     }
 }

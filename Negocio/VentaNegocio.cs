@@ -16,12 +16,12 @@ namespace Negocio
         {
             Database = new NegocioDB();
             long IDFactura = -1;
-            
+
             try
             {
                 Database.SetQuery("INSERT INTO Facturas (Pago, Cancelada) VALUES(0, 0)" + "SELECT CAST(SCOPE_IDENTITY() AS BIGINT) AS ID");
                 Database.Read();
-                if(Database.Reader.Read())
+                if (Database.Reader.Read())
                 {
                     IDFactura = (long)Database.Reader["ID"];
 
@@ -70,7 +70,7 @@ namespace Negocio
             int rowsAffected = 0;
             try
             {
-                
+
                 foreach (ElementoCarrito elemento in productos)
                 {
                     Database = new NegocioDB();
@@ -78,7 +78,7 @@ namespace Negocio
                     Database.SetParam("@ID_Factura", IDFactura);
                     Database.SetParam("@ID_Producto", elemento.Producto.IDProducto);
                     Database.SetParam("@Cantidad", elemento.Cantidad);
-                    
+
                     if (Database.RunQuery() == 1) rowsAffected++;
 
                     Database.Close();
@@ -111,7 +111,7 @@ namespace Negocio
                 db.SetQuery("SELECT ID_Producto, Cantidad FROM Productos_x_Factura WHERE ID_Factura = @ID_Factura");
                 db.SetParam("@ID_Factura", IDFactura);
                 db.Read();
-                while(db.Reader.Read())
+                while (db.Reader.Read())
                 {
                     long IDProducto = -1;
                     int cantidad = -1;
@@ -120,7 +120,7 @@ namespace Negocio
                     if (!(db.Reader["ID_Producto"] is DBNull)) IDProducto = (long)db.Reader["ID_Producto"];
                     if (!(db.Reader["Cantidad"] is DBNull)) cantidad = (int)db.Reader["Cantidad"];
 
-                    if(cantidad != -1 && IDProducto != -1)
+                    if (cantidad != -1 && IDProducto != -1)
                     {
                         producto = productoNegocio.ProductoPorID(IDProducto);
                         elemento.Producto = producto;
@@ -151,7 +151,7 @@ namespace Negocio
                 db.SetQuery("SELECT ID_Factura, Pago, Cancelada FROM Facturas WHERE ID_Factura = @ID_Factura");
                 db.SetParam("@ID_Factura", IDFactura);
                 db.Read();
-                if(db.Reader.Read())
+                if (db.Reader.Read())
                 {
                     if (!(db.Reader["ID_Factura"] is DBNull)) factura.IDFactura = (long)db.Reader["ID_Factura"];
                     if (!(db.Reader["Pago"] is DBNull)) factura.Pago = (bool)db.Reader["Pago"];
@@ -183,7 +183,7 @@ namespace Negocio
             {
                 Database.SetQuery("SELECT ID_Factura, Pago, Cancelada FROM Facturas");
                 Database.Read();
-                while(Database.Reader.Read())
+                while (Database.Reader.Read())
                 {
                     factura = new Factura();
                     if (!(Database.Reader["ID_Factura"] is DBNull)) factura.IDFactura = (long)Database.Reader["ID_Factura"];
@@ -246,7 +246,7 @@ namespace Negocio
                 Database.SetQuery("SELECT ID_Estado, Estado, Terminal FROM EstadoVenta WHERE Estado = @EstadoVenta");
                 Database.SetParam("@EstadoVenta", estado);
                 Database.Read();
-                if(Database.Reader.Read())
+                if (Database.Reader.Read())
                 {
                     if (!(Database.Reader["ID_Estado"] is DBNull)) estadoVenta.IDEstado = (long)Database.Reader["ID_Estado"];
                     if (!(Database.Reader["Estado"] is DBNull)) estadoVenta.Estado = (string)Database.Reader["Estado"];
@@ -330,7 +330,7 @@ namespace Negocio
         public bool ModificarEstadoVenta(long IDVenta, long IDEstado)
         {
             Database = new NegocioDB();
-            
+
             try
             {
                 EstadoVenta estadoEnviado = this.ObtenerEstadoVenta("ENVIADO");
@@ -404,9 +404,9 @@ namespace Negocio
                 Venta venta = this.VentaPorID(IDVenta);
 
                 // Descontar cantidad de productos al stock
-                foreach(ElementoCarrito elemento in venta.Factura.Productos)
+                foreach (ElementoCarrito elemento in venta.Factura.Productos)
                 {
-                    if(!this.DescontarStock(elemento)) return false;
+                    if (!this.DescontarStock(elemento)) return false;
                 }
 
                 // Pasar factura a pago = 1
@@ -427,10 +427,38 @@ namespace Negocio
                     Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado, TipoPago = @TipoPago, CodigoPago = @CodigoPago WHERE ID_Venta = @ID_Venta");
                     Database.SetParam("@CodigoPago", codigoPago);
                 }
-                
+
 
                 Database.SetParam("@ID_Venta", IDVenta);
                 Database.SetParam("@TipoPago", TipoPago);
+                Database.SetParam("@ID_Estado", estadoVenta.IDEstado);
+                if (Database.RunQuery() == 1) return true;
+                else return false;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            finally
+            {
+                Database.Close();
+            }
+        }
+
+        public bool CodigoPago(long IDVenta, string codigo)
+        {
+            Database = new NegocioDB();
+
+            try
+            {
+
+                // Guardar registro de venta
+                EstadoVenta estadoVenta;
+                estadoVenta = this.ObtenerEstadoVenta("PAGADO");
+                Database.SetQuery("UPDATE Ventas SET ID_Estado = @ID_Estado, CodigoPago = @CodigoPago WHERE ID_Venta = @ID_Venta");
+                Database.SetParam("@ID_Venta", IDVenta);
+                Database.SetParam("@CodigoPago", codigo);
                 Database.SetParam("@ID_Estado", estadoVenta.IDEstado);
                 if (Database.RunQuery() == 1) return true;
                 else return false;
@@ -508,7 +536,7 @@ namespace Negocio
                 db.SetQuery("SELECT V.ID_Venta, V.ID_Usuario, V.ID_Estado, EV.Estado as EstadoVenta, V.Monto, V.Fecha, V.FechaEnvio, V.TipoPago, V.CodigoPago, V.CodigoSeguimiento, F.Cancelada, F.Pago, F.ID_Factura, U.ID_Usuario, U.ID_TipoUsuario, TU.Nombre AS TipoUsuario, U.Dni, U.Nombre, U.Apellido, U.Email, U.Telefono, U.FechaNacimiento, U.Estado AS EstadoUsuario, D.ID_Domicilio, D.Localidad, D.Calle, D.Numero, D.CodigoPostal, D.Piso, D.Referencia, D.Alias, D.Estado AS EstadoDomicilio, P.ID_Provincia, P.Nombre as Provincia FROM Ventas V INNER JOIN Facturas F ON V.ID_Factura = F.ID_Factura INNER JOIN Usuarios U ON V.ID_Usuario = U.ID_Usuario INNER JOIN TipoUsuario TU ON U.ID_TipoUsuario = TU.ID_Tipo INNER JOIN EstadoVenta EV ON V.ID_Estado = EV.ID_Estado INNER JOIN Domicilios D ON U.ID_Usuario = D.ID_Usuario INNER JOIN Provincias P ON D.ID_Provincia = P.ID_Provincia ORDER BY V.Fecha DESC");
                 db.Read();
 
-                while(db.Reader.Read())
+                while (db.Reader.Read())
                 {
                     venta = new Venta();
                     // Venta
@@ -530,7 +558,7 @@ namespace Negocio
 
 
                     // Productos Factura
-                    venta.Factura.Productos = this.ProductosFactura(venta.Factura.IDFactura);   
+                    venta.Factura.Productos = this.ProductosFactura(venta.Factura.IDFactura);
 
                     // Usuario
                     if (!(db.Reader["ID_Usuario"] is DBNull)) venta.Usuario.IDUsuario = (long)db.Reader["ID_Usuario"];
@@ -567,7 +595,7 @@ namespace Negocio
 
                     listaVentas.Add(venta);
                 }
-                
+
                 return listaVentas;
             }
             catch (Exception ex)
@@ -638,7 +666,7 @@ namespace Negocio
                     default: return null;
                 }
 
-           
+
                 db.SetQuery(query);
                 db.Read();
 
@@ -889,7 +917,7 @@ namespace Negocio
                 db.SetQuery($"SELECT ID_Venta FROM Ventas WHERE {tipo} = @{tipo}");
                 db.SetParam($"@{tipo}", valor);
                 db.Read();
-                while(db.Reader.Read())
+                while (db.Reader.Read())
                 {
                     cont++;
                 }
@@ -948,7 +976,7 @@ namespace Negocio
             const string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             Random random = new Random();
             StringBuilder constructorCadena = new StringBuilder(longitud);
-            
+
 
             bool repetido = false;
             string codigoGenerado = string.Empty;

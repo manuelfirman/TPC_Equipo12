@@ -81,11 +81,18 @@
         <div class="card bg-danger bg-opacity-75">
             <div class="card-body">
 
+                <%if (UsuarioSession.IDUsuario == Compra.Usuario.IDUsuario)
+                    {%>
                 <h2 class="card-title text-white">NO HAS PAGADO TU PEDIDO</h2>
                 <div class="card col-md-6 p-4 mb-2">
                     <p>No pierdas la oportunidad de adquirir nuestras ofertas!</p>
                 </div>
                 <asp:Button ID="btnPagar" runat="server" Text="Ir a Pagar" CssClass="btn btn-primary" OnClick="btnPagar_Click1" />
+                <%}
+                    else
+                    {%>
+                <h2 class="card-title text-white">EL USUARIO NO PAGO EL PEDIDO</h2>
+                <%}%>
             </div>
         </div>
         <%} %>
@@ -94,11 +101,25 @@
             {  %>
         <div class="card bg-success mt-2">
             <div class="card-body">
+
+                <%if (UsuarioSession.IDUsuario == Compra.Usuario.IDUsuario)
+                    {%>
+
                 <h2 class="card-title text-white">RECIBIMOS EL PAGO DE TU PEDIDO</h2>
                 <div class="card col-md-6 p-4 mb-2">
                     <p>Te avisaremos cuando haya sido enviado</p>
                     <p><span class="fw-medium">Codigo Pago: </span><%= Compra.CodigoPago  %></p>
                 </div>
+
+                <%}
+                    else
+                    {%>
+                <h2 class="card-title text-white">YA RECIBIMOS EL PAGO</h2>
+                <div class="card col-md-6 p-4 mb-2">
+                    <p>El pedido aun no fue enviado</p>
+                    <p><span class="fw-medium">Codigo Pago: </span><%= Compra.CodigoPago  %></p>
+                </div>
+                <%} %>
             </div>
         </div>
         <%} %>
@@ -107,23 +128,45 @@
             {  %>
         <div class="card bg-success mt-2">
             <div class="card-body">
+                <%if (UsuarioSession.IDUsuario == Compra.Usuario.IDUsuario)
+                    {%>
                 <h2 class="card-title text-white">RECIBIMOS EL PAGO DE TU PEDIDO!</h2>
                 <div class="card col-md-6 p-4 mb-2">
                     <p>Pagaste con <span class="fw-medium"><%= Compra.TipoPago  %></span></p>
                     <p><span class="fw-medium">Codigo Pago: </span><%= Compra.CodigoPago  %></p>
-
                 </div>
+                <%}
+                    else
+                    {%>
+                <h2 class="card-title text-white">YA RECIBIMOS EL PAGO</h2>
+                <div class="card col-md-6 p-4 mb-2">
+                    <p>Pago con <span class="fw-medium"><%= Compra.TipoPago  %></span></p>
+                    <p><span class="fw-medium">Codigo Pago: </span><%= Compra.CodigoPago  %></p>
+                </div>
+                <%}%>
             </div>
         </div>
 
         <div class="card bg-success mt-2">
             <div class="card-body">
+                <%if (UsuarioSession.IDUsuario == Compra.Usuario.IDUsuario)
+                    {%>
                 <h2 class="card-title text-white">TU PEDIDO YA HA SIDO ENVIADO!</h2>
                 <div class="card col-md-6 p-4 mb-2">
                     <p><span class="fw-medium">Fecha de Envio: </span><%= Compra.FechaEnvio  %></p>
                     <p>Te lo enviamos a <span class="fw-medium"><%=Compra.Usuario.Domicilios[0].Calle  %> <%=Compra.Usuario.Domicilios[0].Altura  %>, <%=Compra.Usuario.Domicilios[0].Localidad  %> - <%=Compra.Usuario.Domicilios[0].Provincia  %></span></p>
                     <p><span class="fw-medium">Codigo de Seguimiento: </span><%= Compra.CodigoSeguimiento %></p>
                 </div>
+                <%}
+                    else
+                    {%>
+                <h2 class="card-title text-white">EL PEDIDO YA HA SIDO ENVIADO!</h2>
+                <div class="card col-md-6 p-4 mb-2">
+                    <p><span class="fw-medium">Fecha de Envio: </span><%= Compra.FechaEnvio  %></p>
+                    <p>Lo enviamos a <span class="fw-medium"><%=Compra.Usuario.Domicilios[0].Calle  %> <%=Compra.Usuario.Domicilios[0].Altura  %>, <%=Compra.Usuario.Domicilios[0].Localidad  %> - <%=Compra.Usuario.Domicilios[0].Provincia  %></span></p>
+                    <p><span class="fw-medium">Codigo de Seguimiento: </span><%= Compra.CodigoSeguimiento %></p>
+                </div>
+                <%}%>
             </div>
         </div>
         <%} %>
@@ -132,12 +175,25 @@
             {  %>
         <div class="card bg-success mt-2">
             <div class="card-body">
-                <h2 class="card-title text-white">TU PEDIDO YA HA SIDO ENVIADO!</h2>
+                <%if (UsuarioSession.IDUsuario == Compra.Usuario.IDUsuario)
+                    {%>
+                <h2 class="card-title text-white">TU PEDIDO YA HA SIDO ENTREGADO!</h2>
                 <div class="card col-md-6 p-4 mb-2">
 
                     <p>Te lo enviamos a <span class="fw-medium"><%=Compra.Usuario.Domicilios[0].Calle  %> <%=Compra.Usuario.Domicilios[0].Altura  %>, <%=Compra.Usuario.Domicilios[0].Localidad  %> - <%=Compra.Usuario.Domicilios[0].Provincia  %></span></p>
                     <p><span class="fw-medium">Codigo de Seguimiento: </span><%= Compra.CodigoSeguimiento %></p>
                 </div>
+
+                <%}
+                    else
+                    {%>
+                <h2 class="card-title text-white">EL PEDIDO YA HA SIDO ENTREGADO!</h2>
+                <div class="card col-md-6 p-4 mb-2">
+
+                    <p>Te lo enviamos a <span class="fw-medium"><%=Compra.Usuario.Domicilios[0].Calle  %> <%=Compra.Usuario.Domicilios[0].Altura  %>, <%=Compra.Usuario.Domicilios[0].Localidad  %> - <%=Compra.Usuario.Domicilios[0].Provincia  %></span></p>
+                    <p><span class="fw-medium">Codigo de Seguimiento: </span><%= Compra.CodigoSeguimiento %></p>
+                </div>
+                <%} %>
             </div>
         </div>
         <%} %>
@@ -177,7 +233,7 @@
 
                         <%if (Session["Usuario"] != null)
                             { %>
-                        <div class="col-md-12">
+                        <div class="col-md-12" visible="false" id="contenedorChat" runat="server">
                             <div class="card">
                                 <div class="card-body">
                                     <h6 class="card-title">¿En que podemos ayudarte?</h6>
@@ -186,7 +242,12 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <asp:Button ID="BtnComentar" runat="server" Text="Enviar" OnClick="BtnComentar_Click" CssClass="btn btn-primary mt-2" />
+                                            <asp:Button ID="BtnComentar" runat="server" Text="Enviar" OnClick="BtnComentar_Click" CssClass="btn btn-primary mt-2"  />
+                                            <%if (Compra.Estado.Estado == "PAGO PENDIENTE" && UsuarioSession.TipoUser.Nombre == "Usuario")
+                                                {%>
+                                            <asp:DropDownList ID="ddlTipoMensaje" runat="server" CssClass="form-control mb-3" OnSelectedIndexChanged="ddlTipoMensaje_SelectedIndexChanged">
+                                            </asp:DropDownList>
+                                            <%} %>
                                         </div>
                                     </div>
                                 </div>

@@ -13,8 +13,12 @@ namespace Web
     {
         private Usuario usuario = new Usuario();
         private Domicilio domicilio = new Domicilio();
+        private UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
         private CarritoNegocio carritoNegocio = new CarritoNegocio();
         private VentaNegocio ventaNegocio = new VentaNegocio();
+        private ChatNegocio ChatNegocio = new ChatNegocio();
+        private Chat chat = new Chat();
+        private List<Usuario> vendedores = new List<Usuario>();
         protected long IDVenta;
 
         protected decimal total { get; set; }
@@ -54,9 +58,28 @@ namespace Web
 
             if (ventaNegocio.PagoVenta(IDVenta, tipoPago))
             {
-                Session["IDVenta"] = IDVenta;
-                Session["Carrito"] = new CarritoNegocio();
-                Response.Redirect("CompraRealizada.aspx");
+                if (CHKTarjeta.Checked)
+                {
+                    if(txtNumero.Value.Trim().Length == 16  && txtClave.Value.Length == 3 && txtClave.Value.Length == 5)
+                    {
+                        Session["IDVenta"] = IDVenta;
+                        Session["Carrito"] = new CarritoNegocio();
+                        CrearChat();
+                        Response.Redirect("CompraRealizada.aspx");
+                    }
+                    else
+                    {
+                        lblError.Visible = true;
+                        lblError.Text = "REVISE LOS CAMPOS";
+                    }
+                }
+                else
+                {
+                    Session["IDVenta"] = IDVenta;
+                    Session["Carrito"] = new CarritoNegocio();
+                    CrearChat();
+                    Response.Redirect("CompraRealizada.aspx");
+                }
             }
             else
             {
@@ -65,6 +88,31 @@ namespace Web
 
         }
 
+        protected void CrearChat()
+        {
+            vendedores = usuarioNegocio.ListarVendedores();
+            int cantidad = vendedores.Count;
+            if(cantidad > 1)
+            {
+                Random r = new Random();
+                int indice = r.Next(0, cantidad);
+                chat.IDVenta = IDVenta;
+                chat.Mensaje = $"Hola {usuario.Nombre}!, soy {vendedores[indice].Nombre}, estoy aqui para cualquier duda que tengas. Muchas gracias por tu compra!";
+                chat.Remitente = vendedores[indice];
+                chat.IDVendedor = long.Parse(vendedores[indice].IDUsuario.ToString());
+                ChatNegocio.CrearMensaje(chat);
+            }
+            else
+            {
+                chat.IDVenta = IDVenta;
+                chat.Mensaje = $"Hola {usuario.Nombre}!, soy {vendedores[0].Nombre}, estoy aqui para cualquier duda que tengas. Muchas gracias por tu compra!";
+                chat.Remitente = vendedores[0];
+                chat.IDVendedor = long.Parse(vendedores[0].IDUsuario.ToString());
+                ChatNegocio.CrearMensaje(chat);
+            }
+
+            return;
+        }
         protected void CHKEfectivo_CheckedChanged(object sender, EventArgs e)
         {
             CHKTarjeta.Checked = false;
@@ -81,7 +129,7 @@ namespace Web
         {
             CHKEfectivo.Checked = false;
             CHKTransferencia.Checked = false;
-            if (!CHKTarjeta.Checked)
+            if (CHKTarjeta.Checked)
             {
                 txtNumero.Visible = true;
                 lblNumero.Visible = true;

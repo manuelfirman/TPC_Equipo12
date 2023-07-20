@@ -44,7 +44,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <h6>Productos</h6>
@@ -78,8 +78,9 @@
                                         </ul>
                                     </div>
 
-                                    <div class="col-md-1">
+                                    <div class="col-md-2">
                                         <a href="ControlVenta.aspx?Id=<%= venta.IDVenta %>" class="btn btn-primary"><%= venta.Estado.Estado == "CANCELADO" || venta.Estado.Estado == "ENTREGADO" ? "Detalle" : venta.Estado.Estado == "PAGO PENDIENTE" ? "Pagar" : "Seguimiento" %></a>
+                                        <a href="ControlVenta.aspx?Id=<%= venta.IDVenta %>" class="btn btn-primary mt-2">Ayuda en linea</a
                                     </div>
 
                                 </div>

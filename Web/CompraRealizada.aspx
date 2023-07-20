@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <ul class="list-group">
                                         <li class="list-group-item">
                                             <h6>Productos</h6>
@@ -64,9 +64,8 @@
                                                 else if (venta.Estado.Estado == "PAGO PENDIENTE")
                                                 { %>
                                             <p><span class="fw-medium">CBU: </span>145794698746454</p>
-                                            <p>
-                                                <span class="fw-medium">ALIAS: </span>
-                                                MiAlias.mp<p>
+                                            <p><span class="fw-medium">ALIAS: </span>MiAlias.mp<p>
+                                            <p class="text-info">*una vez realizada la transferencia enviar comprobante al chat*<p>
                                                     <% } %>
 
 
@@ -76,8 +75,9 @@
                                     </ul>
                                 </div>
 
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <a href="MisCompras.aspx" class="btn btn-primary">Ver mis compras</a>
+                                    <a href="ControlVenta.aspx?Id=<%= venta.IDVenta %>" class="btn btn-primary">Chatea con un vendedor</a>
                                 </div>
 
                             </div>
